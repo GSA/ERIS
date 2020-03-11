@@ -48,6 +48,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CsvHelper, Version=15.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
       <HintPath>..\packages\CsvHelper.15.0.1\lib\net45\CsvHelper.dll</HintPath>
       <Private>True</Private>
@@ -88,9 +92,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\LoadLookupData.cs" />
     <Compile Include="Data\SaveData.cs" />
+    <Compile Include="Lookups\BuildingLookup.cs" />
+    <Compile Include="Lookups\CountryLookup.cs" />
+    <Compile Include="Lookups\Lookup.cs" />
+    <Compile Include="Lookups\RegionLookup.cs" />
+    <Compile Include="Lookups\StateLookup.cs" />
     <Compile Include="Mapping\Constants.cs" />
     <Compile Include="Mapping\EmployeeMapping.cs" />
+    <Compile Include="Mapping\ERISMapper.cs" />
     <Compile Include="Mapping\SummaryMapping.cs" />
     <Compile Include="Mapping\TypeConversion.cs" />
     <Compile Include="Models\Address.cs" />
