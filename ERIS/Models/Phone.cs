@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ERIS.Models
 {
-    class Phone
+    public class Phone
     {
         public string HomePhone { get; set; }
         public string PersonalCell { get; set; }       

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ERIS.Models
 {
-    class Address
+    public class Address
     {
         public string HomeAddress1 { get; set; }
         public string HomeAddress2 { get; set; }

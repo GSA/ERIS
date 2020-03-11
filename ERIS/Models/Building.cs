@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ERIS.Models
 {
-    class Building
+    public class Building
     {
         public string BuildingLocationCode { get; set; }
     }

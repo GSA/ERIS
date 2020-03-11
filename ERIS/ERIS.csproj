@@ -90,6 +90,9 @@
   <ItemGroup>
     <Compile Include="Data\SaveData.cs" />
     <Compile Include="Mapping\Constants.cs" />
+    <Compile Include="Mapping\EmployeeMapping.cs" />
+    <Compile Include="Mapping\SummaryMapping.cs" />
+    <Compile Include="Mapping\TypeConversion.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Birth.cs" />
     <Compile Include="Models\Building.cs" />
@@ -97,6 +100,7 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Phone.cs" />
     <Compile Include="Models\Position.cs" />
+    <Compile Include="Models\Summary.cs" />
     <Compile Include="Process\ProcessMonster.cs" />
     <Compile Include="Process\SendSummary.cs" />
     <Compile Include="Program.cs" />

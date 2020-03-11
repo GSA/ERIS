@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ERIS.Models
 {
-    class Birth
+    public class Birth
     {
         public string CityOfBirth { get; set; }
         public string StateOfBirth { get; set; }
