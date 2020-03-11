@@ -14,9 +14,9 @@ namespace ERIS
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         //File paths from config file
-        private static string hrFilePath = ConfigurationManager.AppSettings["HRFILE"].ToString();
+        //private static string hrFilePath = ConfigurationManager.AppSettings["HRFILE"].ToString();
 
-        private static string separationFilePath = ConfigurationManager.AppSettings["SEPARATIONFILE"].ToString();
+        //private static string separationFilePath = ConfigurationManager.AppSettings["SEPARATIONFILE"].ToString();
 
         //Stopwatch objects
         private static Stopwatch timeForApp = new Stopwatch();
