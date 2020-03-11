@@ -1,0 +1,4 @@
+﻿<appSettings>
+  <add key="DEBUG" value="[TRUE/FALSE]" />
+  <add key="SMTPSERVER" value="" />
+</appSettings>
