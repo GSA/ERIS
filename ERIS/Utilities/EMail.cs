@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Mail;
 
-namespace ERIS.Utilities
+namespace MERS.Utilities
 {
     internal class EMail : IDisposable
     {

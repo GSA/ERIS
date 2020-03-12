@@ -1,4 +1,4 @@
-﻿namespace ERIS.Lookups
+﻿namespace MERS.Lookups
 {
     public class StateLookup
     {

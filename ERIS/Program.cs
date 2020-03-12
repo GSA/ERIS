@@ -2,11 +2,11 @@
 using System.Diagnostics;
 using System.Configuration;
 using AutoMapper;
-using ERIS.Lookups;
-using ERIS.Data;
-using ERIS.Mapping;
+using MERS.Lookups;
+using MERS.Data;
+using MERS.Mapping;
 
-namespace ERIS
+namespace MERS
 {
     internal static class Program
     {
@@ -23,7 +23,7 @@ namespace ERIS
 
         private static Stopwatch timeForProcess = new Stopwatch();
 
-        private static ERISMapper map = new ERISMapper();
+        private static MERSMapper map = new MERSMapper();
 
         private static IMapper dataMapper;
 
@@ -65,7 +65,7 @@ namespace ERIS
         private static Lookup createLookups()
         {
             Lookup lookups;
-            ERISMapper hrmap = new ERISMapper();
+            MERSMapper hrmap = new MERSMapper();
             IMapper lookupMapper;
 
             hrmap.CreateLookupConfig();

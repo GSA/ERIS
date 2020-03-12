@@ -4,7 +4,7 @@ using CsvHelper.TypeConversion;
 using System;
 using System.Text.RegularExpressions;
 
-namespace ERIS.Mapping
+namespace MERS.Mapping
 {
     internal sealed class DateConverter : DateTimeConverter
     {

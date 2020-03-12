@@ -1,7 +1,7 @@
 ﻿using CsvHelper.Configuration;
-using ERIS.Models;
+using MERS.Models;
 
-namespace ERIS.Mapping
+namespace MERS.Mapping
 {
     internal sealed class ProcessedSummaryMapping : ClassMap<ProcessedSummary>
     {

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERIS", "ERIS\ERIS.csproj", "{ED87A726-6662-4CED-952E-4F1EEF9E3321}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MERS", "ERIS\MERS.csproj", "{ED87A726-6662-4CED-952E-4F1EEF9E3321}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace ERIS.Validation
+namespace MERS.Validation
 {
     public static class ValidatorExtensions
     {
