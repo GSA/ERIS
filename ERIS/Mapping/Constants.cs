@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MERS.Mapping
+namespace ERIS.Mapping
 {
     internal static class MonsterConstants
     {

@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using MERS.Lookups;
+using ERIS.Lookups;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Data;
 
-namespace MERS.Data
+namespace ERIS.Data
 {
     internal class LoadLookupData
     {

@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using MERS.Lookups;
-using MERS.Models;
+using ERIS.Lookups;
+using ERIS.Models;
 
-namespace MERS.Mapping
+namespace ERIS.Mapping
 {
-    internal class MERSMapper
+    internal class ERISMapper
     {
         private MapperConfiguration lookupConfig;
         private MapperConfiguration dataConfig;

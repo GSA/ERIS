@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace MERS.Validation
+namespace ERIS.Validation
 {
     internal class ValidateMonster
     {
