@@ -1,4 +1,4 @@
-﻿namespace MERS.Lookups
+﻿namespace ERIS.Lookups
 {
     public class RegionLookup
     {

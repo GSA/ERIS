@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MERS")]
+[assembly: AssemblyTitle("ERIS")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("GSA")]
-[assembly: AssemblyProduct("MERS")]
+[assembly: AssemblyProduct("ERIS")]
 [assembly: AssemblyCopyright("Copyright © GSA 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

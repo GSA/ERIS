@@ -1,12 +1,12 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using MERS.Models;
+using ERIS.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 
-namespace MERS.Utilities
+namespace ERIS.Utilities
 {
     internal class FileReader
     {

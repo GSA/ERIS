@@ -1,8 +1,8 @@
 ﻿using CsvHelper.Configuration;
-using MERS.Models;
+using ERIS.Models;
 using System.Collections.Generic;
 
-namespace MERS.Mapping
+namespace ERIS.Mapping
 {
     public sealed class EmployeeMapping : ClassMap<Employee>
     {

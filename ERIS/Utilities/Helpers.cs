@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace MERS.Utilities
+namespace ERIS.Utilities
 {
     internal static class Helpers
     {

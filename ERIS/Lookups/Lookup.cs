@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MERS.Lookups
+namespace ERIS.Lookups
 {
     public class Lookup
     {
