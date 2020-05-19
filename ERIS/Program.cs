@@ -5,6 +5,8 @@ using AutoMapper;
 using ERIS.Lookups;
 using ERIS.Data;
 using ERIS.Mapping;
+using ERIS.Process;
+using ERIS.Models;
 
 namespace ERIS
 {
@@ -27,8 +29,11 @@ namespace ERIS
 
         private static IMapper dataMapper;
 
+        private static EMailData emailData = new EMailData();
+
         static void Main(string[] args)
         {
+            SendSummary sendSummary = new SendSummary(ref emailData);
             //Start timer
             timeForApp.Start();
 
@@ -43,7 +48,7 @@ namespace ERIS
             log.Info("Done Processing HR Links File(s):" + DateTime.Now);
 
             log.Info("Sending Summary File");
-            
+            sendSummary.SendSummaryEMail();
             log.Info("Summary file sent");
 
             //Stop second timer

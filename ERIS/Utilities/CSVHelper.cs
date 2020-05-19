@@ -82,13 +82,16 @@ namespace ERIS.Utilities
             {
                 var summaryFileName = fileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmss_FFFF") + ".csv";
 
+                TextWriter summaryFile = File.CreateText(ConfigurationManager.AppSettings["SUMMARYFILEPATH"] + summaryFileName);
+
                 //Creates the summary file
                 //TODO: Uncomment and get working
                 //using (CsvWriter csvWriter = new CsvWriter(new StreamWriter(ConfigurationManager.AppSettings["SUMMARYFILEPATH"] + summaryFileName, false)))
-                //{
-                //    csvWriter.Configuration.RegisterClassMap<TMap>();
-                //    csvWriter.WriteRecords(summaryData);
-                //}
+                using (CsvWriter csvWriter = new CsvWriter(summaryFile, System.Globalization.CultureInfo.CurrentCulture, false))
+                {
+                    csvWriter.Configuration.RegisterClassMap<TMap>();
+                    csvWriter.WriteRecords(summaryData);
+                }
 
                 return summaryFileName;
             }
