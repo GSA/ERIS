@@ -8,8 +8,12 @@ namespace ERIS.Models
 {
     class EMailData
     {
+        public string MonsterFilename { get; set; }
+
         public DateTime ProcessingDate { get; set; }
         public Int64 ItemsProcessed { get; set; }
+        public Int64 MonsterSucceeded { get; set; }
+        public Int64 MonsterFailed { get; set; }
         public Int64 CreateRecord { get; set; }
         public Int64 UpdateRecord { get; set; }
         public Int64 ReviewRecord { get; set; }

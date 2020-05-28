@@ -16,59 +16,63 @@ namespace ERIS.Process
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public readonly SummaryFileGenerator SummaryFileGenerator;
-
-        public List<CreatedSummary> CreatedRecordProcessed { get; set; }
-        public List<UpdatedSummary> UpdatedRecordProcessed { get; set; }
-        public List<ReviewedSummary> ReviewedRecordProcessed { get; set; }
-        public List<FlaggedSummary> FlaggedRecordProcessed { get; set; }
+        public List<CreatedSummary> CreatedRecordsProcessed { get; set; }
+        public List<UpdatedSummary> UpdatedRecordsProcessed { get; set; }
+        public List<ReviewedSummary> ReviewedRecordsProcessed { get; set; }
+        public List<FlaggedSummary> FlaggedRecordsProcessed { get; set; }
+        public List<ProcessedSummary> SuccessfulUsersProcessed { get; set; }
+        public List<ProcessedSummary> UnsuccessfulUsersProcessed { get; set; }
 
         public ERISSummary()
         {
             SummaryFileGenerator = new SummaryFileGenerator();
 
-            CreatedRecordProcessed = new List<CreatedSummary>();
-            UpdatedRecordProcessed = new List<UpdatedSummary>();
-            ReviewedRecordProcessed = new List<ReviewedSummary>();
-            FlaggedRecordProcessed = new List<FlaggedSummary>();
+            SuccessfulUsersProcessed = new List<ProcessedSummary>();
+            UnsuccessfulUsersProcessed = new List<ProcessedSummary>();
+            CreatedRecordsProcessed = new List<CreatedSummary>();
+            UpdatedRecordsProcessed = new List<UpdatedSummary>();
+            ReviewedRecordsProcessed = new List<ReviewedSummary>();
+            FlaggedRecordsProcessed = new List<FlaggedSummary>();
 
         }
 
         public void GenerateSummaryFiles(EMailData emailData)
         {
-            if (CreatedRecordProcessed.Count > 0)
+
+            if (CreatedRecordsProcessed.Count > 0)
             {
-                CreatedRecordProcessed = CreatedRecordProcessed.OrderBy(o => o.employeeData.Person.GCIMSID.ToString()).ToList();
+                CreatedRecordsProcessed = CreatedRecordsProcessed.OrderBy(o => o.LastName).ThenBy(t => t.FirstName).ToList();
 
-                emailData.CreatedRecordFilename = SummaryFileGenerator.GenerateSummaryFile<CreatedSummary, CreatedSummaryMapping>(ConfigurationManager.AppSettings["SUCCESSSUMMARYFILENAME"].ToString(), CreatedRecordProcessed);
+                emailData.CreatedRecordFilename = SummaryFileGenerator.GenerateSummaryFile<CreatedSummary, CreatedSummaryMapping>(ConfigurationManager.AppSettings["CREATEDSUMMARYFILENAME"].ToString(), CreatedRecordsProcessed);
 
-                Log.Info("Records Created File: " + emailData.CreatedRecordFilename);
+                Log.Info("Created File: " + emailData.CreatedRecordFilename);
             }
 
-            if (UpdatedRecordProcessed.Count > 0)
+            if (UpdatedRecordsProcessed.Count > 0)
             {
-                UpdatedRecordProcessed = UpdatedRecordProcessed.OrderBy(o => o.employeeData.Person.GCIMSID.ToString()).ToList();
+                UpdatedRecordsProcessed = UpdatedRecordsProcessed.OrderBy(o => o.LastName).ThenBy(t => t.FirstName).ToList();
 
-                emailData.UpdatedRecordFilename = SummaryFileGenerator.GenerateSummaryFile<UpdatedSummary, UpdatedSummaryMapping>(ConfigurationManager.AppSettings["SUCCESSSUMMARYFILENAME"].ToString(), UpdatedRecordProcessed);
+                emailData.UpdatedRecordFilename = SummaryFileGenerator.GenerateSummaryFile<UpdatedSummary, UpdatedSummaryMapping>(ConfigurationManager.AppSettings["UPDATEDSUMMARYFILENAME"].ToString(), UpdatedRecordsProcessed);
 
-                Log.Info("Records Updated File: " + emailData.UpdatedRecordFilename);
+                Log.Info("Updated File: " + emailData.UpdatedRecordFilename);
             }
 
-            if (ReviewedRecordProcessed.Count > 0)
+            if (ReviewedRecordsProcessed.Count > 0)
             {
-                ReviewedRecordProcessed = ReviewedRecordProcessed.OrderBy(o => o.employeeData.Person.GCIMSID.ToString()).ToList();
+                ReviewedRecordsProcessed = ReviewedRecordsProcessed.OrderBy(o => o.LastName).ThenBy(t => t.FirstName).ToList();
 
-                emailData.ReviewRecordFilename = SummaryFileGenerator.GenerateSummaryFile<ReviewedSummary, ReviewedSummaryMapping>(ConfigurationManager.AppSettings["SUCCESSSUMMARYFILENAME"].ToString(), ReviewedRecordProcessed);
+                emailData.ReviewRecordFilename = SummaryFileGenerator.GenerateSummaryFile<ReviewedSummary, ReviewedSummaryMapping>(ConfigurationManager.AppSettings["REVIEWEDSUMMARYFILENAME"].ToString(), ReviewedRecordsProcessed);
 
-                Log.Info("Records for Review File: " + emailData.ReviewRecordFilename);
+                Log.Info("Reviewed File: " + emailData.ReviewRecordFilename);
             }
 
-            if (FlaggedRecordProcessed.Count > 0)
+            if (FlaggedRecordsProcessed.Count > 0)
             {
-                FlaggedRecordProcessed = FlaggedRecordProcessed.OrderBy(o => o.employeeData.Person.GCIMSID.ToString()).ToList();
+                FlaggedRecordsProcessed = FlaggedRecordsProcessed.OrderBy(o => o.LastName).ThenBy(t => t.FirstName).ToList();
 
-                emailData.FlaggRecordFilename = SummaryFileGenerator.GenerateSummaryFile<FlaggedSummary, FlaggedSummaryMapping>(ConfigurationManager.AppSettings["SUCCESSSUMMARYFILENAME"].ToString(), FlaggedRecordProcessed);
+                emailData.FlaggRecordFilename = SummaryFileGenerator.GenerateSummaryFile<FlaggedSummary, FlaggedSummaryMapping>(ConfigurationManager.AppSettings["FLAGGEDSUMMARYFILENAME"].ToString(), FlaggedRecordsProcessed);
 
-                Log.Info("Records Flagged File: " + emailData.FlaggRecordFilename);
+                Log.Info("Flagged File: " + emailData.FlaggRecordFilename);
             }
 
 

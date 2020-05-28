@@ -70,4 +70,38 @@ namespace ERIS.Mapping
             }
         }
     }
+
+    internal sealed class CitizenConverter : BooleanConverter
+    {
+        public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+        {
+            switch (text.ToLower())
+            {
+                case "us":
+                    return true;
+                case " ":
+                    return false;
+                default:
+                    return false;
+            }
+        }
+    }
+
+    internal sealed class IsVirtualConverter : BooleanConverter
+    {
+        public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+        {
+            switch (text.ToLower())
+            {
+                case "1":
+                    return true;
+                case "0":
+                    return false;
+                case " ":
+                    return false;
+                default:
+                    return false;
+            }
+        }
+    }
 }

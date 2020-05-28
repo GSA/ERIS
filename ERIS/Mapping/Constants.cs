@@ -8,6 +8,7 @@ namespace ERIS.Mapping
 {
     internal static class MonsterConstants
     {
+        public const int MONSTER_NUMBER = 0;
         public const int FIRST_NAME = 1;
         public const int MIDDLE_NAME = 2;
         public const int LAST_NAME = 3;
