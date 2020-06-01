@@ -43,19 +43,6 @@ namespace ERIS.Mapping
         }
     }
 
-    internal sealed class ReviewedSummaryMapping : ClassMap<ReviewedSummary>
-    {
-        public ReviewedSummaryMapping()
-        {
-            Map(m => m.MonsterID).Name("Monster ID");
-            Map(m => m.FirstName).Name("First Name");
-            Map(m => m.MiddleName).Name("Middle Name");
-            Map(m => m.LastName).Name("Last Name");
-            Map(m => m.SocialSecurityNumber).Name("Social Security Number");
-            Map(m => m.DateOfBirth).Name("Date of Birth");
-        }
-    }
-
     internal sealed class FlaggedSummaryMapping : ClassMap<FlaggedSummary>
     {
         public FlaggedSummaryMapping()
@@ -66,6 +53,20 @@ namespace ERIS.Mapping
             Map(m => m.LastName).Name("Last Name");
             Map(m => m.SocialSecurityNumber).Name("Social Security Number");
             Map(m => m.DateOfBirth).Name("Date of Birth");
+        }
+    }
+
+    internal sealed class ErrorSummaryMapping : ClassMap<ErrorSummary>
+    {
+        public ErrorSummaryMapping()
+        {
+            Map(m => m.MonsterID).Name("Monster ID");
+            Map(m => m.FirstName).Name("First Name");
+            Map(m => m.MiddleName).Name("Middle Name");
+            Map(m => m.LastName).Name("Last Name");
+            Map(m => m.SocialSecurityNumber).Name("Social Security Number");
+            Map(m => m.DateOfBirth).Name("Date of Birth");
+            Map(m => m.Action).Name("Action");
         }
     }
 }

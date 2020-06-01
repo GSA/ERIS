@@ -22,21 +22,8 @@ using System.Threading.Tasks;
 namespace ERIS.Process
 {
 
-    public enum ErrorCodes : int
-    {
-        unknown_error = -1,
-        unprocessed = 0,
-        successfully_processed = 1,
-        password_protected = -2,
-        wrong_version = -3,
-        arra = -4,
-        duplicate_user = -5,
-        failed_validation = -6
-    }
-
     class ProcessMonster
     {
-
         //Reference to logger
         private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         //private static CsvConfiguration config;
@@ -62,31 +49,11 @@ namespace ERIS.Process
             try
             {
                 //TODO: Add code here to process monster file
-                /*string MonsterFile = File.ReadAllText(ConfigurationManager.AppSettings["MONSTERFILE"].ToString());
-                Console.WriteLine(MonsterFile);
-                Console.ReadLine();*/
-
-                //using (StreamReader sr = new StreamReader(ConfigurationManager.AppSettings["MONSTERFILE"].ToString()))
-                //{
-                //    string line;
-                //    // Read and display lines from the file until the end of
-
-                //    // the file is reached.
-
-
-                //    while ((line = sr.ReadLine()) != null)
-                //    {
-                //        var value = (line.Replace("~", ",").ToString());
-                //        Console.WriteLine(value);
-                //        Console.ReadLine();
-
-                //    }
-                //}
                 Employee gcimsRecord;
 
                 var summary = new ERISSummary();
                 var fileReader = new FileReader();
-                //var validate = new ValidateMonster(lookups);
+                var validate = new ValidateMonster(lookups);
                 var em = new EmployeeMapping();
                 List<string> badRecords;
 
@@ -94,12 +61,12 @@ namespace ERIS.Process
                                
                 var MonsterData = fileReader.GetFileData<Employee, EmployeeMapping>(MonsterFile, out badRecords, em);
 
-                Helpers.AddBadRecordsToSummary(badRecords, ref summary);
+                //Helpers.AddBadRecordsToSummary(badRecords, ref summary);
 
                 log.Info("Loading GCIMS Data");
                 var allGCIMSData = retrieve.AllGCIMSData();
 
-                ProcessResult updatedResults;
+                //ProcessResult updatedResults;
 
                 //Start Processing the Monster Data
                 foreach (Employee employeeData in MonsterData)
@@ -156,12 +123,12 @@ namespace ERIS.Process
                     }
 
                     //If there are critical errors write to the error summary and move to the next record
-                    //log.Info("Checking for Critical errors for user: " + employeeData.Person.MonsterID);
-                    //if (Helpers.CheckForErrors(validate, employeeData, summary.UnsuccessfulUsersProcessed, ref log))
-                    //    continue;
+                    log.Info("Checking for Critical errors for user: " + employeeData.Person.MonsterID);
+                    if (Helpers.CheckForErrors(validate, employeeData, summary.UnsuccessfulProcessed, ref log))
+                        continue;
 
-                    //Helpers.CleanupMonsterData(employeeData);
-
+                    Helpers.CleanupMonsterData(employeeData);
+           #region test
                     //    //If DB Record is not null them check if we need to update record
                     //    if (gcimsRecord != null)
                     //    {
@@ -285,23 +252,26 @@ namespace ERIS.Process
                     //        }
                     //    }
                     //}
-
-                    //emailData.MonsterFilename = Path.GetFileName(MonsterFile);
-                    //emailData.ItemsProcessed = MonsterData.Count;
-                    //emailData.CreateRecord = summary.CreatedRecordsProcessed.Count;
-                    //emailData.UpdateRecord = summary.UpdatedRecordsProcessed.Count;
-                    //emailData.ReviewRecord = summary.ReviewedRecordsProcessed.Count;
-                    //emailData.FlagRecord = summary.FlaggedRecordsProcessed.Count;
-
-                    ////Add log entries
-                    //log.Info("Total records " + String.Format("{0:#,###0}", MonsterData.Count));
-                    //log.Info("Records created: " + String.Format("{0:#,###0}", summary.CreatedRecordsProcessed.Count));
-                    //log.Info("Records updated: " + String.Format("{0:#,###0}", summary.UpdatedRecordsProcessed.Count));
-                    //log.Info("Records reviewed: " + String.Format("{0:#,###0}", summary.ReviewedRecordsProcessed.Count));
-                    //log.Info("Records flagged: " + String.Format("{0:#,###0}", summary.FlaggedRecordsProcessed.Count));
-
-                    //summary.GenerateSummaryFiles(emailData);
+                    #endregion test                    
                 }
+
+                emailData.MonsterFilename = Path.GetFileName(MonsterFile);
+                emailData.ItemsProcessed = MonsterData.Count;
+                //emailData.CreateRecord = summary.CreatedRecordsProcessed.Count;
+                //emailData.UpdateRecord = summary.UpdatedRecordsProcessed.Count;
+                //emailData.ReviewRecord = summary.ReviewedRecordsProcessed.Count;
+                //emailData.FlagRecord = summary.FlaggedRecordsProcessed.Count;
+                emailData.MonsterFailed = summary.UnsuccessfulProcessed.Count;
+
+                //Add log entries
+                log.Info("Total records " + String.Format("{0:#,###0}", MonsterData.Count));
+                //log.Info("Records created: " + String.Format("{0:#,###0}", summary.CreatedRecordsProcessed.Count));
+                //log.Info("Records updated: " + String.Format("{0:#,###0}", summary.UpdatedRecordsProcessed.Count));
+                //log.Info("Records reviewed: " + String.Format("{0:#,###0}", summary.ReviewedRecordsProcessed.Count));
+                //log.Info("Records flagged: " + String.Format("{0:#,###0}", summary.FlaggedRecordsProcessed.Count));
+                log.Info("Records Invalid: " + String.Format("{0:#,###0}", summary.UnsuccessfulProcessed.Count));
+
+                summary.GenerateSummaryFiles(emailData);
             }
             //Catch all errors
 

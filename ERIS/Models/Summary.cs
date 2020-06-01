@@ -8,7 +8,7 @@ namespace ERIS.Models
 {
     internal class ProcessedSummary
     {
-        public Int64 MonsterID { get; set; }
+        public string MonsterID { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
@@ -19,7 +19,7 @@ namespace ERIS.Models
 
     internal class CreatedSummary
     {
-        public Int64 MonsterID { get; set; }        
+        public string MonsterID { get; set; }        
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
@@ -29,7 +29,7 @@ namespace ERIS.Models
 
     internal class UpdatedSummary
     {
-        public Int64 MonsterID { get; set; }
+        public string MonsterID { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
@@ -37,23 +37,34 @@ namespace ERIS.Models
         public DateTime? DateOfBirth { get; set; }
     }
 
-    internal class ReviewedSummary
-    {
-        public Int64 MonsterID { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string SocialSecurityNumber { get; set; }
-        public DateTime? DateOfBirth { get; set; }
-    }
+    //internal class ReviewedSummary
+    //{
+    //    public Int64 MonsterID { get; set; }
+    //    public string FirstName { get; set; }
+    //    public string MiddleName { get; set; }
+    //    public string LastName { get; set; }
+    //    public string SocialSecurityNumber { get; set; }
+    //    public DateTime? DateOfBirth { get; set; }
+    //}
 
     internal class FlaggedSummary
     {
-        public Int64 MonsterID { get; set; }
+        public string MonsterID { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string SocialSecurityNumber { get; set; }
         public DateTime? DateOfBirth { get; set; }
+    }
+
+    internal class ErrorSummary
+    {
+        public string MonsterID { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
+        public string SocialSecurityNumber { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public string Action { get; set; }
     }
 }

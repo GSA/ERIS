@@ -17,6 +17,5 @@ namespace ERIS.Models
         public string SocialSecurityNumber { get; set; }
         public string Gender { get; set; }
         public string HomeEmail { get; set; }
-        public string Status { get; set; } //Not sure if needed yet (should be applicant for new people
     }
 }

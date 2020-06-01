@@ -68,8 +68,8 @@ namespace ERIS.Process
             template = template.Replace("[RECORDSPROCESSED]", emailData.ItemsProcessed.ToString());
             template = template.Replace("[RECORDSCREATED]", emailData.CreateRecord.ToString());
             template = template.Replace("[RECORDSUPDATED]", emailData.UpdateRecord.ToString());
-            template = template.Replace("[RECORDSFORHD]", emailData.ReviewRecord.ToString());
-            template = template.Replace("[ERRORRECORDS]", emailData.FlagRecord.ToString());
+            template = template.Replace("[RECORDSFORHD]", emailData.FlagRecord.ToString());
+            template = template.Replace("[INVALIDRECORDS]", emailData.MonsterFailed.ToString());
 
             return template;
         }
@@ -84,10 +84,10 @@ namespace ERIS.Process
                 attachments.Append(AddAttachment(emailData.CreatedRecordFilename));
             if (emailData.UpdatedRecordFilename != null)
                 attachments.Append(AddAttachment(emailData.UpdatedRecordFilename));
-            if (emailData.ReviewRecordFilename != null)
-                attachments.Append(AddAttachment(emailData.ReviewRecordFilename));
             if (emailData.FlaggRecordFilename!= null)
                 attachments.Append(AddAttachment(emailData.FlaggRecordFilename));
+            if (emailData.ErrorFilename != null)
+                attachments.Append(AddAttachment(emailData.ErrorFilename));
 
             return attachments.ToString();
         }

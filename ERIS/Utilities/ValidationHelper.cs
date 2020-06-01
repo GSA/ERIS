@@ -15,13 +15,13 @@ namespace ERIS.Utilities
         {
         }
 
-        public string GetErrors(IList<ValidationFailure> failures, Monster hr)
+        public string GetErrors(IList<ValidationFailure> failures, Monster monster)
         {
             StringBuilder errors = new StringBuilder();
 
             foreach (var rule in failures)
             {
-                errors.Append(rule.ErrorMessage.Remove(0, rule.ErrorMessage.IndexOf('.') + (int)hr));
+                errors.Append(rule.ErrorMessage.Remove(0, rule.ErrorMessage.IndexOf('.') + (int)monster));
                 errors.Append(",");
             }
 

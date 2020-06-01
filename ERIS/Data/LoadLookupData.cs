@@ -67,7 +67,6 @@ namespace ERIS.Data
             Lookup lookup = new Lookup();
 
             //lookup_country
-            lookupData.NextResult();
             lookup.countryLookup = lookupMapper.Map<IDataReader, List<CountryLookup>>(lookupData);
 
             //lookup_state

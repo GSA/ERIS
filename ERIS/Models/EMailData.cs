@@ -13,15 +13,14 @@ namespace ERIS.Models
         public DateTime ProcessingDate { get; set; }
         public Int64 ItemsProcessed { get; set; }
         public Int64 MonsterSucceeded { get; set; }
-        public Int64 MonsterFailed { get; set; }
         public Int64 CreateRecord { get; set; }
         public Int64 UpdateRecord { get; set; }
-        public Int64 ReviewRecord { get; set; }
         public Int64 FlagRecord { get; set; }
+        public Int64 MonsterFailed{ get; set; }
 
         public string CreatedRecordFilename { get; set; }
         public string UpdatedRecordFilename { get; set; }
-        public string ReviewRecordFilename { get; set; }
         public string FlaggRecordFilename { get; set; }
+        public string ErrorFilename { get; set; }
     }
 }

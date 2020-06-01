@@ -28,7 +28,7 @@ namespace ERIS.Mapping
             Map(m => m.Suffix).Index(MonsterConstants.SUFFIX);
             Map(m => m.SocialSecurityNumber).Index(MonsterConstants.SOCIAL_SECURITY_NUMBER);
             Map(m => m.Gender).Index(MonsterConstants.GENDER);
-            Map(m => m.HomeEmail).Index(MonsterConstants.PERSONAL_EMAIL);    
+            Map(m => m.HomeEmail).Index(MonsterConstants.PERSONAL_EMAIL);
         }
     }
 
@@ -37,9 +37,11 @@ namespace ERIS.Mapping
         public AddressMap()
         {
             Map(m => m.HomeAddress1).Index(MonsterConstants.HOME_ADDRESS_1);
-            Map(m => m.HomeAddress2).Index(MonsterConstants.HOME_ADDRESS_2);            
+            Map(m => m.HomeAddress2).Index(MonsterConstants.HOME_ADDRESS_2);
+            Map(m => m.HomeAddress3).Index(MonsterConstants.HOME_ADDRESS_3);
             Map(m => m.HomeCity).Index(MonsterConstants.HOME_CITY);
             Map(m => m.HomeState).Index(MonsterConstants.HOME_STATE);
+            Map(m => m.HomeCountry).Index(MonsterConstants.HOME_COUNTRY);
             Map(m => m.HomeZipCode).Index(MonsterConstants.HOME_ZIP_CODE);
         }
     }
@@ -60,7 +62,7 @@ namespace ERIS.Mapping
             Map(m => m.StateOfBirth).Index(MonsterConstants.BIRTH_STATE);
             Map(m => m.CountryOfBirth).Index(MonsterConstants.BIRTH_COUNTRY);
             Map(m => m.CountryOfCitizenship).Index(MonsterConstants.COUNTRY_OF_CITIZENSHIP);
-            Map(m => m.Citizen).Index(MonsterConstants.CITIZEN).TypeConverter<CitizenConverter>() ;
+            Map(m => m.Citizen).Index(MonsterConstants.CITIZEN);
             Map(m => m.DateOfBirth).Index(MonsterConstants.DATE_OF_BIRTH).TypeConverter<DateConverter>();
         }
     }
@@ -71,7 +73,7 @@ namespace ERIS.Mapping
         {             
             Map(m => m.JobTitle).Index(MonsterConstants.JOB_TITLE);
             Map(m => m.Region).Index(MonsterConstants.REGION).TypeConverter<RegionConverter>();
-            Map(m => m.IsVirtual).Index(MonsterConstants.VIRTUAL).TypeConverter<IsVirtualConverter>();
+            Map(m => m.IsVirtual).Index(MonsterConstants.VIRTUAL);
             Map(m => m.VirtualRegion).Index(MonsterConstants.VIRTUAL_REGION);
             Map(m => m.MajorOrg).Index(MonsterConstants.MAJOR_ORG).TypeConverter<MajorOrgConverter>();
            
@@ -83,8 +85,7 @@ namespace ERIS.Mapping
         public PhoneMap()
         {          
             Map(m => m.HomePhone).Index(MonsterConstants.HOME_PHONE);
-            Map(m => m.PersonalCell).Index(MonsterConstants.PERSONAL_CELL);
-            Map(m => m.WorkCell).Index(MonsterConstants.WORK_CELL);            
+            Map(m => m.PersonalCell).Index(MonsterConstants.PERSONAL_CELL);          
         }
     }
 }

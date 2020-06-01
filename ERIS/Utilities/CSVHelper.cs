@@ -11,10 +11,6 @@ namespace ERIS.Utilities
 {
     internal class FileReader
     {
-        public FileReader()
-        {
-        }
-
         //TODO: Uncomment out and get working
         public List<TClass> GetFileData<TClass, TMap>(string filePath, out List<string> badRecords, ClassMap<Employee> employeeMap = null)
             where TClass : class
@@ -37,7 +33,7 @@ namespace ERIS.Utilities
                 {
                     var csvReader = new CsvReader(csvParser);
                     csvReader.Configuration.Delimiter = "~";
-                    csvReader.Configuration.HasHeaderRecord = false;
+                    csvReader.Configuration.HasHeaderRecord = true;
                     csvReader.Configuration.MissingFieldFound = null;
                     if (employeeMap != null)
                     {

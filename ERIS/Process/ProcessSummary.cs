@@ -18,20 +18,18 @@ namespace ERIS.Process
         public readonly SummaryFileGenerator SummaryFileGenerator;
         public List<CreatedSummary> CreatedRecordsProcessed { get; set; }
         public List<UpdatedSummary> UpdatedRecordsProcessed { get; set; }
-        public List<ReviewedSummary> ReviewedRecordsProcessed { get; set; }
         public List<FlaggedSummary> FlaggedRecordsProcessed { get; set; }
-        public List<ProcessedSummary> SuccessfulUsersProcessed { get; set; }
-        public List<ProcessedSummary> UnsuccessfulUsersProcessed { get; set; }
+        public List<ProcessedSummary> SuccessfulProcessed { get; set; }
+        public List<ErrorSummary> UnsuccessfulProcessed { get; set; }
 
         public ERISSummary()
         {
             SummaryFileGenerator = new SummaryFileGenerator();
 
-            SuccessfulUsersProcessed = new List<ProcessedSummary>();
-            UnsuccessfulUsersProcessed = new List<ProcessedSummary>();
+            SuccessfulProcessed = new List<ProcessedSummary>();
+            UnsuccessfulProcessed = new List<ErrorSummary>();
             CreatedRecordsProcessed = new List<CreatedSummary>();
             UpdatedRecordsProcessed = new List<UpdatedSummary>();
-            ReviewedRecordsProcessed = new List<ReviewedSummary>();
             FlaggedRecordsProcessed = new List<FlaggedSummary>();
 
         }
@@ -41,7 +39,7 @@ namespace ERIS.Process
 
             if (CreatedRecordsProcessed.Count > 0)
             {
-                CreatedRecordsProcessed = CreatedRecordsProcessed.OrderBy(o => o.LastName).ThenBy(t => t.FirstName).ToList();
+                CreatedRecordsProcessed = CreatedRecordsProcessed.OrderBy(o => o.MonsterID).ToList();
 
                 emailData.CreatedRecordFilename = SummaryFileGenerator.GenerateSummaryFile<CreatedSummary, CreatedSummaryMapping>(ConfigurationManager.AppSettings["CREATEDSUMMARYFILENAME"].ToString(), CreatedRecordsProcessed);
 
@@ -50,29 +48,29 @@ namespace ERIS.Process
 
             if (UpdatedRecordsProcessed.Count > 0)
             {
-                UpdatedRecordsProcessed = UpdatedRecordsProcessed.OrderBy(o => o.LastName).ThenBy(t => t.FirstName).ToList();
+                UpdatedRecordsProcessed = UpdatedRecordsProcessed.OrderBy(o => o.MonsterID).ToList();
 
                 emailData.UpdatedRecordFilename = SummaryFileGenerator.GenerateSummaryFile<UpdatedSummary, UpdatedSummaryMapping>(ConfigurationManager.AppSettings["UPDATEDSUMMARYFILENAME"].ToString(), UpdatedRecordsProcessed);
 
                 Log.Info("Updated File: " + emailData.UpdatedRecordFilename);
             }
 
-            if (ReviewedRecordsProcessed.Count > 0)
-            {
-                ReviewedRecordsProcessed = ReviewedRecordsProcessed.OrderBy(o => o.LastName).ThenBy(t => t.FirstName).ToList();
-
-                emailData.ReviewRecordFilename = SummaryFileGenerator.GenerateSummaryFile<ReviewedSummary, ReviewedSummaryMapping>(ConfigurationManager.AppSettings["REVIEWEDSUMMARYFILENAME"].ToString(), ReviewedRecordsProcessed);
-
-                Log.Info("Reviewed File: " + emailData.ReviewRecordFilename);
-            }
-
             if (FlaggedRecordsProcessed.Count > 0)
             {
-                FlaggedRecordsProcessed = FlaggedRecordsProcessed.OrderBy(o => o.LastName).ThenBy(t => t.FirstName).ToList();
+                FlaggedRecordsProcessed = FlaggedRecordsProcessed.OrderBy(o => o.MonsterID).ToList();
 
                 emailData.FlaggRecordFilename = SummaryFileGenerator.GenerateSummaryFile<FlaggedSummary, FlaggedSummaryMapping>(ConfigurationManager.AppSettings["FLAGGEDSUMMARYFILENAME"].ToString(), FlaggedRecordsProcessed);
 
                 Log.Info("Flagged File: " + emailData.FlaggRecordFilename);
+            }
+
+            if (UnsuccessfulProcessed.Count > 0)
+            {
+                UnsuccessfulProcessed= UnsuccessfulProcessed.OrderBy(o => o.MonsterID).ToList();
+
+                emailData.ErrorFilename= SummaryFileGenerator.GenerateSummaryFile<ErrorSummary, ErrorSummaryMapping>(ConfigurationManager.AppSettings["ERRORSUMMARYFILENAME"].ToString(), UnsuccessfulProcessed);
+
+                Log.Info("Error File: " + emailData.ErrorFilename);
             }
 
 

@@ -122,15 +122,15 @@ namespace ERIS.Utilities
                 var parts = new List<string>();
                 var s = item.removeItems(new[] { "\"" });
                 parts.AddRange(s.Split('~'));
-                var obj = new ProcessedSummary
+                var obj = new ErrorSummary
                 {
-                    Action = "Invalid Record From CSV File",
-                    MonsterID = -1,
+                    MonsterID = "Unknown Monster ID",
+                    Action = "Invalid Record From CSV File",                    
                     LastName = parts.Count > 1 ? parts[1] : "Unknown Last Name",
                     FirstName = parts.Count > 3 ? parts[3] : "Unknown First Name",
                     MiddleName = parts.Count > 4 ? parts[4] : "Unknown Middle Name"
                 };
-                summary.UnsuccessfulUsersProcessed.Add(obj);
+                summary.UnsuccessfulProcessed.Add(obj);
             }
         }
 
@@ -142,22 +142,23 @@ namespace ERIS.Utilities
         /// <param name="FlaggedProcessed"></param>
         /// <param name="log"></param>
         /// <returns></returns>
-        public static bool CheckForErrors(ValidateMonster validate, Employee employeeData, List<ProcessedSummary> FlaggedProcessed, ref ILog log)
+        public static bool CheckForErrors(ValidateMonster validate, Employee employeeData, List<ErrorSummary> UnsuccessfulProcessed, ref ILog log)
         {
             var validationHelper = new ValidationHelper();
-            //var criticalErrors = validate.ValidateEmployeeCriticalInfo(employeeData);
+            var criticalErrors = validate.ValidateEmployeeCriticalInfo(employeeData);
 
-            //if (criticalErrors.IsValid) return false;
-            //log.Warn("Errors found for user: " + employeeData.Person.MonsterID + "(" + criticalErrors.Errors.Count + ")");
+            if (criticalErrors.IsValid) return false;
+            log.Warn("Errors found for user: " + employeeData.Person.MonsterID + "(" + criticalErrors.Errors.Count + ")");
 
-            FlaggedProcessed.Add(new ProcessedSummary
+            UnsuccessfulProcessed.Add(new ErrorSummary
             {
-                MonsterID = -1,
+                MonsterID = employeeData.Person.MonsterID,
                 FirstName = employeeData.Person.FirstName,
                 MiddleName = employeeData.Person.MiddleName,
                 LastName = employeeData.Person.LastName,
                 SocialSecurityNumber = employeeData.Person.SocialSecurityNumber,
-                DateOfBirth = employeeData.Birth.DateOfBirth
+                DateOfBirth = employeeData.Birth.DateOfBirth,
+                Action = validationHelper.GetErrors(criticalErrors.Errors, ValidationHelper.Monster.Monsterfile).TrimEnd(',')
             });
 
             return true;
