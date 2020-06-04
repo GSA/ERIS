@@ -29,6 +29,7 @@ namespace ERIS.Mapping
             Map(m => m.SocialSecurityNumber).Index(MonsterConstants.SOCIAL_SECURITY_NUMBER);
             Map(m => m.Gender).Index(MonsterConstants.GENDER);
             Map(m => m.HomeEmail).Index(MonsterConstants.PERSONAL_EMAIL);
+            Map(m => m.HREmail).Index(MonsterConstants.HR_EMAIL);
         }
     }
 
@@ -62,7 +63,7 @@ namespace ERIS.Mapping
             Map(m => m.StateOfBirth).Index(MonsterConstants.BIRTH_STATE);
             Map(m => m.CountryOfBirth).Index(MonsterConstants.BIRTH_COUNTRY);
             Map(m => m.CountryOfCitizenship).Index(MonsterConstants.COUNTRY_OF_CITIZENSHIP);
-            Map(m => m.Citizen).Index(MonsterConstants.CITIZEN);
+            Map(m => m.Citizen).Index(MonsterConstants.CITIZEN).TypeConverter<CitizenConverter>();
             Map(m => m.DateOfBirth).Index(MonsterConstants.DATE_OF_BIRTH).TypeConverter<DateConverter>();
         }
     }
@@ -73,10 +74,11 @@ namespace ERIS.Mapping
         {             
             Map(m => m.JobTitle).Index(MonsterConstants.JOB_TITLE);
             Map(m => m.Region).Index(MonsterConstants.REGION).TypeConverter<RegionConverter>();
-            Map(m => m.IsVirtual).Index(MonsterConstants.VIRTUAL);
+            Map(m => m.IsVirtual).Index(MonsterConstants.VIRTUAL).TypeConverter<IsVirtualConverter>();
             Map(m => m.VirtualRegion).Index(MonsterConstants.VIRTUAL_REGION);
             Map(m => m.MajorOrg).Index(MonsterConstants.MAJOR_ORG).TypeConverter<MajorOrgConverter>();
-           
+            Map(m => m.OfficeSymbol).Index(MonsterConstants.OFFICE_SYMBOL);
+
         }
     }
 

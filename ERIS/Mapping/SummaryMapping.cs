@@ -61,12 +61,11 @@ namespace ERIS.Mapping
         public ErrorSummaryMapping()
         {
             Map(m => m.MonsterID).Name("Monster ID");
+            Map(m => m.LastName).Name("Last Name");
+            Map(m => m.Suffix).Name("Suffix");
             Map(m => m.FirstName).Name("First Name");
             Map(m => m.MiddleName).Name("Middle Name");
-            Map(m => m.LastName).Name("Last Name");
-            Map(m => m.SocialSecurityNumber).Name("Social Security Number");
-            Map(m => m.DateOfBirth).Name("Date of Birth");
-            Map(m => m.Action).Name("Action");
+            Map(m => m.Errors).Name("Validation Error(S)");
         }
     }
 }

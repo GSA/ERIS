@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace ERIS.Process
 {
-    internal class SendSummary
+    class SendErrorSummary
     {
         //Reference to logger
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly EMailData emailData = new EMailData();
 
-        public SendSummary(ref EMailData emailData)
+        public SendErrorSummary(ref EMailData emailData)
         {
             this.emailData = emailData;
         }
@@ -30,7 +30,7 @@ namespace ERIS.Process
             string body = string.Empty;
             string attahcments = string.Empty;
 
-            subject = ConfigurationManager.AppSettings["SUMMARYEMAILSUBJECT"].ToString() + DateTime.Now.ToString("MMMM dd, yyyy");
+            subject = ConfigurationManager.AppSettings["ERRORSUMMARYEMAILSUBJECT"].ToString() + "-" + DateTime.Now.ToString("MMMM dd, yyyy");
 
             body = GenerateEMailBody();
 
@@ -62,14 +62,11 @@ namespace ERIS.Process
             StringBuilder errors = new StringBuilder();
             StringBuilder fileNames = new StringBuilder();
 
-            string template = File.ReadAllText(ConfigurationManager.AppSettings["SUMMARYTEMPLATE"]);
+            string template = File.ReadAllText(ConfigurationManager.AppSettings["ERRORSUMMARYTEMPLATE"]);
 
             template = template.Replace("[PROCESSINGDATE]", emailData.ProcessingDate.ToShortDateString());
-            template = template.Replace("[RECORDSPROCESSED]", emailData.ItemsProcessed.ToString());
-            template = template.Replace("[RECORDSCREATED]", emailData.CreateRecord.ToString());
-            template = template.Replace("[RECORDSUPDATED]", emailData.UpdateRecord.ToString());
-            template = template.Replace("[RECORDSFORHD]", emailData.FlagRecord.ToString());
             template = template.Replace("[INVALIDRECORDS]", emailData.ErrorRecord.ToString());
+            template = template.Replace("[COUNT RECORDS WITH ERRORS]", emailData.ErrorRecord.ToString());
 
             return template;
         }
@@ -78,12 +75,6 @@ namespace ERIS.Process
         {
             StringBuilder attachments = new StringBuilder();
 
-            if (emailData.CreatedRecordFilename != null)
-                attachments.Append(AddAttachment(emailData.CreatedRecordFilename));
-            if (emailData.UpdatedRecordFilename != null)
-                attachments.Append(AddAttachment(emailData.UpdatedRecordFilename));
-            if (emailData.FlaggRecordFilename!= null)
-                attachments.Append(AddAttachment(emailData.FlaggRecordFilename));
             if (emailData.ErrorFilename != null)
                 attachments.Append(AddAttachment(emailData.ErrorFilename));
 

@@ -50,11 +50,11 @@ namespace ERIS
             ProcessMonster processMonster = new ProcessMonster(dataMapper, ref emailData, lookups);
 
             //Log action
-            log.Info("Processing HR Monster File:" + DateTime.Now);
+            log.Info("Processing Monster File:" + DateTime.Now);
 
             if (File.Exists(MonsterFilePath))
             {
-                log.Info("Starting Processing HR File: " + DateTime.Now);
+                log.Info("Starting Processing Monster File: " + DateTime.Now);
 
                 timeForProcess.Start();
                 processMonster.ProcessMonsterFile(MonsterFilePath);

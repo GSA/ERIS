@@ -70,44 +70,49 @@ namespace ERIS.Utilities
         /// <param name="allGcimsData"></param>
         /// <param name="log"></param>
         /// <returns></returns>
-        public static Employee RecordFound(Employee employeeData, List<Employee> allGCIMSData, ref ILog log)
+        //public static Employee RecordFound(Employee employeeData, List<Employee> allGCIMSData, ref ILog log)
+        //{
+        //    var MonsterMatch = allGCIMSData.Where(w => employeeData.Person.GCIMSID == w.Person.GCIMSID).ToList();
+
+        //    if (MonsterMatch.Count > 1)
+        //    {
+        //        log.Info("Multiple GCIMS IDs Found: " + employeeData.Person.GCIMSID);
+
+        //        return null;
+        //    }
+        //    else if (MonsterMatch.Count == 1)
+        //    {
+        //        log.Info("Matching record found by emplID: " + employeeData.Person.GCIMSID);
+
+        //        return MonsterMatch.Single();
+        //    }
+        //    else if (MonsterMatch.Count == 0)
+        //    {
+        //        log.Info("Trying to match record by Lastname, Birth Date and SSN: " + employeeData.Person.GCIMSID);
+
+        //        var nameMatch = allGCIMSData.Where(w =>
+        //            employeeData.Person.LastName.ToLower().Trim().Equals(w.Person.LastName.ToLower().Trim()) &&
+        //            employeeData.Person.SocialSecurityNumber.Equals(w.Person.SocialSecurityNumber) &&
+        //            employeeData.Birth.DateOfBirth.Equals(w.Birth.DateOfBirth)).ToList();
+
+        //        if (nameMatch.Count == 0 || nameMatch.Count > 1)
+        //        {
+        //            log.Info("Match not found by name for user: " + employeeData.Person.GCIMSID);
+        //            return null;
+        //        }
+        //        else if (nameMatch.Count == 1)
+        //        {
+        //            log.Info("Match found by name for user: " + employeeData.Person.GCIMSID);
+        //            return nameMatch.Single();
+        //        }
+        //    }
+
+        //    return null;
+        //}
+        
+        public static void AddNewRecordToDB()
         {
-            var MonsterMatch = allGCIMSData.Where(w => employeeData.Person.GCIMSID == w.Person.GCIMSID).ToList();
 
-            if (MonsterMatch.Count > 1)
-            {
-                log.Info("Multiple Monster IDs Found: " + employeeData.Person.GCIMSID);
-
-                return null;
-            }
-            else if (MonsterMatch.Count == 1)
-            {
-                log.Info("Matching record found by emplID: " + employeeData.Person.GCIMSID);
-
-                return MonsterMatch.Single();
-            }
-            else if (MonsterMatch.Count == 0)
-            {
-                log.Info("Trying to match record by Lastname, Birth Date and SSN: " + employeeData.Person.GCIMSID);
-
-                var nameMatch = allGCIMSData.Where(w =>
-                    employeeData.Person.LastName.ToLower().Trim().Equals(w.Person.LastName.ToLower().Trim()) &&
-                    employeeData.Person.SocialSecurityNumber.Equals(w.Person.SocialSecurityNumber) &&
-                    employeeData.Birth.DateOfBirth.Equals(w.Birth.DateOfBirth)).ToList();
-
-                if (nameMatch.Count == 0 || nameMatch.Count > 1)
-                {
-                    log.Info("Match not found by name for user: " + employeeData.Person.GCIMSID);
-                    return null;
-                }
-                else if (nameMatch.Count == 1)
-                {
-                    log.Info("Match found by name for user: " + employeeData.Person.GCIMSID);
-                    return nameMatch.Single();
-                }
-            }
-
-            return null;
         }
 
         /// <summary>
@@ -125,7 +130,7 @@ namespace ERIS.Utilities
                 var obj = new ErrorSummary
                 {
                     MonsterID = "Unknown Monster ID",
-                    Action = "Invalid Record From CSV File",                    
+                    Errors = "Invalid Record From CSV File",                    
                     LastName = parts.Count > 1 ? parts[1] : "Unknown Last Name",
                     FirstName = parts.Count > 3 ? parts[3] : "Unknown First Name",
                     MiddleName = parts.Count > 4 ? parts[4] : "Unknown Middle Name"
@@ -156,9 +161,8 @@ namespace ERIS.Utilities
                 FirstName = employeeData.Person.FirstName,
                 MiddleName = employeeData.Person.MiddleName,
                 LastName = employeeData.Person.LastName,
-                SocialSecurityNumber = employeeData.Person.SocialSecurityNumber,
-                DateOfBirth = employeeData.Birth.DateOfBirth,
-                Action = validationHelper.GetErrors(criticalErrors.Errors, ValidationHelper.Monster.Monsterfile).TrimEnd(',')
+                Suffix = employeeData.Person.Suffix,
+                Errors = validationHelper.GetErrors(criticalErrors.Errors, ValidationHelper.Monster.Monsterfile).TrimEnd(',')
             });
 
             return true;
@@ -176,7 +180,7 @@ namespace ERIS.Utilities
 
             //Phone clean up
             employeeData.Phone.HomePhone = employeeData.Phone.HomePhone.RemovePhoneFormatting();
-            employeeData.Phone.WorkCell = employeeData.Phone.WorkCell.RemovePhoneFormatting();
+            //employeeData.Phone.WorkCell = employeeData.Phone.WorkCell.RemovePhoneFormatting();
             employeeData.Phone.PersonalCell= employeeData.Phone.PersonalCell.RemovePhoneFormatting();;
 
         }

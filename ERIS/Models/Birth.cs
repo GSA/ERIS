@@ -12,7 +12,7 @@ namespace ERIS.Models
         public string StateOfBirth { get; set; }
         public string CountryOfBirth { get; set; }
         public string CountryOfCitizenship { get; set; }
-        public bool Citizen { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public bool? Citizen { get; set; }
+        public DateTime? DateOfBirth { get; set; }
     }
 }

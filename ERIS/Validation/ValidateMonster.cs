@@ -69,7 +69,7 @@ namespace ERIS.Validation
                     .WithMessage($"{{PropertyName}}: Contains Invalid Characters");
 
             RuleFor(Employee => Employee.Person.Suffix)
-                .Matches(@"^(Jr.|Sr.|II|III|IV|V|VI| )$")
+                .Matches(@"^(Jr.|Sr.|II|III|IV|V|VI|\s*)$")
                 .WithMessage($"{{PropertyName}}: Contains Invalid Characters");
 
             RuleFor(Employee => Employee.Person.SocialSecurityNumber)
@@ -81,8 +81,8 @@ namespace ERIS.Validation
             Unless(e => string.IsNullOrEmpty(e.Person.Gender), () =>
             {
                 RuleFor(Employee => Employee.Person.Gender)
-                    .Matches(@"^[MF]{1}$")
-                    .WithMessage($"{{PropertyName}} must be one of these values: 'M', 'f'");
+                    .Matches(@"^(M|F)$")
+                    .WithMessage($"{{PropertyName}} must be one of these values: 'M', 'F'");
             });
 
 
@@ -96,6 +96,19 @@ namespace ERIS.Validation
                     .EmailAddress()
                     .WithMessage($"{{PropertyName}} must be a valid email address")
                     .Matches(@"(?i)^((?!gsa(ig)?.gov).)*$")
+                    .WithMessage("Home email cannot end in gsa.gov. (Case Ignored)");
+            });
+
+            RuleFor(Employee => Employee.Person.HREmail)
+                    .MaximumLength(64)
+                    .WithMessage($"{{PropertyName}}: Contains Invalid Characters");
+
+            Unless(e => string.IsNullOrEmpty(e.Person.HREmail), () =>
+            {
+                RuleFor(Employee => Employee.Person.HREmail)
+                    .EmailAddress()
+                    .WithMessage($"{{PropertyName}} must be a valid email address")
+                    .Matches(@".*[gsa.gov]$")
                     .WithMessage("Home email cannot end in gsa.gov. (Case Ignored)");
             });
 
@@ -250,11 +263,9 @@ namespace ERIS.Validation
                     .NotEmpty()
                     .WithMessage($"{{PropertyName}}: Required Field");
 
-            Unless(e => e.Position.IsVirtual.Equals(0), () =>
+            Unless(e => string.IsNullOrEmpty(e.Position.VirtualRegion), () =>
             {
                 RuleFor(Employee => Employee.Position.VirtualRegion)
-                        .NotEmpty()
-                        .WithMessage($"{{PropertyName}}: Required Field")
                         .In(lookups["RegionCodes"])
                         .MaximumLength(3)
                         .WithMessage($"{{PropertyName}}: Contains Invalid Characters");

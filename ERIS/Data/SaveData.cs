@@ -1,5 +1,10 @@
-﻿using System;
+﻿using ERIS.Models;
+using ERIS.Utilities;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +16,99 @@ namespace ERIS.Data
         //Reference to logger
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        //Set up connection
+        private readonly MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["ERIS"].ToString());
+
+        private readonly MySqlCommand cmd = new MySqlCommand();
+
         public SaveData()
         {
 
+        }
+
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="saveData"></param>
+        /// <returns></returns>
+        /// Change to person data
+        public ProcessResult UpdatePersonInformation(Int64 persID, Employee monsterData)
+        {
+            try
+            {
+                using (conn)
+                {
+                    if (conn.State == ConnectionState.Closed)
+                        conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandText = "Monster_UpdatePerson";
+
+                        cmd.Parameters.Clear();
+
+                        MySqlParameter[] personParameters = new MySqlParameter[]
+                        {
+                            new MySqlParameter { ParameterName = "persID", Value = persID, MySqlDbType = MySqlDbType.Int64},
+                            //new MySqlParameter { ParameterName = "emplID", Value = monsterData.Person.EmployeeID, MySqlDbType = MySqlDbType.VarChar, Size = 11},
+                            new MySqlParameter { ParameterName = "SSN", Value = monsterData.Person.SocialSecurityNumber, MySqlDbType = MySqlDbType.TinyBlob },
+                            new MySqlParameter { ParameterName = "HashedSSN", Value = Helpers.HashSsn(monsterData.Person.SocialSecurityNumber), MySqlDbType = MySqlDbType.Binary, Size = 32 },
+                            new MySqlParameter { ParameterName = "HashedSSNLast4", Value = Helpers.HashSsn(monsterData.Person.SocialSecurityNumber.Substring(5,4)), MySqlDbType = MySqlDbType.Binary, Size = 32 },
+                            new MySqlParameter { ParameterName = "cityOfBirth", Value = monsterData.Birth.CityOfBirth, MySqlDbType = MySqlDbType.TinyBlob},
+                            new MySqlParameter { ParameterName = "stateOfBirth", Value = monsterData.Birth.StateOfBirth, MySqlDbType = MySqlDbType.TinyBlob},
+                            new MySqlParameter { ParameterName = "countryOfBirth", Value = monsterData.Birth.CountryOfBirth, MySqlDbType = MySqlDbType.TinyBlob},
+                            new MySqlParameter { ParameterName = "countryOfCitizenship", Value = monsterData.Birth.CountryOfCitizenship, MySqlDbType = MySqlDbType.VarChar, Size = 2},
+                            new MySqlParameter { ParameterName = "isCitizen", Value = monsterData.Birth.Citizen, MySqlDbType = MySqlDbType.Byte},
+                            new MySqlParameter { ParameterName = "homeAddress1", Value = monsterData.Address.HomeAddress1, MySqlDbType = MySqlDbType.TinyBlob},
+                            new MySqlParameter { ParameterName = "homeAddress2", Value = monsterData.Address.HomeAddress2, MySqlDbType = MySqlDbType.TinyBlob},
+                            new MySqlParameter { ParameterName = "homeAddress3", Value = monsterData.Address.HomeAddress3, MySqlDbType = MySqlDbType.TinyBlob},
+                            new MySqlParameter { ParameterName = "homeCity", Value = monsterData.Address.HomeCity, MySqlDbType = MySqlDbType.VarChar, Size = 60},
+                            new MySqlParameter { ParameterName = "homeState", Value = monsterData.Address.HomeState, MySqlDbType = MySqlDbType.VarChar, Size = 2},
+                            new MySqlParameter { ParameterName = "homeZipCode", Value = monsterData.Address.HomeZipCode, MySqlDbType = MySqlDbType.VarChar, Size = 5},
+                            new MySqlParameter { ParameterName = "homeCountry", Value = monsterData.Address.HomeCountry, MySqlDbType = MySqlDbType.VarChar, Size = 2},
+                            new MySqlParameter { ParameterName = "dateOfBirth", Value = monsterData.Birth.DateOfBirth?.ToString("yyyy-M-dd"), MySqlDbType = MySqlDbType.TinyBlob},
+                            new MySqlParameter { ParameterName = "gender", Value = monsterData.Person.Gender, MySqlDbType = MySqlDbType.VarChar, Size = 1},
+                            new MySqlParameter { ParameterName = "jobTitle", Value = monsterData.Position.JobTitle, MySqlDbType = MySqlDbType.VarChar, Size = 70},
+                            new MySqlParameter { ParameterName = "region", Value = monsterData.Position.Region, MySqlDbType = MySqlDbType.VarChar, Size = 3},
+                            new MySqlParameter { ParameterName = "majorOrg", Value = monsterData.Position.MajorOrg, MySqlDbType = MySqlDbType.VarChar, Size = 1},
+                            new MySqlParameter { ParameterName = "officeSymbol", Value = monsterData.Position.OfficeSymbol, MySqlDbType = MySqlDbType.VarChar, Size = 18},
+                            new MySqlParameter { ParameterName = "homePhone", Value = monsterData.Phone.HomePhone, MySqlDbType = MySqlDbType.TinyBlob},
+                            new MySqlParameter { ParameterName = "homeCell", Value = monsterData.Phone.PersonalCell, MySqlDbType = MySqlDbType.TinyBlob},
+                            new MySqlParameter { ParameterName = "homeEmail", Value = monsterData.Person.HomeEmail, MySqlDbType = MySqlDbType.TinyBlob},
+                            new MySqlParameter { ParameterName = "isVirtual", Value = monsterData.Position.IsVirtual, MySqlDbType = MySqlDbType.Byte},
+                            new MySqlParameter { ParameterName = "virtualRegion", Value = monsterData.Position.VirtualRegion, MySqlDbType = MySqlDbType.VarChar, Size = 3},
+                            new MySqlParameter { ParameterName = "result", MySqlDbType = MySqlDbType.Int32, Direction = ParameterDirection.Output},
+                            new MySqlParameter { ParameterName = "actionMsg", MySqlDbType = MySqlDbType.VarChar, Size = 50, Direction = ParameterDirection.Output },
+                            new MySqlParameter { ParameterName = "SQLExceptionWarning", MySqlDbType=MySqlDbType.VarChar, Size=4000, Direction = ParameterDirection.Output },
+                        };
+
+                        cmd.Parameters.AddRange(personParameters);
+
+                        cmd.ExecuteNonQuery();
+
+                        return new ProcessResult
+                        {
+                            Result = (int)cmd.Parameters["result"].Value,
+                            Action = cmd.Parameters["actionMsg"].Value.ToString(),
+                            Error = cmd.Parameters["SQLExceptionWarning"].Value.ToString()
+                        };
+                    }
+                }
+            }
+            //Catch all errors
+            catch (Exception ex)
+            {
+                log.Error("Updating GCIMS Record: " + ex.Message + " - " + ex.InnerException);
+                return new ProcessResult
+                {
+                    Result = -1,
+                    Action = "-1",
+                    Error = ex.Message.ToString()
+                };
+            }
         }
     }
 }

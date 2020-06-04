@@ -60,11 +60,10 @@ namespace ERIS.Models
     internal class ErrorSummary
     {
         public string MonsterID { get; set; }
+        public string LastName { get; set; }
+        public string Suffix { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string SocialSecurityNumber { get; set; }
-        public DateTime? DateOfBirth { get; set; }
-        public string Action { get; set; }
+        public string Errors { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace ERIS.Models
         public Int64 CreateRecord { get; set; }
         public Int64 UpdateRecord { get; set; }
         public Int64 FlagRecord { get; set; }
-        public Int64 MonsterFailed{ get; set; }
+        public Int64 ErrorRecord { get; set; }
 
         public string CreatedRecordFilename { get; set; }
         public string UpdatedRecordFilename { get; set; }
