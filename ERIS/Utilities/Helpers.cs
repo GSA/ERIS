@@ -2,7 +2,10 @@
 using ERIS.Process;
 using ERIS.Validation;
 using log4net;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -109,35 +112,32 @@ namespace ERIS.Utilities
 
         //    return null;
         //}
+
         
-        public static void AddNewRecordToDB()
-        {
 
-        }
-
-        /// <summary>
-        /// Adds a bad record to the summary
-        /// </summary>
-        /// <param name="badRecords"></param>
-        /// <param name="summary"></param>
-        public static void AddBadRecordsToSummary(IEnumerable<string> badRecords, ref ERISSummary summary)
-        {
-            foreach (var item in badRecords)
-            {
-                var parts = new List<string>();
-                var s = item.removeItems(new[] { "\"" });
-                parts.AddRange(s.Split('~'));
-                var obj = new ErrorSummary
-                {
-                    MonsterID = "Unknown Monster ID",
-                    Errors = "Invalid Record From CSV File",                    
-                    LastName = parts.Count > 1 ? parts[1] : "Unknown Last Name",
-                    FirstName = parts.Count > 3 ? parts[3] : "Unknown First Name",
-                    MiddleName = parts.Count > 4 ? parts[4] : "Unknown Middle Name"
-                };
-                summary.UnsuccessfulProcessed.Add(obj);
-            }
-        }
+        ///// <summary>
+        ///// Adds a bad record to the summary
+        ///// </summary>
+        ///// <param name="badRecords"></param>
+        ///// <param name="summary"></param>
+        //public static void AddBadRecordsToSummary(IEnumerable<string> badRecords, ref ERISSummary summary)
+        //{
+        //    foreach (var item in badRecords)
+        //    {
+        //        var parts = new List<string>();
+        //        var s = item.removeItems(new[] { "\"" });
+        //        parts.AddRange(s.Split('~'));
+        //        var obj = new ErrorSummary
+        //        {
+        //            MonsterID = "Unknown Monster ID",
+        //            Errors = "Invalid Record From CSV File",                    
+        //            LastName = parts.Count > 1 ? parts[1] : "Unknown Last Name",
+        //            FirstName = parts.Count > 3 ? parts[3] : "Unknown First Name",
+        //            MiddleName = parts.Count > 4 ? parts[4] : "Unknown Middle Name"
+        //        };
+        //        summary.UnsuccessfulProcessed.Add(obj);
+        //    }
+        //}
 
         /// <summary>
         /// Processes the validation and returns if a record has validation errors
@@ -162,7 +162,7 @@ namespace ERIS.Utilities
                 MiddleName = employeeData.Person.MiddleName,
                 LastName = employeeData.Person.LastName,
                 Suffix = employeeData.Person.Suffix,
-                Errors = validationHelper.GetErrors(criticalErrors.Errors, ValidationHelper.Monster.Monsterfile).TrimEnd(',')
+                ValidationErrors = validationHelper.GetErrors(criticalErrors.Errors, ValidationHelper.Monster.Monsterfile).TrimEnd(',')
             });
 
             return true;

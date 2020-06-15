@@ -19,42 +19,35 @@ namespace ERIS.Models
 
     internal class CreatedSummary
     {
-        public string MonsterID { get; set; }        
+        public string MonsterID { get; set; }    
+        public Int64 GCIMSID { get; set; }    
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
-        public string SocialSecurityNumber { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public string Suffix { get; set; }
     }
 
     internal class UpdatedSummary
     {
         public string MonsterID { get; set; }
+        public Int64 GCIMSID { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
-        public string SocialSecurityNumber { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public string Suffix { get; set; }
+        public bool? Sponsored { get; set; }
+        public string UpdatedFields { get; set; }
     }
-
-    //internal class ReviewedSummary
-    //{
-    //    public Int64 MonsterID { get; set; }
-    //    public string FirstName { get; set; }
-    //    public string MiddleName { get; set; }
-    //    public string LastName { get; set; }
-    //    public string SocialSecurityNumber { get; set; }
-    //    public DateTime? DateOfBirth { get; set; }
-    //}
 
     internal class FlaggedSummary
     {
         public string MonsterID { get; set; }
+        public Int64 GCIMSID { get; set; }
+        public string LastName { get; set; }
+        public string Suffix { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string SocialSecurityNumber { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public string MatchingFields { get; set; }
     }
 
     internal class ErrorSummary
@@ -64,6 +57,6 @@ namespace ERIS.Models
         public string Suffix { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
-        public string Errors { get; set; }
+        public string ValidationErrors { get; set; }
     }
 }

@@ -46,7 +46,7 @@ namespace ERIS.Data
                     {
                         cmd.Connection = conn;
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.CommandText = "Monster_UpdatePerson";
+                        cmd.CommandText = "ERIS_UpdatePerson";
 
                         cmd.Parameters.Clear();
 
@@ -80,6 +80,7 @@ namespace ERIS.Data
                             new MySqlParameter { ParameterName = "homeEmail", Value = monsterData.Person.HomeEmail, MySqlDbType = MySqlDbType.TinyBlob},
                             new MySqlParameter { ParameterName = "isVirtual", Value = monsterData.Position.IsVirtual, MySqlDbType = MySqlDbType.Byte},
                             new MySqlParameter { ParameterName = "virtualRegion", Value = monsterData.Position.VirtualRegion, MySqlDbType = MySqlDbType.VarChar, Size = 3},
+                            new MySqlParameter { ParameterName = "workBuilding", Value = monsterData.Building.BuildingLocationCode, MySqlDbType = MySqlDbType.VarChar, Size = 6},
                             new MySqlParameter { ParameterName = "result", MySqlDbType = MySqlDbType.Int32, Direction = ParameterDirection.Output},
                             new MySqlParameter { ParameterName = "actionMsg", MySqlDbType = MySqlDbType.VarChar, Size = 50, Direction = ParameterDirection.Output },
                             new MySqlParameter { ParameterName = "SQLExceptionWarning", MySqlDbType=MySqlDbType.VarChar, Size=4000, Direction = ParameterDirection.Output },
@@ -109,6 +110,89 @@ namespace ERIS.Data
                     Error = ex.Message.ToString()
                 };
             }
+        }
+
+        /// <summary>
+        /// Function that calls stored procedure for inserting a user
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <param name="storedProcedure"></param>
+        /// <returns>ID of new user</returns>
+        public int InsertNewEmployee(Employee monsterData)
+        {
+            try
+            {
+                using (conn)
+                {
+                    if (conn.State == ConnectionState.Closed)
+                        conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandText = "ERIS_InsertNewEmployee";
+
+                        cmd.Parameters.Clear();
+
+                        MySqlParameter[] UserParamters = new MySqlParameter[]
+                            {
+                           
+                                //new MySqlParameter { ParameterName = "emplID", Value = monsterData.Person.EmployeeID, MySqlDbType = MySqlDbType.VarChar, Size = 11},
+                                new MySqlParameter { ParameterName = "firstName", Value = monsterData.Person.FirstName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
+                                new MySqlParameter { ParameterName = "middleName", Value = monsterData.Person.MiddleName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
+                                new MySqlParameter { ParameterName = "lastName", Value = monsterData.Person.LastName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
+                                new MySqlParameter { ParameterName = "suffix", Value = monsterData.Person.Suffix, MySqlDbType = MySqlDbType.VarChar, Size = 3},
+                                new MySqlParameter { ParameterName = "SSN", Value = monsterData.Person.SocialSecurityNumber, MySqlDbType = MySqlDbType.TinyBlob },
+                                new MySqlParameter { ParameterName = "HashedSSN", Value = Helpers.HashSsn(monsterData.Person.SocialSecurityNumber), MySqlDbType = MySqlDbType.Binary, Size = 32 },
+                                new MySqlParameter { ParameterName = "HashedSSNLast4", Value = Helpers.HashSsn(monsterData.Person.SocialSecurityNumber.Substring(5,4)), MySqlDbType = MySqlDbType.Binary, Size = 32 },
+                                new MySqlParameter { ParameterName = "cityOfBirth", Value = monsterData.Birth.CityOfBirth, MySqlDbType = MySqlDbType.TinyBlob},
+                                new MySqlParameter { ParameterName = "stateOfBirth", Value = monsterData.Birth.StateOfBirth, MySqlDbType = MySqlDbType.TinyBlob},
+                                new MySqlParameter { ParameterName = "countryOfBirth", Value = monsterData.Birth.CountryOfBirth, MySqlDbType = MySqlDbType.TinyBlob},
+                                new MySqlParameter { ParameterName = "countryOfCitizenship", Value = monsterData.Birth.CountryOfCitizenship, MySqlDbType = MySqlDbType.VarChar, Size = 2},
+                                new MySqlParameter { ParameterName = "isCitizen", Value = monsterData.Birth.Citizen, MySqlDbType = MySqlDbType.Byte},
+                                new MySqlParameter { ParameterName = "homeAddress1", Value = monsterData.Address.HomeAddress1, MySqlDbType = MySqlDbType.TinyBlob},
+                                new MySqlParameter { ParameterName = "homeAddress2", Value = monsterData.Address.HomeAddress2, MySqlDbType = MySqlDbType.TinyBlob},
+                                new MySqlParameter { ParameterName = "homeAddress3", Value = monsterData.Address.HomeAddress3, MySqlDbType = MySqlDbType.TinyBlob},
+                                new MySqlParameter { ParameterName = "homeCity", Value = monsterData.Address.HomeCity, MySqlDbType = MySqlDbType.VarChar, Size = 60},
+                                new MySqlParameter { ParameterName = "homeState", Value = monsterData.Address.HomeState, MySqlDbType = MySqlDbType.VarChar, Size = 2},
+                                new MySqlParameter { ParameterName = "homeZipCode", Value = monsterData.Address.HomeZipCode, MySqlDbType = MySqlDbType.VarChar, Size = 5},
+                                new MySqlParameter { ParameterName = "homeCountry", Value = monsterData.Address.HomeCountry, MySqlDbType = MySqlDbType.VarChar, Size = 2},
+                                new MySqlParameter { ParameterName = "dateOfBirth", Value = monsterData.Birth.DateOfBirth?.ToString("yyyy-M-dd"), MySqlDbType = MySqlDbType.TinyBlob},
+                                new MySqlParameter { ParameterName = "gender", Value = monsterData.Person.Gender, MySqlDbType = MySqlDbType.VarChar, Size = 1},
+                                new MySqlParameter { ParameterName = "jobTitle", Value = monsterData.Position.JobTitle, MySqlDbType = MySqlDbType.VarChar, Size = 70},
+                                new MySqlParameter { ParameterName = "region", Value = monsterData.Position.Region, MySqlDbType = MySqlDbType.VarChar, Size = 3},
+                                new MySqlParameter { ParameterName = "majorOrg", Value = monsterData.Position.MajorOrg, MySqlDbType = MySqlDbType.VarChar, Size = 1},
+                                new MySqlParameter { ParameterName = "officeSymbol", Value = monsterData.Position.OfficeSymbol, MySqlDbType = MySqlDbType.VarChar, Size = 18},
+                                new MySqlParameter { ParameterName = "homePhone", Value = monsterData.Phone.HomePhone, MySqlDbType = MySqlDbType.TinyBlob},
+                                new MySqlParameter { ParameterName = "homeCell", Value = monsterData.Phone.PersonalCell, MySqlDbType = MySqlDbType.TinyBlob},
+                                new MySqlParameter { ParameterName = "homeEmail", Value = monsterData.Person.HomeEmail, MySqlDbType = MySqlDbType.TinyBlob},
+                                new MySqlParameter { ParameterName = "workBuilding", Value = monsterData.Building.BuildingLocationCode, MySqlDbType = MySqlDbType.VarChar, Size = 6},
+                                new MySqlParameter { ParameterName = "isVirtual", Value = monsterData.Position.IsVirtual, MySqlDbType = MySqlDbType.Byte},
+                                new MySqlParameter { ParameterName = "virtualRegion", Value = monsterData.Position.VirtualRegion, MySqlDbType = MySqlDbType.VarChar, Size = 3},
+                                new MySqlParameter { ParameterName = "PersID", MySqlDbType=MySqlDbType.Int32, Direction = ParameterDirection.Output },
+                                new MySqlParameter { ParameterName = "result", MySqlDbType = MySqlDbType.Int32, Direction = ParameterDirection.Output},
+                                new MySqlParameter { ParameterName = "actionMsg", MySqlDbType = MySqlDbType.VarChar, Size = 50, Direction = ParameterDirection.Output },
+                                new MySqlParameter { ParameterName = "SQLExceptionWarning", MySqlDbType=MySqlDbType.VarChar, Size=4000, Direction = ParameterDirection.Output },
+
+                            };
+
+                        cmd.Parameters.AddRange(UserParamters);
+
+                        cmd.ExecuteNonQuery();
+
+                        log.Info(String.Format("InsertNewUser completed with persId:{0} and SqlException:{1}", cmd.Parameters["PersID"].Value, cmd.Parameters["SQLExceptionWarning"].Value));
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                log.Error("Add New Employee: " + ex.Message + " - " + ex.InnerException);
+
+            }
+            //Returns the Person ID
+            return (int)cmd.Parameters["PersID"].Value;
         }
     }
 }

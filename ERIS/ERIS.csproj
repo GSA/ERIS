@@ -177,6 +177,7 @@
     <Compile Include="Models\ProcessResult.cs" />
     <Compile Include="Models\Summary.cs" />
     <Compile Include="Process\ErrorSummary.cs" />
+    <Compile Include="Process\PartialMatchSummary.cs" />
     <Compile Include="Process\ProcessMonster.cs" />
     <Compile Include="Process\ProcessSummary.cs" />
     <Compile Include="Process\SendSummary.cs" />
@@ -217,6 +218,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Templates\Error Summary Report.html" />
+    <Content Include="Templates\Partial Match Summary Report.html" />
     <Content Include="Templates\Summary E-Mail.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

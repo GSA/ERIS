@@ -54,10 +54,11 @@ namespace ERIS.Process
                 var fileReader = new FileReader();
                 var validate = new ValidateMonster(lookups);
                 var em = new EmployeeMapping();
-                //var save = new SaveData();
+                var save = new SaveData();
                 List<string> badRecords;
+                var persID = 0;
 
-                //var monsterAction = "";
+                var monsterAction = "";
 
                 log.Info("Loading Monster File");             
                                
@@ -68,7 +69,7 @@ namespace ERIS.Process
                 log.Info("Loading GCIMS Data");
                 var allGCIMSData = retrieve.AllGCIMSData();
 
-                //ProcessResult updatedResults;
+                ProcessResult updatedResults;
 
                 //Start Processing the Monster Data
                 foreach (Employee employeeData in MonsterData)
@@ -76,51 +77,62 @@ namespace ERIS.Process
                     log.Info("Processing Data: " + employeeData.Person.MonsterID);
 
 
+                    //If there are critical errors write to the error summary and move to the next record
+                    log.Info("Checking for Critical errors for user: " + employeeData.Person.MonsterID);
+                    if (Helpers.CheckForErrors(validate, employeeData, summary.UnsuccessfulProcessed, ref log))
+                        continue;
+
+                    Helpers.CleanupMonsterData(employeeData);
+
                     //Looking for matching record.
-                    //log.Info("Looking for matching record: " + employeeData.Person.MonsterID);
-                    //ReturnAction action = new ReturnAction();
+                    log.Info("Looking for matching record: " + employeeData.Person.MonsterID);
+                    ReturnAction action = new ReturnAction();
                     //gcimsRecord = Helpers.RecordFound(employeeData, allGCIMSData, ref log);
-                    //monsterAction = action.MonsterAction(employeeData.Person.SocialSecurityNumber, employeeData.Birth.DateOfBirth.ToString(), employeeData.Person.FirstName, employeeData.Person.MiddleName, employeeData.Person.LastName, employeeData.Person.Suffix);
+                    monsterAction = action.MonsterAction(employeeData.Person.SocialSecurityNumber, employeeData.Birth.DateOfBirth.ToString(), employeeData.Person.FirstName, employeeData.Person.MiddleName, employeeData.Person.LastName, employeeData.Person.Suffix);
 
-                    // switch (monsterAction)
-                    // {
-                    //     case "Update Record":
-                    //         updatedResults = save.UpdatePersonInformation(gcimsRecord.Person.GCIMSID, employeeData);
-                    //         summary.UpdatedRecordsProcessed.Add(new UpdatedSummary
-                    //         {
-                    //             MonsterID = employeeData.Person.MonsterID,
-                    //             FirstName = employeeData.Person.FirstName,
-                    //             MiddleName = employeeData.Person.MiddleName,
-                    //             LastName = employeeData.Person.LastName,
-                    //             SocialSecurityNumber = employeeData.Person.SocialSecurityNumber,
-                    //             DateOfBirth = employeeData.Birth.DateOfBirth
-                    //         });
-                    //         break;
-                    //     case "Potential Match":
-                    //         summary.FlaggedRecordsProcessed.Add(new FlaggedSummary
-                    //         {
-                    //             MonsterID = employeeData.Person.MonsterID,
-                    //             FirstName = employeeData.Person.FirstName,
-                    //             MiddleName = employeeData.Person.MiddleName,
-                    //             LastName = employeeData.Person.LastName,
-                    //             SocialSecurityNumber = employeeData.Person.SocialSecurityNumber,
-                    //             DateOfBirth = employeeData.Birth.DateOfBirth
-                    //         });
-                    //         break;
-                    //     case "New Record":
-                    //         //AddNewRecordToDB();
-                    //         summary.CreatedRecordsProcessed.Add(new CreatedSummary
-                    //         {
-                    //             MonsterID = employeeData.Person.MonsterID,
-                    //             FirstName = employeeData.Person.FirstName,
-                    //             MiddleName = employeeData.Person.MiddleName,
-                    //             LastName = employeeData.Person.LastName,
-                    //             SocialSecurityNumber = employeeData.Person.SocialSecurityNumber,
-                    //             DateOfBirth = employeeData.Birth.DateOfBirth
-                    //         });
-                    //         break;
+                    switch (monsterAction)
+                    {
+                        //case "Update Record":
+                        //    updatedResults = save.UpdatePersonInformation(employeeData.Person.GCIMSID, employeeData);
+                        //    summary.UpdatedRecordsProcessed.Add(new UpdatedSummary
+                        //    {
+                        //        GCIMSID = employeeData.Person.GCIMSID,
+                        //        MonsterID = employeeData.Person.MonsterID,
+                        //        FirstName = employeeData.Person.FirstName,
+                        //        MiddleName = employeeData.Person.MiddleName,
+                        //        LastName = employeeData.Person.LastName,
+                        //        Suffix = employeeData.Person.Suffix,
+                        //        //Sponsored = employeeData.Person.Sponsored,
+                        //        UpdatedFields = employeeData.Person.UpdatedFields
 
-                    // }
+                        //    });
+                        //    break;
+                        //case "Potential Match":
+                        //    summary.FlaggedRecordsProcessed.Add(new FlaggedSummary
+                        //    {
+                        //        MonsterID = employeeData.Person.MonsterID,
+                        //        FirstName = employeeData.Person.FirstName,
+                        //        MiddleName = employeeData.Person.MiddleName,
+                        //        LastName = employeeData.Person.LastName,
+                        //        SocialSecurityNumber = employeeData.Person.SocialSecurityNumber,
+                        //        DateOfBirth = employeeData.Birth.DateOfBirth
+                        //    });
+                        //    break;
+                        case "New Record":
+                            log.Info("Create record for user: " + employeeData.Person.MonsterID);
+                            persID = save.InsertNewEmployee(employeeData);
+                            summary.CreatedRecordsProcessed.Add(new CreatedSummary
+                            {
+                                MonsterID = employeeData.Person.MonsterID,
+                                GCIMSID = persID,
+                                FirstName = employeeData.Person.FirstName,
+                                MiddleName = employeeData.Person.MiddleName,
+                                LastName = employeeData.Person.LastName,
+                                Suffix = employeeData.Person.Suffix
+                            });
+                            break;
+
+                    }
 
 
                     //if (TerritoriesNotCountriesArray.Contains(employeeData.Birth.CountryOfBirth.ToLower()) && string.IsNullOrWhiteSpace(employeeData.Birth.StateOfBirth))
@@ -146,18 +158,14 @@ namespace ERIS.Process
                     //    employeeData.Birth.CountryOfBirth = "US";
                     //}
 
-                    //If there are critical errors write to the error summary and move to the next record
-                    log.Info("Checking for Critical errors for user: " + employeeData.Person.MonsterID);
-                    if (Helpers.CheckForErrors(validate, employeeData, summary.UnsuccessfulProcessed, ref log))
-                        continue;
 
-                    Helpers.CleanupMonsterData(employeeData);
+
 
                 }
 
                 emailData.MonsterFilename = Path.GetFileName(MonsterFile);
                 emailData.ItemsProcessed = MonsterData.Count;
-                //emailData.CreateRecord = summary.CreatedRecordsProcessed.Count;
+                emailData.CreateRecord = summary.CreatedRecordsProcessed.Count;
                 //emailData.UpdateRecord = summary.UpdatedRecordsProcessed.Count;
                 //emailData.ReviewRecord = summary.ReviewedRecordsProcessed.Count;
                 //emailData.FlagRecord = summary.FlaggedRecordsProcessed.Count;
@@ -165,7 +173,7 @@ namespace ERIS.Process
 
                 //Add log entries
                 log.Info("Total records " + String.Format("{0:#,###0}", MonsterData.Count));
-                //log.Info("Records created: " + String.Format("{0:#,###0}", summary.CreatedRecordsProcessed.Count));
+                log.Info("Records created: " + String.Format("{0:#,###0}", summary.CreatedRecordsProcessed.Count));
                 //log.Info("Records updated: " + String.Format("{0:#,###0}", summary.UpdatedRecordsProcessed.Count));
                 //log.Info("Records reviewed: " + String.Format("{0:#,###0}", summary.ReviewedRecordsProcessed.Count));
                 //log.Info("Records flagged: " + String.Format("{0:#,###0}", summary.FlaggedRecordsProcessed.Count));

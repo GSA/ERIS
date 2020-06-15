@@ -8,7 +8,7 @@ namespace ERIS.Models
 {
     public class Person
     {
-/*        public Int64 GCIMSID { get; set; } *///If Matched we set this
+        public Int64 GCIMSID { get; set; } //If Matched we set this
         public string MonsterID { get; set; }
         //public string EmployeeID { get; set; }
         public string FirstName { get; set; }
@@ -18,7 +18,10 @@ namespace ERIS.Models
         public string SocialSecurityNumber { get; set; }
         public string Gender { get; set; }
         public string HomeEmail { get; set; }
-        //public string Status { get; set; }
+        public string Status { get; set; }
+        public string Affiliation { get; set; }
         public string HREmail { get; set; }
+        public bool? Sponsored { get; set; }
+        public string UpdatedFields { get; set; }
     }
 }
