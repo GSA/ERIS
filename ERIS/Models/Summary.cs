@@ -35,7 +35,7 @@ namespace ERIS.Models
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string Suffix { get; set; }
-        public bool? Sponsored { get; set; }
+        public int Sponsored { get; set; }
         public string UpdatedFields { get; set; }
     }
 
@@ -47,7 +47,7 @@ namespace ERIS.Models
         public string Suffix { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
-        public string MatchingFields { get; set; }
+        //public string MatchingFields { get; set; }
     }
 
     internal class ErrorSummary

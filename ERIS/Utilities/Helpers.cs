@@ -1,6 +1,7 @@
 ﻿using ERIS.Models;
 using ERIS.Process;
 using ERIS.Validation;
+using KellermanSoftware.CompareNetObjects;
 using log4net;
 using MySql.Data.MySqlClient;
 using System;
@@ -35,35 +36,35 @@ namespace ERIS.Utilities
             return hashedFullSsn;
         }
 
-        ///// <summary>
-        ///// Determines if 2 same type object are equal. Fields can be ignored
-        ///// </summary>
-        ///// <param name="gcimsData"></param>
-        ///// <param name="monsterData"></param>
-        ///// <param name="propertyNameList"></param>
-        ///// <param name="log"></param>
-        ///// <returns></returns>
-        //public static bool AreEqualGcimsToHr(Employee gcimsData, Employee monsterData, out string propertyNameList, ref ILog log)
-        //{
-        //    var compareLogic = new CompareLogic
-        //    {
-        //        Config = { TreatStringEmptyAndNullTheSame = true, CaseSensitive = false, MaxDifferences = 100 }
-        //    };
+        /// <summary>
+        /// Determines if 2 same type object are equal. Fields can be ignored
+        /// </summary>
+        /// <param name="gcimsData"></param>
+        /// <param name="erisData"></param>
+        /// <param name="propertyNameList"></param>
+        /// <param name="log"></param>
+        /// <returns></returns>
+        public static bool AreEqualGcimsToHr(Employee gcimsData, Employee erisData, out string propertyNameList, ref ILog log)
+        {
+            var compareLogic = new CompareLogic
+            {
+                Config = { TreatStringEmptyAndNullTheSame = true, CaseSensitive = false, MaxDifferences = 100 }
+            };
 
-        //    compareLogic.Config.CustomComparers.Add(new EmployeeComparer(RootComparerFactory.GetRootComparer()));
+            compareLogic.Config.CustomComparers.Add(new EmployeeComparer(RootComparerFactory.GetRootComparer()));
 
-        //    var result = compareLogic.Compare(gcimsData, hrData);
+            var result = compareLogic.Compare(gcimsData, erisData);
 
-        //    var diffs = result.Differences.Select(a => a.PropertyName).ToArray();
-        //    var localPropertyNameList = string.Join(",", diffs);
-        //    propertyNameList = localPropertyNameList;
-        //    if (diffs?.Length > 0)
-        //    {
-        //        log.Info($"Property differences include: {localPropertyNameList}");
-        //    }
+            var diffs = result.Differences.Select(a => a.PropertyName).ToArray();
+            var localPropertyNameList = string.Join(",", diffs);
+            propertyNameList = localPropertyNameList;
+            if (diffs?.Length > 0)
+            {
+                log.Info($"Property differences include: {localPropertyNameList}");
+            }
 
-        //    return result.AreEqual;
-        //}
+            return result.AreEqual;
+        }
 
 
         /// <summary>
@@ -113,7 +114,7 @@ namespace ERIS.Utilities
         //    return null;
         //}
 
-        
+
 
         ///// <summary>
         ///// Adds a bad record to the summary

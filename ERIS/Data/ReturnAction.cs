@@ -1,4 +1,5 @@
-﻿using ERIS.Utilities;
+﻿using ERIS.Models;
+using ERIS.Utilities;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace ERIS.Data
         /// /// <param name="lastname"></param>
         /// /// <param name="suffix"></param>
         /// <returns></returns>
-        public string MonsterAction(string ssn, string dob, string firstname, string middlename, string lastname, string suffix)
+        public string MonsterAction(Employee monsterData)
         {
             try
             {
@@ -46,12 +47,12 @@ namespace ERIS.Data
 
                         MySqlParameter[] erisParamaters = new MySqlParameter[]
                         {
-                            new MySqlParameter { ParameterName = "firstname", Value = firstname, MySqlDbType = MySqlDbType.VarChar, Size = 60},
-                            new MySqlParameter { ParameterName = "middlename", Value = firstname, MySqlDbType = MySqlDbType.VarChar, Size = 60},
-                            new MySqlParameter { ParameterName = "lastname", Value = lastname, MySqlDbType = MySqlDbType.VarChar, Size = 60},
-                            new MySqlParameter { ParameterName = "suffix", Value = suffix == "" ? DBNull.Value.ToString() : suffix, MySqlDbType = MySqlDbType.VarChar, Size = 12},
-                            new MySqlParameter { ParameterName = "ssn", Value = Helpers.HashSsn(ssn), MySqlDbType = MySqlDbType.VarBinary, Size = 32},
-                            new MySqlParameter { ParameterName = "dob", Value = dob, MySqlDbType = MySqlDbType.VarChar, Size = 11},
+                            new MySqlParameter { ParameterName = "firstname", Value = monsterData.Person.FirstName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
+                            new MySqlParameter { ParameterName = "middlename", Value = monsterData.Person.MiddleName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
+                            new MySqlParameter { ParameterName = "lastname", Value = monsterData.Person.LastName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
+                            new MySqlParameter { ParameterName = "suffix", Value = monsterData.Person.Suffix, MySqlDbType = MySqlDbType.VarChar, Size = 12},
+                            new MySqlParameter { ParameterName = "ssn", Value = monsterData.Person.SocialSecurityNumber, MySqlDbType = MySqlDbType.TinyBlob},
+                            new MySqlParameter { ParameterName = "dob", Value = monsterData.Birth.DateOfBirth?.ToString("yyyy-MM-dd"), MySqlDbType = MySqlDbType.TinyBlob},
                             new MySqlParameter { ParameterName = "monsterAction", MySqlDbType=MySqlDbType.VarChar, Size=20, Direction = ParameterDirection.Output },
                         };
 

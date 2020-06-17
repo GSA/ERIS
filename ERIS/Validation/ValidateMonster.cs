@@ -263,11 +263,18 @@ namespace ERIS.Validation
                     .NotEmpty()
                     .WithMessage($"{{PropertyName}}: Required Field");
 
-            Unless(e => string.IsNullOrEmpty(e.Position.VirtualRegion), () =>
+            When(e => e.Position.IsVirtual.ToString().Equals("1"),() =>
             {
                 RuleFor(Employee => Employee.Position.VirtualRegion)
                         .In(lookups["RegionCodes"])
                         .MaximumLength(3)
+                        .WithMessage($"{{PropertyName}}: Contains Invalid Characters");
+            });
+
+            When(e => e.Position.IsVirtual.ToString().Equals("0"), () =>
+            {
+                RuleFor(Employee => Employee.Position.VirtualRegion)
+                        .Empty()
                         .WithMessage($"{{PropertyName}}: Contains Invalid Characters");
             });
 

@@ -40,7 +40,7 @@ namespace ERIS.Mapping
             Map(m => m.MiddleName).Name("Middle Name");
             Map(m => m.LastName).Name("Last Name");
             Map(m => m.Suffix).Name("Suffix");
-            Map(m => m.Sponsored).Name("Sponsored?");
+            Map(m => m.Sponsored).Name("Sponsored");
             Map(m => m.UpdatedFields).Name("Updated Fields");
 
         }
@@ -56,7 +56,7 @@ namespace ERIS.Mapping
             Map(m => m.Suffix).Name("Suffix");
             Map(m => m.FirstName).Name("First Name");
             Map(m => m.MiddleName).Name("Middle Name");
-            Map(m => m.MatchingFields).Name("Matching Fields");
+            //Map(m => m.MatchingFields).Name("Matching Fields");
         }
     }
 

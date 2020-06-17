@@ -75,7 +75,7 @@ namespace ERIS.Mapping
             Map(m => m.JobTitle).Index(MonsterConstants.JOB_TITLE);
             Map(m => m.Region).Index(MonsterConstants.REGION).TypeConverter<RegionConverter>();
             Map(m => m.IsVirtual).Index(MonsterConstants.VIRTUAL).TypeConverter<IsVirtualConverter>();
-            Map(m => m.VirtualRegion).Index(MonsterConstants.VIRTUAL_REGION);
+            Map(m => m.VirtualRegion).Index(MonsterConstants.VIRTUAL_REGION).TypeConverter<RegionConverter>();
             Map(m => m.MajorOrg).Index(MonsterConstants.MAJOR_ORG).TypeConverter<MajorOrgConverter>();
             Map(m => m.OfficeSymbol).Index(MonsterConstants.OFFICE_SYMBOL);
 

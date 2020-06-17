@@ -10,7 +10,6 @@ namespace ERIS.Models
     {
         public Int64 GCIMSID { get; set; } //If Matched we set this
         public string MonsterID { get; set; }
-        //public string EmployeeID { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }       
@@ -21,7 +20,5 @@ namespace ERIS.Models
         public string Status { get; set; }
         public string Affiliation { get; set; }
         public string HREmail { get; set; }
-        public bool? Sponsored { get; set; }
-        public string UpdatedFields { get; set; }
     }
 }

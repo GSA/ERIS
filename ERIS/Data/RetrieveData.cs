@@ -25,7 +25,7 @@ namespace ERIS.Data
             retrieveMapper.ConfigurationProvider.CompileMappings();
         }
 
-        public List<Employee> AllGCIMSData()
+        public List<Employee> AllGCIMSUpdatedData(Employee monsterData)
         {
             try
             {
@@ -46,8 +46,15 @@ namespace ERIS.Data
 
                         cmd.Connection = conn;
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.CommandText = "HR_GetAllRecords";
+                        cmd.CommandText = "ERIS_GetAllUpdatedRecords";
                         cmd.Parameters.Clear();
+
+                        cmd.Parameters.AddWithValue("firstname", monsterData.Person.FirstName);
+                        cmd.Parameters.AddWithValue("middlename", monsterData.Person.MiddleName);
+                        cmd.Parameters.AddWithValue("lastname", monsterData.Person.LastName);
+                        cmd.Parameters.AddWithValue("dob", monsterData.Birth.DateOfBirth?.ToString("yyyy-MM-dd"));
+                        cmd.Parameters.AddWithValue("ssn", monsterData.Person.SocialSecurityNumber);
+                        cmd.Parameters.AddWithValue("suffix", monsterData.Person.Suffix);
 
                         gcimsData = cmd.ExecuteReader();
 
