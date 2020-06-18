@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace ERIS.Utilities
 {
-    public class EmployeeComparer : BaseTypeComparer
+    public class EmployeeComparerforUpdated : BaseTypeComparer
     {
-        public EmployeeComparer(RootComparer rootComparer) : base(rootComparer)
+        public EmployeeComparerforUpdated(RootComparer rootComparer) : base(rootComparer)
         {
         }
 
@@ -23,7 +23,7 @@ namespace ERIS.Utilities
         public override void CompareType(CompareParms parms)
         {
             string[] included = { "FinalResult", "InitialResult", "FinalResultDate", "InitialResultDate" };
-            string[] excluded = { "MonsterID", "FirstName", "MiddleName", "LastName", "SocialSecurityNumber", "DateOfBirth" };
+            string[] excluded = { "MonsterID", "FirstName", "MiddleName", "LastName", "SocialSecurityNumber", "HREmail", "Name", "DateOfBirth" };
             var db = (Employee)parms.Object1;
             var er = (Employee)parms.Object2;
             var properties = typeof(Employee).GetProperties().Where(prop => prop.CanRead && prop.CanWrite).ToArray();
@@ -43,7 +43,7 @@ namespace ERIS.Utilities
 
                     if (included.Any(q => q == childSourceProperties[y].Name))
                     {
-                        //code for initial/final investigations
+                        
                     }
                     else
                     {

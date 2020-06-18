@@ -44,101 +44,65 @@ namespace ERIS.Utilities
         /// <param name="propertyNameList"></param>
         /// <param name="log"></param>
         /// <returns></returns>
-        public static bool AreEqualGcimsToHr(Employee gcimsData, Employee erisData, out string propertyNameList, ref ILog log)
+        public static bool AreEqualGcimsToMonster1(Employee gcimsData, Employee erisData, out string propertyNameList, ref ILog log)
         {
             var compareLogic = new CompareLogic
             {
                 Config = { TreatStringEmptyAndNullTheSame = true, CaseSensitive = false, MaxDifferences = 100 }
             };
 
-            compareLogic.Config.CustomComparers.Add(new EmployeeComparer(RootComparerFactory.GetRootComparer()));
+            compareLogic.Config.CustomComparers.Add(new EmployeeComparerforUpdated(RootComparerFactory.GetRootComparer()));
+
+            compareLogic.Config.CustomComparers.Add(new EmployeeComparerforFlagged(RootComparerFactory.GetRootComparer()));
 
             var result = compareLogic.Compare(gcimsData, erisData);
 
             var diffs = result.Differences.Select(a => a.PropertyName).ToArray();
+
             var localPropertyNameList = string.Join(",", diffs);
             propertyNameList = localPropertyNameList;
             if (diffs?.Length > 0)
             {
-                log.Info($"Property differences include: {localPropertyNameList}");
+                log.Info($"Property differences include: {localPropertyNameList}");                
             }
 
             return result.AreEqual;
+
         }
 
-
         /// <summary>
-        /// Returns an Employee object if match found in db
+        /// Determines if 2 same type object are equal. Fields can be ignored
         /// </summary>
-        /// <param name="employeeData"></param>
-        /// <param name="allGcimsData"></param>
+        /// <param name="gcimsData"></param>
+        /// <param name="erisData"></param>
+        /// <param name="propertyNameList"></param>
         /// <param name="log"></param>
         /// <returns></returns>
-        //public static Employee RecordFound(Employee employeeData, List<Employee> allGCIMSData, ref ILog log)
-        //{
-        //    var MonsterMatch = allGCIMSData.Where(w => employeeData.Person.GCIMSID == w.Person.GCIMSID).ToList();
+        public static bool AreEqualGcimsToMonster2(Employee gcimsData, Employee erisData, out string propertyNameList, ref ILog log)
+        {
+            var compareLogic = new CompareLogic
+            {
+                Config = { TreatStringEmptyAndNullTheSame = true, CaseSensitive = false, MaxDifferences = 100 }
+            };
 
-        //    if (MonsterMatch.Count > 1)
-        //    {
-        //        log.Info("Multiple GCIMS IDs Found: " + employeeData.Person.GCIMSID);
+            compareLogic.Config.CustomComparers.Add(new EmployeeComparerforFlagged(RootComparerFactory.GetRootComparer()));
 
-        //        return null;
-        //    }
-        //    else if (MonsterMatch.Count == 1)
-        //    {
-        //        log.Info("Matching record found by emplID: " + employeeData.Person.GCIMSID);
+            var result = compareLogic.Compare(gcimsData, erisData);
 
-        //        return MonsterMatch.Single();
-        //    }
-        //    else if (MonsterMatch.Count == 0)
-        //    {
-        //        log.Info("Trying to match record by Lastname, Birth Date and SSN: " + employeeData.Person.GCIMSID);
+            var matches = result.Differences.Select(a => a.PropertyName).ToArray();
 
-        //        var nameMatch = allGCIMSData.Where(w =>
-        //            employeeData.Person.LastName.ToLower().Trim().Equals(w.Person.LastName.ToLower().Trim()) &&
-        //            employeeData.Person.SocialSecurityNumber.Equals(w.Person.SocialSecurityNumber) &&
-        //            employeeData.Birth.DateOfBirth.Equals(w.Birth.DateOfBirth)).ToList();
+            var localPropertyNameList = string.Join(",", matches);
+            propertyNameList = localPropertyNameList;
 
-        //        if (nameMatch.Count == 0 || nameMatch.Count > 1)
-        //        {
-        //            log.Info("Match not found by name for user: " + employeeData.Person.GCIMSID);
-        //            return null;
-        //        }
-        //        else if (nameMatch.Count == 1)
-        //        {
-        //            log.Info("Match found by name for user: " + employeeData.Person.GCIMSID);
-        //            return nameMatch.Single();
-        //        }
-        //    }
+            if (matches?.Length > 0)
+            {
+                log.Info($"Property matching fields include: {localPropertyNameList}");
 
-        //    return null;
-        //}
+            }
+            return result.AreEqual;
 
+        }
 
-
-        ///// <summary>
-        ///// Adds a bad record to the summary
-        ///// </summary>
-        ///// <param name="badRecords"></param>
-        ///// <param name="summary"></param>
-        //public static void AddBadRecordsToSummary(IEnumerable<string> badRecords, ref ERISSummary summary)
-        //{
-        //    foreach (var item in badRecords)
-        //    {
-        //        var parts = new List<string>();
-        //        var s = item.removeItems(new[] { "\"" });
-        //        parts.AddRange(s.Split('~'));
-        //        var obj = new ErrorSummary
-        //        {
-        //            MonsterID = "Unknown Monster ID",
-        //            Errors = "Invalid Record From CSV File",                    
-        //            LastName = parts.Count > 1 ? parts[1] : "Unknown Last Name",
-        //            FirstName = parts.Count > 3 ? parts[3] : "Unknown First Name",
-        //            MiddleName = parts.Count > 4 ? parts[4] : "Unknown Middle Name"
-        //        };
-        //        summary.UnsuccessfulProcessed.Add(obj);
-        //    }
-        //}
 
         /// <summary>
         /// Processes the validation and returns if a record has validation errors

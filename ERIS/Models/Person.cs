@@ -20,5 +20,6 @@ namespace ERIS.Models
         public string Status { get; set; }
         public string Affiliation { get; set; }
         public string HREmail { get; set; }
+        public string Name { get; set; }
     }
 }

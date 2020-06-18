@@ -33,7 +33,7 @@ namespace ERIS.Process
 
             subject = File.ReadAllText(ConfigurationManager.AppSettings["FLAGGEDSUMMARYEMAILSUBJECT"]);
 
-            subject = subject.Replace("[PROCESSINGDATE]", emailData.ProcessingDate.ToShortDateString());
+            subject = subject.Replace("[PROCESSINGDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
             subject = subject.Replace("[LAST]", summaryData.LastName);
             subject = subject.Replace("[SUFFIX]", summaryData.Suffix);
             subject = subject.Replace("[FIRST]", summaryData.FirstName);
@@ -75,6 +75,7 @@ namespace ERIS.Process
             template = template.Replace("[SUFFIX]", summaryData.Suffix);
             template = template.Replace("[FIRST]", summaryData.FirstName);
             template = template.Replace("[MIDDLE]", summaryData.MiddleName);
+            template = template.Replace("[RUNDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
 
             return template;
         }

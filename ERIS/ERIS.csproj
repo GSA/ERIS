@@ -192,8 +192,8 @@
     <Compile Include="Utilities\CSVHelper.cs" />
     <Compile Include="Utilities\EMail.cs" />
     <Compile Include="Utilities\EmailTool.cs" />
-    <Compile Include="Utilities\EmployeeComparer.cs" />
-    <Compile Include="Utilities\ExcludedFieldTool.cs" />
+    <Compile Include="Utilities\EmployeeComparerforUpdated.cs" />
+    <Compile Include="Utilities\EmployeeComparerforFlagged.cs" />
     <Compile Include="Utilities\ExtensionMethods.cs" />
     <Compile Include="Utilities\Helpers.cs" />
     <Compile Include="Utilities\Utilities.cs" />
