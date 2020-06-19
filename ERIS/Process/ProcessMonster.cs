@@ -98,7 +98,7 @@ namespace ERIS.Process
                                 log.Info("Update record for user: " + employeeData.Person.MonsterID);
                                 persID = records.GetUpdatedID(employeeData);
                                 sponsored = records.GetSponsor(employeeData);
-                                updatedResults = save.UpdatePersonInformation(employeeData);
+                                updatedResults = save.UpdatePersonInformation(persID, employeeData);
                                 if (updatedResults.Result > 0)
                                 {
                                     summary.UpdatedRecordsProcessed.Add(new UpdatedSummary

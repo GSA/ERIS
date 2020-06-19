@@ -33,7 +33,7 @@ namespace ERIS.Data
         /// <param name="saveData"></param>
         /// <returns></returns>
         /// Change to person data
-        public ProcessResult UpdatePersonInformation(Employee monsterData)
+        public ProcessResult UpdatePersonInformation(Int64 persID, Employee monsterData)
         {
             try
             {
@@ -52,6 +52,7 @@ namespace ERIS.Data
 
                         MySqlParameter[] personParameters = new MySqlParameter[]
                         {
+                            new MySqlParameter { ParameterName = "persID", Value = persID, MySqlDbType = MySqlDbType.Int64},
                             new MySqlParameter { ParameterName = "firstname", Value = monsterData.Person.FirstName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
                             new MySqlParameter { ParameterName = "middlename", Value = monsterData.Person.MiddleName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
                             new MySqlParameter { ParameterName = "lastname", Value = monsterData.Person.LastName, MySqlDbType = MySqlDbType.VarChar, Size = 60},

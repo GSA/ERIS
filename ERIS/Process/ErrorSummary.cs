@@ -40,10 +40,10 @@ namespace ERIS.Process
             {
                 using (email)
                 {
-                    email.Send(ConfigurationManager.AppSettings["DEFAULTEMAIL"].ToString(),
-                               ConfigurationManager.AppSettings["SUMMARYTO"].ToString(),
-                               ConfigurationManager.AppSettings["SUMMARYCC"].ToString(),
-                               ConfigurationManager.AppSettings["SUMMARYBCC"].ToString(),
+                    email.Send(ConfigurationManager.AppSettings["ERRORSUMMARYFROM"].ToString(),
+                               ConfigurationManager.AppSettings["ERRORSUMMARYTO"].ToString(),
+                               ConfigurationManager.AppSettings["ERRORSUMMARYCC"].ToString(),
+                               ConfigurationManager.AppSettings["ERRORSUMMARYBCC"].ToString(),
                                subject, body, attahcments.TrimEnd(';'), ConfigurationManager.AppSettings["SMTPSERVER"].ToString(), true);
                 }
             }
