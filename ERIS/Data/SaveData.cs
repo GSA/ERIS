@@ -52,6 +52,7 @@ namespace ERIS.Data
 
                         MySqlParameter[] personParameters = new MySqlParameter[]
                         {
+                            new MySqlParameter { ParameterName = "monsterID", Value = monsterData.Person.MonsterID, MySqlDbType = MySqlDbType.VarChar, Size = 90},
                             new MySqlParameter { ParameterName = "persID", Value = persID, MySqlDbType = MySqlDbType.Int64},
                             new MySqlParameter { ParameterName = "firstname", Value = monsterData.Person.FirstName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
                             new MySqlParameter { ParameterName = "middlename", Value = monsterData.Person.MiddleName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
@@ -82,6 +83,7 @@ namespace ERIS.Data
                             new MySqlParameter { ParameterName = "isVirtual", Value = monsterData.Position.IsVirtual, MySqlDbType = MySqlDbType.Byte},
                             new MySqlParameter { ParameterName = "virtualRegion", Value = monsterData.Position.VirtualRegion, MySqlDbType = MySqlDbType.VarChar, Size = 3},
                             new MySqlParameter { ParameterName = "workBuilding", Value = monsterData.Building.BuildingLocationCode, MySqlDbType = MySqlDbType.VarChar, Size = 6},
+                            new MySqlParameter { ParameterName = "hrEmail", Value = monsterData.Person.HREmail, MySqlDbType = MySqlDbType.VarChar, Size = 64},
                             new MySqlParameter { ParameterName = "result", MySqlDbType = MySqlDbType.Int32, Direction = ParameterDirection.Output},
                             new MySqlParameter { ParameterName = "actionMsg", MySqlDbType = MySqlDbType.VarChar, Size = 50, Direction = ParameterDirection.Output },
                             new MySqlParameter { ParameterName = "SQLExceptionWarning", MySqlDbType=MySqlDbType.VarChar, Size=4000, Direction = ParameterDirection.Output },

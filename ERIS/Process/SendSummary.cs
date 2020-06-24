@@ -64,7 +64,7 @@ namespace ERIS.Process
 
             string template = File.ReadAllText(ConfigurationManager.AppSettings["SUMMARYTEMPLATE"]);
 
-            template = template.Replace("[PROCESSINGDATE]", emailData.ProcessingDate.ToShortDateString());
+            template = template.Replace("[PROCESSINGDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
             template = template.Replace("[RECORDSPROCESSED]", emailData.ItemsProcessed.ToString());
             template = template.Replace("[RECORDSCREATED]", emailData.CreateRecord.ToString());
             template = template.Replace("[RECORDSUPDATED]", emailData.UpdateRecord.ToString());

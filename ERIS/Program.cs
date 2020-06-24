@@ -71,7 +71,7 @@ namespace ERIS
             log.Info("Done Processing Monster File(s):" + DateTime.Now);
 
             log.Info("Sending Summary File");
-            //sendSummary.SendSummaryEMail();
+            sendSummary.SendSummaryEMail();
             log.Info("Summary file sent");
 
             //Stop second timer
@@ -108,58 +108,5 @@ namespace ERIS
             return lookups;
         }
 
-        /// <summary>
-        /// Processes files while in debug mode, note that in debug mode the files are not encrypted
-        /// </summary>
-        /// <param name="filesForProcessing"></param>
-        //private static void ProcessDebugFiles(string processfile)
-        //{
-        //    int processedResult;
-
-        //    processfile = ConfigurationManager.AppSettings["MONSTERFILE"] ;
-
-        //    log.Info(string.Format("Processing file {0}", processfile));
-
-        //        //Get data from Monster
-
-        //        if (processfile != null)                 {                
-
-        //            //Process the data retrieved from the Monster
-        //            processedResult = processMonster.ProcesMonsterInformation(processfile, true);
-
-        //         }
-        //        else
-        //        {
-        //            //Mark the file as failed in the database
-
-        //        }
-
-
-        //  }
-
-            //public static string GetErrorMessage(int e)
-            //{
-            //    switch (e)
-            //    {
-            //        case -1:
-            //            return "An unknown error has occurred";
-            //        case 0:
-            //            return "The file is unprocessed";
-            //        case 1:
-            //            return "The file was processed successfully";
-            //        case -2:
-            //            return "The file is password protected";
-            //        case -3:
-            //            return "The file is the wrong version";
-            //        case -4:
-            //            return "The file is ARRA";
-            //        case -5:
-            //            return "The file contains a duplicate user";
-            //        case -6:
-            //            return "The file failed validation";
-            //        default:
-            //            return "The error code was not found in the list";
-            //    }
-            //}
     }
  }
