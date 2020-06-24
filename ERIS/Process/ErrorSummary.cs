@@ -22,7 +22,7 @@ namespace ERIS.Process
             this.emailData = emailData;
         }
 
-        public void SendSummaryEMail()
+        public void SendErrorSummaryEMail()
         {
             EMail email = new EMail();
 

@@ -15,21 +15,24 @@ namespace ERIS.Process
         //Reference to logger
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private readonly EMailData emailData = new EMailData();
+        //private readonly EMailData emailData = new EMailData();
         private readonly FlaggedSummary summaryData = new FlaggedSummary();
+        private readonly Employee employeeData = new Employee();
 
-        public PartialMatchSummary(ref EMailData emailData)
+        public PartialMatchSummary(ref FlaggedSummary summaryData, ref Employee employeeData)
         {
-            this.emailData = emailData;
+            this.summaryData = summaryData;
+            this.employeeData = employeeData;
         }
 
-        public void SendSummaryEMail()
+        public void SendReviewSummaryEMail()
         {
             EMail email = new EMail();
 
             string subject = string.Empty;
             string body = string.Empty;
             string attahcments = string.Empty;
+            string to = string.Empty;
 
             subject = File.ReadAllText(ConfigurationManager.AppSettings["FLAGGEDSUMMARYEMAILSUBJECT"]);
 
@@ -43,12 +46,14 @@ namespace ERIS.Process
 
             attahcments = SummaryAttachments();
 
+            to = to.Replace("[HREMAIL]", employeeData.Person.HREmail);
+
             try
             {
                 using (email)
                 {
                     email.Send(ConfigurationManager.AppSettings["REVIEWSUMMARYFROM"].ToString(),
-                               ConfigurationManager.AppSettings["REVIEWSUMMARYTO"].ToString(),
+                               to,
                                ConfigurationManager.AppSettings["REVIEWSUMMARYCC"].ToString(),
                                ConfigurationManager.AppSettings["REVIEWSUMMARYBCC"].ToString(),
                                subject, body, attahcments.TrimEnd(';'), ConfigurationManager.AppSettings["SMTPSERVER"].ToString(), true);
