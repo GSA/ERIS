@@ -50,7 +50,7 @@ namespace ERIS
 
             SendSummary sendSummary = new SendSummary(ref emailData);
             SendErrorSummary sendErrorSummary = new SendErrorSummary(ref emailData);
-            PartialMatchSummary sendReviewSummary = new PartialMatchSummary(ref summaryData, ref employeeData);
+            PartialMatchSummary sendReviewSummary = new PartialMatchSummary(ref emailData, ref summaryData, ref employeeData);
             ProcessMonster processMonster = new ProcessMonster(dataMapper, ref emailData, lookups);
 
             //Log action

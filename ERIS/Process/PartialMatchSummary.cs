@@ -15,12 +15,13 @@ namespace ERIS.Process
         //Reference to logger
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        //private readonly EMailData emailData = new EMailData();
+        private readonly EMailData emailData = new EMailData();
         private readonly FlaggedSummary summaryData = new FlaggedSummary();
         private readonly Employee employeeData = new Employee();
 
-        public PartialMatchSummary(ref FlaggedSummary summaryData, ref Employee employeeData)
+        public PartialMatchSummary(ref EMailData emailData, ref FlaggedSummary summaryData, ref Employee employeeData)
         {
+            this.emailData = emailData;
             this.summaryData = summaryData;
             this.employeeData = employeeData;
         }
