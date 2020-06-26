@@ -47,6 +47,7 @@ namespace ERIS.Process
 
             attahcments = SummaryAttachments();
 
+            to = File.ReadAllText(ConfigurationManager.AppSettings["REVIEWSUMMARYTO"]);
             to = to.Replace("[HREMAIL]", employeeData.Person.HREmail);
 
             try
