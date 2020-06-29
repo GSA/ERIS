@@ -182,7 +182,6 @@
     <Compile Include="Models\ProcessResult.cs" />
     <Compile Include="Models\Summary.cs" />
     <Compile Include="Process\ErrorSummary.cs" />
-    <Compile Include="Process\PartialMatchSummary.cs" />
     <Compile Include="Process\ProcessMonster.cs" />
     <Compile Include="Process\ProcessSummary.cs" />
     <Compile Include="Process\SendSummary.cs" />

@@ -3,6 +3,7 @@ using ERIS.Models;
 using ERIS.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,10 +13,11 @@ namespace ERIS.Utilities
 {
     class EmailTool
     {
-        /*string emailFrom, emailTo, emailCC, emailBCC, server;
+        string emailFrom, emailTo, emailCC, emailBCC, server;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         EMail Email = new EMail();
         private bool Debug;
+
 
         public EmailTool() { }
 
@@ -27,7 +29,7 @@ namespace ERIS.Utilities
             emailFrom = "DEFAULTEMAIL".GetSetting();
             emailTo = "TO".GetSetting();
             emailCC = "CC".GetSetting();
-            emailBCC = "BCC".GetSetting();
+            emailBCC = "REVIEWSUMMARYFROM".GetSetting();
             server = "SMTPSERVER".GetSetting();
         }
 
@@ -37,7 +39,7 @@ namespace ERIS.Utilities
         /// <param name="subject"></param>
         /// <param name="body"></param>
         /// <returns></returns>
-        private bool SendEmail(string subject, string body, string to, string cc)
+        private bool SendEmail(string subject, string body, string to)
         {
 
             log.Info("Configuring variables for email");
@@ -52,7 +54,7 @@ namespace ERIS.Utilities
             EmailSMTPServer = server;
             EmailFrom = emailFrom;
             EmailTo = to;
-            EmailCC = cc;
+            EmailCC = emailCC;
             EmailBCC = emailBCC;
 
             Email.Send(EmailFrom, EmailTo, EmailCC, EmailBCC, EmailSubject, EmailBody, EmailAttachments, EmailSMTPServer, true);
@@ -66,22 +68,11 @@ namespace ERIS.Utilities
         /// <param name="contractData"></param>
         /// <param name="debug"></param>
         /// <returns></returns>
-        private string prepareTo(string to, bool debug)
+        private string prepareTo(string to, FlaggedSummary summaryData, bool debug)
         {
-            to = "";
+            to = ConfigurationManager.AppSettings["REVIEWSUMMARYTO"].ToString();
+            to = to.Replace("[HREMAIL]", summaryData.HREmail);
             return to;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="cc"></param>
-        /// <param name="contractData"></param>
-        /// <param name="debug"></param>
-        /// <returns></returns>
-        private string prepareCC(string cc, bool debug)
-        {
-            return cc;
         }
 
         /// <summary>
@@ -91,11 +82,17 @@ namespace ERIS.Utilities
         /// <param name="contracts"></param>
         /// <param name="debug"></param>
         /// <returns></returns>
-        private string prepareEmailSubject(string subject, bool debug)
+        private string prepareEmailSubject(string subject, FlaggedSummary summaryData, bool debug)
         {
-            string tSubject = subject;
+            subject = ConfigurationManager.AppSettings["FLAGGEDSUMMARYEMAILSUBJECT"].ToString();
 
-            return tSubject;
+            subject = subject.Replace("[PROCESSINGDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
+            subject = subject.Replace("[LAST]", summaryData.LastName);
+            subject = subject.Replace("[SUFFIX]", summaryData.Suffix);
+            subject = subject.Replace("[FIRST]", summaryData.FirstName);
+            subject = subject.Replace("[MIDDLE]", summaryData.MiddleName);
+
+            return subject;
         }
 
         /// <summary>
@@ -105,16 +102,15 @@ namespace ERIS.Utilities
         /// <param name="contracts"></param>
         /// <param name="debug"></param>
         /// <returns></returns>
-        private string prepareEmailBody(string body, EMailData bodyData, bool debug)
+        private string prepareEmailBody(string body, FlaggedSummary summaryData, bool debug)
         {
             string tBody = body;
 
-            tBody = tBody.Replace("[PROCESSINGDATE]", bodyData.ProcessingDate.ToString("MM/dd/yyyy"));
-            tBody = tBody.Replace("[RECORDSPROCESSED]", bodyData.ItemsProcessed.ToString());
-            tBody = tBody.Replace("[RECORDSCREATED]", bodyData.CreateRecord.ToString());
-            tBody = tBody.Replace("[RECORDSUPDATED]", bodyData.UpdateRecord.ToString());
-            tBody = tBody.Replace("[RECORDSFORHD]", bodyData.ReviewRecord.ToString());
-            tBody = tBody.Replace("[ERRORRECORDS]", bodyData.FlagRecord.ToString());
+            tBody = tBody.Replace("[LAST]", summaryData.LastName);
+            tBody = tBody.Replace("[SUFFIX]", summaryData.Suffix);
+            tBody = tBody.Replace("[FIRST]", summaryData.FirstName);
+            tBody = tBody.Replace("[MIDDLE]", summaryData.MiddleName);
+            tBody = tBody.Replace("[RUNDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
 
             return tBody;
 
@@ -136,8 +132,8 @@ namespace ERIS.Utilities
                 switch (templateName)
                 {
                     case Templates.SummaryEmailTemplate:
-                        body = File.ReadAllText("SUMMARYFILE".GetSetting());
-                        subject = "EMAILSUBJECT".GetSetting();
+                        body = File.ReadAllText("FLAGGEDSUMMARYTEMPLATE".GetSetting());
+                        subject = "FLAGGEDSUMMARYEMAILSUBJECT".GetSetting();
                         break;
                     default:
                         break;
@@ -168,34 +164,33 @@ namespace ERIS.Utilities
         /// </summary>
         /// <param name="row"></param>
         /// <returns></returns>
-        internal string SendMonsterSummaryEMail(EMailData row)
+        internal string SendReviewSummaryEMail(FlaggedSummary row)
         {
-            string Subject = "", Body = "", To = "", CC = "";
+            string Subject = "", Body = "", To = "";
 
-             log.Info("Sending reminder email");
+             log.Info("Sending review email to HR");
              GetEmailStub(Templates.SummaryEmailTemplate, ref Subject, ref Body);
             
 
-            To = prepareTo(To, Debug);
-            Subject = prepareEmailSubject(Subject, Debug);
+            To = prepareTo(To, row, Debug);
+            Subject = prepareEmailSubject(Subject, row, Debug);
             Body = prepareEmailBody(Body, row, Debug);
-            CC = prepareCC(CC, Debug);
 
-            log.Info("Calling send email function");
+            //log.Info("Calling send email function");
 
-            bool Result = SendEmail(Subject, Body, To, CC);
+            bool Result = SendEmail(Subject, Body, To);
 
             if (Result)
             {
-                log.Info("Email sent successfully! ");
+                //log.Info("Email sent successfully! ");
                 return prependStatusMessage(Debug, "Email sent successfully!");
             }
             else
             {
-                log.Info("Failed to send email!");
+                //log.Info("Failed to send email!");
                 return prependStatusMessage(Debug, "Failed to send email!");
             }
 
-        }*/
+        }
     }
 }

@@ -48,6 +48,7 @@ namespace ERIS.Models
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string MatchingFields { get; set; }
+        public string HREmail { get; set; }
     }
 
     internal class ErrorSummary

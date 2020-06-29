@@ -47,10 +47,9 @@ namespace ERIS
             CreateMaps();
 
             Lookup lookups = createLookups();
-
+           
             SendSummary sendSummary = new SendSummary(ref emailData);
             SendErrorSummary sendErrorSummary = new SendErrorSummary(ref emailData);
-            PartialMatchSummary sendReviewSummary = new PartialMatchSummary(ref emailData, ref summaryData, ref employeeData);
             ProcessMonster processMonster = new ProcessMonster(dataMapper, ref emailData, lookups);
 
             //Log action
@@ -77,7 +76,6 @@ namespace ERIS
             log.Info("Sending Summary File");
             sendSummary.SendSummaryEMail();
             sendErrorSummary.SendErrorSummaryEMail();
-            sendReviewSummary.SendReviewSummaryEMail();
             log.Info("Summary file sent");
 
             //Stop second timer
