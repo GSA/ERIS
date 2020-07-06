@@ -57,7 +57,7 @@ namespace ERIS.Validation
                     .WithMessage($"{{PropertyName}}: exceeds maximum number of characters. Please double-check the field. If value is correct, please reach out to HSPD-12 Security at HSPD12.Security@gsa.gov or at +1 (202) 501-4459.")
                     .NotEmpty()
                     .WithMessage($"{{PropertyName}}: Required Field")
-                    .Matches(@"^([NMN]{3})|([a-zA-Z \-\‘\’\'\`][^?!.,*&%$#@+_:<>{}|]{1,40})$")
+                    .Matches(@"^([A-Za-z \-\‘\’\'\`]{1,40}|[NMN]{1,3})+$")
                     .WithMessage($"{{PropertyName}}: Contains Invalid Characters");
 
             RuleFor(Employee => Employee.Person.LastName)
