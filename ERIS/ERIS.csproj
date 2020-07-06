@@ -190,7 +190,7 @@
     <Compile Include="Utilities\CsvFixer.cs" />
     <Compile Include="Utilities\CSVHelper.cs" />
     <Compile Include="Utilities\EMail.cs" />
-    <Compile Include="Utilities\EmailTool.cs" />
+    <Compile Include="Utilities\ReviewSummary.cs" />
     <Compile Include="Utilities\EmployeeComparerforUpdated.cs" />
     <Compile Include="Utilities\EmployeeComparerforFlagged.cs" />
     <Compile Include="Utilities\ExtensionMethods.cs" />

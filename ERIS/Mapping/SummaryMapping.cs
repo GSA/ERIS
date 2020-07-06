@@ -51,7 +51,7 @@ namespace ERIS.Mapping
         public FlaggedSummaryMapping()
         {
             Map(m => m.MonsterID).Name("Monster ID");
-            Map(m => m.GCIMSID).Name("GCIMS ID");
+            //Map(m => m.GCIMSID).Name("GCIMS ID");
             Map(m => m.LastName).Name("Last Name");
             Map(m => m.Suffix).Name("Suffix");
             Map(m => m.FirstName).Name("First Name");

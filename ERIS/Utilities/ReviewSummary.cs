@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ERIS.Utilities
 {
-    class EmailTool
+    class ReviewSummary
     {
         string emailFrom, emailTo, emailCC, emailBCC, server;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -19,7 +19,7 @@ namespace ERIS.Utilities
         private bool Debug;
 
 
-        public EmailTool() { }
+        public ReviewSummary() { }
 
         /// <summary>
         /// Set email default values

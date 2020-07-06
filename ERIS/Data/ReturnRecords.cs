@@ -76,60 +76,60 @@ namespace ERIS.Data
         }
 
 
-        /// <summary>
-        /// Calls stored procedure that retrieve pers_id
-        /// </summary>
-        /// <param name="ssn"></param>
-        /// <param name="dob"></param>
-        /// <param name="firstname"></param>
-        /// /// <param name="middlename"></param>
-        /// /// <param name="lastname"></param>
-        /// /// <param name="suffix"></param>
-        /// <returns></returns>
-        public int GetFlaggedID(Employee monsterData)
-        {
-            try
-            {
-                using (conn)
-                {
-                    if (conn.State == ConnectionState.Closed)
-                        conn.Open();
+        ///// <summary>
+        ///// Calls stored procedure that retrieve pers_id
+        ///// </summary>
+        ///// <param name="ssn"></param>
+        ///// <param name="dob"></param>
+        ///// <param name="firstname"></param>
+        ///// /// <param name="middlename"></param>
+        ///// /// <param name="lastname"></param>
+        ///// /// <param name="suffix"></param>
+        ///// <returns></returns>
+        //public int GetFlaggedID(Employee monsterData)
+        //{
+        //    try
+        //    {
+        //        using (conn)
+        //        {
+        //            if (conn.State == ConnectionState.Closed)
+        //                conn.Open();
 
-                    using (cmd)
-                    {
-                        cmd.Connection = conn;
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.CommandText = "ERIS_FlaggedIDs";
+        //            using (cmd)
+        //            {
+        //                cmd.Connection = conn;
+        //                cmd.CommandType = CommandType.StoredProcedure;
+        //                cmd.CommandText = "ERIS_FlaggedIDs";
 
-                        cmd.Parameters.Clear();
+        //                cmd.Parameters.Clear();
 
-                        MySqlParameter[] erisParamaters = new MySqlParameter[]
-                        {
-                            new MySqlParameter { ParameterName = "firstname", Value = monsterData.Person.FirstName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
-                            new MySqlParameter { ParameterName = "middlename", Value = monsterData.Person.MiddleName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
-                            new MySqlParameter { ParameterName = "lastname", Value = monsterData.Person.LastName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
-                            new MySqlParameter { ParameterName = "suffix", Value = monsterData.Person.Suffix, MySqlDbType = MySqlDbType.VarChar, Size = 12},
-                            new MySqlParameter { ParameterName = "ssn", Value = monsterData.Person.SocialSecurityNumber, MySqlDbType = MySqlDbType.TinyBlob},
-                            new MySqlParameter { ParameterName = "dob", Value = monsterData.Birth.DateOfBirth?.ToString("yyyy-MM-dd"), MySqlDbType = MySqlDbType.TinyBlob},
-                            new MySqlParameter { ParameterName = "persID", MySqlDbType = MySqlDbType.Int32, Direction = ParameterDirection.Output },
-                        };
+        //                MySqlParameter[] erisParamaters = new MySqlParameter[]
+        //                {
+        //                    new MySqlParameter { ParameterName = "firstname", Value = monsterData.Person.FirstName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
+        //                    new MySqlParameter { ParameterName = "middlename", Value = monsterData.Person.MiddleName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
+        //                    new MySqlParameter { ParameterName = "lastname", Value = monsterData.Person.LastName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
+        //                    new MySqlParameter { ParameterName = "suffix", Value = monsterData.Person.Suffix, MySqlDbType = MySqlDbType.VarChar, Size = 12},
+        //                    new MySqlParameter { ParameterName = "ssn", Value = monsterData.Person.SocialSecurityNumber, MySqlDbType = MySqlDbType.TinyBlob},
+        //                    new MySqlParameter { ParameterName = "dob", Value = monsterData.Birth.DateOfBirth?.ToString("yyyy-MM-dd"), MySqlDbType = MySqlDbType.TinyBlob},
+        //                    new MySqlParameter { ParameterName = "persID", MySqlDbType = MySqlDbType.Int32, Direction = ParameterDirection.Output },
+        //                };
 
-                        cmd.Parameters.AddRange(erisParamaters);
+        //                cmd.Parameters.AddRange(erisParamaters);
 
-                        cmd.ExecuteNonQuery();
+        //                cmd.ExecuteNonQuery();
 
 
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error("Get PersID: " + ex.Message + " - " + ex.InnerException);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        log.Error("Get PersID: " + ex.Message + " - " + ex.InnerException);
 
-            }
+        //    }
 
-            return (int)cmd.Parameters["persID"].Value;
-        }
+        //    return (int)cmd.Parameters["persID"].Value;
+        //}
 
         /// <summary>
         /// Calls stored procedure that retrieve pers_mso_sponsored

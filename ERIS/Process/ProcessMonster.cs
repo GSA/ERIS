@@ -30,7 +30,7 @@ namespace ERIS.Process
         private static readonly string[] TerritoriesNotCountriesArray = new string[] { "rq", "gq", "vq", "aq" };
         readonly Lookup lookups;
         private readonly EMailData emailData;
-        private EmailTool emailTool = new EmailTool();
+        private ReviewSummary reviewsummary = new ReviewSummary();
 
         //Constructor
         public ProcessMonster(IMapper dataMapper, ref EMailData emailData, Lookup lookups)
@@ -121,11 +121,11 @@ namespace ERIS.Process
                             if (!Helpers.AreEqualGcimsToMonster2(allGCIMSFlaggedData.Single(), employeeData, out columnList, ref log))
                             {
                                 log.Info("Flagged record for user: " + employeeData.Person.MonsterID);
-                                persID = records.GetFlaggedID(employeeData);
+                                //persID = records.GetFlaggedID(employeeData);
                                 summary.FlaggedRecordsProcessed.Add(new FlaggedSummary
                                 {
                                     MonsterID = employeeData.Person.MonsterID,
-                                    GCIMSID = persID,
+                                    //GCIMSID = persID,
                                     FirstName = employeeData.Person.FirstName,
                                     MiddleName = employeeData.Person.MiddleName,
                                     LastName = employeeData.Person.LastName,
@@ -163,7 +163,7 @@ namespace ERIS.Process
 
                 for (int i = 0; i < summary.FlaggedRecordsProcessed.Count; i++)
                 {
-                    emailTool.SendReviewSummaryEMail(summary.FlaggedRecordsProcessed[i]);
+                    reviewsummary.SendReviewSummaryEMail(summary.FlaggedRecordsProcessed[i]);
                 }
 
                 //Add log entries

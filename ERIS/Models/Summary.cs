@@ -42,7 +42,7 @@ namespace ERIS.Models
     internal class FlaggedSummary
     {
         public string MonsterID { get; set; }
-        public Int64 GCIMSID { get; set; }
+        //public Int64 GCIMSID { get; set; }
         public string LastName { get; set; }
         public string Suffix { get; set; }
         public string FirstName { get; set; }
