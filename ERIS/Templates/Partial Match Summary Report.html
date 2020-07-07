@@ -3,11 +3,43 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+    </style>
+
 </head>
 <body>
     <p>
         [FIRST] [MIDDLE] [LAST] [SUFFIX], an applicant employee for whom you are listed as an HR POC, could not be imported into GCIMS on [RUNDATE] due to a partial match with an existing GCIMS record and will need to be entered into the system manually. Please review the error details below, address any data issues, and apply changes to GCIMS manually by either updating a corresponding existing record or creating a new record. <br /><br />
         <b>Please note newly-created GCIMS records or existing records without sponsorship must be sponsored manually.</b>
     </p>
+    </br></br>
+    <table style="width:100%">
+        <tr>
+            <th>Monster ID</th>
+            <th>Last Name</th>
+            <th>Suffix</th>
+            <th>First Name</th>
+            <th>Middle Name</th>
+            <th>Matching Fields</th>
+        </tr>
+        <tr>
+            <td>[MONSTERID]</td>
+            <td>[LAST]</td>
+            <td>[SUFFIX]</td>
+            <td>[FIRST]</td>
+            <td>[MIDDLE]</td>
+            <td>[MATCHINGFIELDS]</td>
+        </tr>
+    </table>
 </body>
 </html>

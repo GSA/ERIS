@@ -84,15 +84,15 @@ namespace ERIS.Utilities
         /// <returns></returns>
         private string prepareEmailSubject(string subject, FlaggedSummary summaryData, bool debug)
         {
-            subject = ConfigurationManager.AppSettings["FLAGGEDSUMMARYEMAILSUBJECT"].ToString();
+            string tSubject = subject;
 
-            subject = subject.Replace("[PROCESSINGDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
-            subject = subject.Replace("[LAST]", summaryData.LastName);
-            subject = subject.Replace("[SUFFIX]", summaryData.Suffix);
-            subject = subject.Replace("[FIRST]", summaryData.FirstName);
-            subject = subject.Replace("[MIDDLE]", summaryData.MiddleName);
+            tSubject = tSubject.Replace("[PROCESSINGDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
+            tSubject = tSubject.Replace("[LAST]", summaryData.LastName);
+            tSubject = tSubject.Replace("[SUFFIX]", summaryData.Suffix);
+            tSubject = tSubject.Replace("[FIRST]", summaryData.FirstName);
+            tSubject = tSubject.Replace("[MIDDLE]", summaryData.MiddleName);
 
-            return subject;
+            return tSubject;
         }
 
         /// <summary>
@@ -111,10 +111,10 @@ namespace ERIS.Utilities
             tBody = tBody.Replace("[FIRST]", summaryData.FirstName);
             tBody = tBody.Replace("[MIDDLE]", summaryData.MiddleName);
             tBody = tBody.Replace("[RUNDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
+            tBody = tBody.Replace("[MONSTERID]", summaryData.MonsterID);
+            tBody = tBody.Replace("[MATCHINGFIELDS]", summaryData.MatchingFields);
 
             return tBody;
-
-
         }
 
         /// <summary>
