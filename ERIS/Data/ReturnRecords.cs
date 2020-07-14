@@ -54,7 +54,7 @@ namespace ERIS.Data
                             new MySqlParameter { ParameterName = "lastname", Value = monsterData.Person.LastName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
                             new MySqlParameter { ParameterName = "suffix", Value = monsterData.Person.Suffix, MySqlDbType = MySqlDbType.VarChar, Size = 12},
                             new MySqlParameter { ParameterName = "ssn", Value = monsterData.Person.SocialSecurityNumber, MySqlDbType = MySqlDbType.TinyBlob},
-                            new MySqlParameter { ParameterName = "dob", Value = monsterData.Birth.DateOfBirth?.ToString("yyyy-MM-dd"), MySqlDbType = MySqlDbType.TinyBlob},
+                            new MySqlParameter { ParameterName = "dob", Value = monsterData.Birth.DateOfBirth, MySqlDbType = MySqlDbType.TinyBlob},
                             new MySqlParameter { ParameterName = "persID", MySqlDbType = MySqlDbType.Int32, Direction = ParameterDirection.Output },
                         };
 
@@ -165,7 +165,7 @@ namespace ERIS.Data
                             new MySqlParameter { ParameterName = "lastname", Value = monsterData.Person.LastName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
                             new MySqlParameter { ParameterName = "suffix", Value = monsterData.Person.Suffix, MySqlDbType = MySqlDbType.VarChar, Size = 12},
                             new MySqlParameter { ParameterName = "ssn", Value = monsterData.Person.SocialSecurityNumber, MySqlDbType = MySqlDbType.TinyBlob},
-                            new MySqlParameter { ParameterName = "dob", Value = monsterData.Birth.DateOfBirth?.ToString("yyyy-MM-dd"), MySqlDbType = MySqlDbType.TinyBlob},
+                            new MySqlParameter { ParameterName = "dob", Value = monsterData.Birth.DateOfBirth, MySqlDbType = MySqlDbType.TinyBlob},
                             new MySqlParameter { ParameterName = "sponsored", MySqlDbType = MySqlDbType.Int32, Direction = ParameterDirection.Output },
                         };
 

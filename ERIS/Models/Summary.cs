@@ -13,7 +13,7 @@ namespace ERIS.Models
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string SocialSecurityNumber { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
         public string Action { get; set; }
     }
 

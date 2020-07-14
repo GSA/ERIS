@@ -52,7 +52,7 @@ namespace ERIS.Data
                         cmd.Parameters.AddWithValue("firstname", monsterData.Person.FirstName);
                         cmd.Parameters.AddWithValue("middlename", monsterData.Person.MiddleName);
                         cmd.Parameters.AddWithValue("lastname", monsterData.Person.LastName);
-                        cmd.Parameters.AddWithValue("dob", monsterData.Birth.DateOfBirth?.ToString("yyyy-MM-dd"));
+                        cmd.Parameters.AddWithValue("dob", monsterData.Birth.DateOfBirth);
                         cmd.Parameters.AddWithValue("ssn", monsterData.Person.SocialSecurityNumber);
                         cmd.Parameters.AddWithValue("suffix", monsterData.Person.Suffix);
 
@@ -104,7 +104,7 @@ namespace ERIS.Data
                         cmd.Parameters.AddWithValue("firstname", monsterData.Person.FirstName);
                         cmd.Parameters.AddWithValue("middlename", monsterData.Person.MiddleName);
                         cmd.Parameters.AddWithValue("lastname", monsterData.Person.LastName);
-                        cmd.Parameters.AddWithValue("dob", monsterData.Birth.DateOfBirth?.ToString("yyyy-MM-dd"));
+                        cmd.Parameters.AddWithValue("dob", monsterData.Birth.DateOfBirth);
                         cmd.Parameters.AddWithValue("ssn", monsterData.Person.SocialSecurityNumber);
                         cmd.Parameters.AddWithValue("suffix", monsterData.Person.Suffix);
 

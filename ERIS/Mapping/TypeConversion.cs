@@ -37,6 +37,9 @@ namespace ERIS.Mapping
                 case "w":
                     return "NCR";
 
+                case "":
+                    return "";
+
                 default:
                     return text.PadLeft(2, '0');
             }
@@ -77,10 +80,12 @@ namespace ERIS.Mapping
         {
             switch (text.ToLower())
             {
-                case "us":
+                case "1":
                     return true;
-                case " ":
+                case "0":
                     return false;
+                case "":
+                    return null;
                 default:
                     return false;
             }
@@ -97,8 +102,8 @@ namespace ERIS.Mapping
                     return true;
                 case "0":
                     return false;
-                case " ":
-                    return false;
+                case "":
+                    return null;
                 default:
                     return false;
             }

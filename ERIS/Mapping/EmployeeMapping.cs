@@ -64,7 +64,7 @@ namespace ERIS.Mapping
             Map(m => m.CountryOfBirth).Index(MonsterConstants.BIRTH_COUNTRY);
             Map(m => m.CountryOfCitizenship).Index(MonsterConstants.COUNTRY_OF_CITIZENSHIP);
             Map(m => m.Citizen).Index(MonsterConstants.CITIZEN).TypeConverter<CitizenConverter>();
-            Map(m => m.DateOfBirth).Index(MonsterConstants.DATE_OF_BIRTH).TypeConverter<DateConverter>();
+            Map(m => m.DateOfBirth).Index(MonsterConstants.DATE_OF_BIRTH);
         }
     }
 

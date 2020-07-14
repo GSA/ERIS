@@ -71,7 +71,13 @@ namespace ERIS.Data
 
             //lookup_state
             lookupData.NextResult();
-            lookup.stateLookup = lookupMapper.Map<IDataReader, List<StateLookup>>(lookupData);
+            lookup.usStateLookup = lookupMapper.Map<IDataReader, List<StateLookup>>(lookupData);
+
+            lookupData.NextResult();
+            lookup.mxStateLookup = lookupMapper.Map<IDataReader, List<StateLookup>>(lookupData);
+
+            lookupData.NextResult();
+            lookup.caStateLookup = lookupMapper.Map<IDataReader, List<StateLookup>>(lookupData);
 
             //lookup_region
             lookupData.NextResult();
