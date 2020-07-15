@@ -65,7 +65,7 @@ namespace ERIS.Process
             string template = File.ReadAllText(ConfigurationManager.AppSettings["ERRORSUMMARYTEMPLATE"]);
 
             template = template.Replace("[PROCESSINGDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
-            template = template.Replace("[INVALIDRECORDS]", emailData.ErrorRecord.ToString());
+            template = template.Replace("[ERRORRECORDS]", emailData.ErrorRecord.ToString());
             template = template.Replace("[COUNT RECORDS WITH ERRORS]", emailData.ErrorRecord.ToString());
 
             return template;
