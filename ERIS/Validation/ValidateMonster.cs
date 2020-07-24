@@ -108,7 +108,7 @@ namespace ERIS.Validation
                    .Matches(@".*[gsa.gov]$")
                    .WithMessage($"{{PropertyName}}: Invalid gsa e-mail address")
                    .In(lookups["EmailCodes"])
-                   .WithMessage("GSA E-Mail Address not found");
+                   .WithMessage($"{{PropertyName}}: Not Found in GCIMS");
 
 
             #endregion Person
