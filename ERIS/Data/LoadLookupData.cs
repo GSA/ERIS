@@ -87,6 +87,10 @@ namespace ERIS.Data
             lookupData.NextResult();
             lookup.BuildingLookup = lookupMapper.Map<IDataReader, List<BuildingLookup>>(lookupData);
 
+            //lookup_workEmail
+            lookupData.NextResult();
+            lookup.EmailLookup = lookupMapper.Map<IDataReader, List<EmailLookup>>(lookupData);
+
             return lookup;
         }
     }

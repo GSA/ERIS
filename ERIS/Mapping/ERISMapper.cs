@@ -18,6 +18,7 @@ namespace ERIS.Mapping
                 cfg.CreateMap<Lookup, StateLookup>().ReverseMap();
                 cfg.CreateMap<Lookup, RegionLookup>().ReverseMap();               
                 cfg.CreateMap<Lookup, BuildingLookup>().ReverseMap();
+                cfg.CreateMap<Lookup, EmailLookup>().ReverseMap();
 
                 cfg.AddDataReaderMapping();
                 cfg.AllowNullCollections = true;

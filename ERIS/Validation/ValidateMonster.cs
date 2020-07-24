@@ -24,6 +24,7 @@ namespace ERIS.Validation
             lookups.Add("CountryCodes", lookup.countryLookup.Select(c => c.Code).ToArray());
             lookups.Add("RegionCodes", lookup.regionLookup.Select(c => c.Code).ToArray());
             lookups.Add("BuildingCodes", lookup.BuildingLookup.Select(c => c.BuildingId).ToArray());
+            lookups.Add("EmailCodes", lookup.EmailLookup.Select(c => c.WorkEmail).ToArray());
         }
 
         public ValidationResult ValidateEmployeeCriticalInfo(Employee employeeInformation)
@@ -105,6 +106,8 @@ namespace ERIS.Validation
                    .EmailAddress()
                    .WithMessage($"{{PropertyName}}: Invalid e-mail address")
                    .Matches(@".*[gsa.gov]$")
+                   .WithMessage($"{{PropertyName}}: Invalid gsa e-mail address")
+                   .In(lookups["EmailCodes"])
                    .WithMessage("GSA E-Mail Address not found");
 
 

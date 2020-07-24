@@ -15,5 +15,7 @@ namespace ERIS.Lookups
         public List<StateLookup> caStateLookup { get; set; }
 
         public List<BuildingLookup> BuildingLookup { get; set; }
+
+        public List<EmailLookup> EmailLookup { get; set; }
     }
 }

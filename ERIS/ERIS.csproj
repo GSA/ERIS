@@ -163,6 +163,7 @@
     <Compile Include="Data\SaveData.cs" />
     <Compile Include="Lookups\BuildingLookup.cs" />
     <Compile Include="Lookups\CountryLookup.cs" />
+    <Compile Include="Lookups\EmailLookup.cs" />
     <Compile Include="Lookups\Lookup.cs" />
     <Compile Include="Lookups\RegionLookup.cs" />
     <Compile Include="Lookups\StateLookup.cs" />
