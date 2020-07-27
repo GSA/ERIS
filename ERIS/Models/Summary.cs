@@ -35,7 +35,7 @@ namespace ERIS.Models
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string Suffix { get; set; }
-        public int Sponsored { get; set; }
+        public string Sponsorship { get; set; }
         public string UpdatedFields { get; set; }
     }
 

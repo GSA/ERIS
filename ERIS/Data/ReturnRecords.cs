@@ -141,7 +141,7 @@ namespace ERIS.Data
         /// /// <param name="lastname"></param>
         /// /// <param name="suffix"></param>
         /// <returns></returns>
-        public int GetSponsor(Employee monsterData)
+        public string GetSponsor(Employee monsterData)
         {
             try
             {
@@ -166,7 +166,7 @@ namespace ERIS.Data
                             new MySqlParameter { ParameterName = "suffix", Value = monsterData.Person.Suffix, MySqlDbType = MySqlDbType.VarChar, Size = 12},
                             new MySqlParameter { ParameterName = "ssn", Value = monsterData.Person.SocialSecurityNumber, MySqlDbType = MySqlDbType.TinyBlob},
                             new MySqlParameter { ParameterName = "dob", Value = monsterData.Birth.DateOfBirth, MySqlDbType = MySqlDbType.TinyBlob},
-                            new MySqlParameter { ParameterName = "sponsored", MySqlDbType = MySqlDbType.Int32, Direction = ParameterDirection.Output },
+                            new MySqlParameter { ParameterName = "sponsorship", MySqlDbType = MySqlDbType.VarChar, Size =4, Direction = ParameterDirection.Output },
                         };
 
                         cmd.Parameters.AddRange(erisParamaters);
@@ -183,7 +183,7 @@ namespace ERIS.Data
 
             }
 
-            return (int)cmd.Parameters["sponsored"].Value;
+            return cmd.Parameters["sponsorship"].Value.ToString();
         }
     }
 }

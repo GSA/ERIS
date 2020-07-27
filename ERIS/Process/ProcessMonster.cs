@@ -56,7 +56,7 @@ namespace ERIS.Process
                 var save = new SaveData();
                 List<string> badRecords;
                 var persID = 0;
-                var sponsored = 0;
+                var sponsorship = "";
 
                 var monsterAction = "";
 
@@ -98,7 +98,7 @@ namespace ERIS.Process
                             {
                                 log.Info("Update record for user: " + employeeData.Person.MonsterID);
                                 persID = records.GetUpdatedID(employeeData);
-                                sponsored = records.GetSponsor(employeeData);
+                                sponsorship = records.GetSponsor(employeeData);
                                 updatedResults = save.UpdatePersonInformation(persID, employeeData);
                                 if (updatedResults.Result > 0)
                                 {
@@ -110,7 +110,7 @@ namespace ERIS.Process
                                         MiddleName = employeeData.Person.MiddleName,
                                         LastName = employeeData.Person.LastName,
                                         Suffix = employeeData.Person.Suffix,
-                                        Sponsored = sponsored,
+                                        Sponsorship = sponsorship,
                                         UpdatedFields = columnList
 
                                     });
@@ -133,7 +133,7 @@ namespace ERIS.Process
                                     MatchingFields = columnList,
                                     HREmail = employeeData.Person.HREmail
                                 });
-                                
+
                             }
                             break;
                         case "New Record":
