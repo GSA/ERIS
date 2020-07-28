@@ -76,7 +76,7 @@ namespace ERIS.Process
                     if (Helpers.CheckForErrors(validate, employeeData, summary.UnsuccessfulProcessed, ref log))
                         continue;
 
-                    Helpers.CleanupMonsterData(employeeData);
+                    //Helpers.CleanupMonsterData(employeeData);
 
                     log.Info("Loading GCIMS Data");
                     var allGCIMSUpdatedData = retrieve.AllGCIMSUpdatedData(employeeData);

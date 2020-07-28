@@ -196,7 +196,6 @@
     <Compile Include="Utilities\EmployeeComparerforFlagged.cs" />
     <Compile Include="Utilities\ExtensionMethods.cs" />
     <Compile Include="Utilities\Helpers.cs" />
-    <Compile Include="Utilities\Utilities.cs" />
     <Compile Include="Utilities\ValidationHelper.cs" />
     <Compile Include="Validation\ValidateMonster.cs" />
     <Compile Include="Validation\ValidatorExtensions.cs" />
