@@ -115,6 +115,25 @@ namespace ERIS.Process
 
                                     });
                                 }
+                              
+                            }
+                            else
+                            {
+                                persID = records.GetUpdatedID(employeeData);
+                                sponsorship = records.GetSponsor(employeeData);
+                                summary.UpdatedRecordsProcessed.Add(new UpdatedSummary
+                                {
+                                    MonsterID = employeeData.Person.MonsterID,
+                                    GCIMSID = persID,
+                                    FirstName = employeeData.Person.FirstName,
+                                    MiddleName = employeeData.Person.MiddleName,
+                                    LastName = employeeData.Person.LastName,
+                                    Suffix = employeeData.Person.Suffix,
+                                    Sponsorship = sponsorship,
+                                    UpdatedFields = columnList
+
+                                });
+
                             }
                             break;
                         case "Potential Match":
@@ -161,10 +180,10 @@ namespace ERIS.Process
                 emailData.FlagRecord = summary.FlaggedRecordsProcessed.Count;
                 emailData.ErrorRecord = summary.UnsuccessfulProcessed.Count;
 
-                for (int i = 0; i < summary.FlaggedRecordsProcessed.Count; i++)
-                {
-                    reviewsummary.SendReviewSummaryEMail(summary.FlaggedRecordsProcessed[i]);
-                }
+                //for (int i = 0; i < summary.FlaggedRecordsProcessed.Count; i++)
+                //{
+                //    reviewsummary.SendReviewSummaryEMail(summary.FlaggedRecordsProcessed[i]);
+                //}
 
                 //Add log entries
                 log.Info("Total records " + String.Format("{0:#,###0}", MonsterData.Count));
