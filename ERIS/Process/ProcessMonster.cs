@@ -119,6 +119,7 @@ namespace ERIS.Process
                             }
                             else
                             {
+                                log.Info("Update record for user: " + employeeData.Person.MonsterID);
                                 persID = records.GetUpdatedID(employeeData);
                                 sponsorship = records.GetSponsor(employeeData);
                                 summary.UpdatedRecordsProcessed.Add(new UpdatedSummary
@@ -180,10 +181,10 @@ namespace ERIS.Process
                 emailData.FlagRecord = summary.FlaggedRecordsProcessed.Count;
                 emailData.ErrorRecord = summary.UnsuccessfulProcessed.Count;
 
-                //for (int i = 0; i < summary.FlaggedRecordsProcessed.Count; i++)
-                //{
-                //    reviewsummary.SendReviewSummaryEMail(summary.FlaggedRecordsProcessed[i]);
-                //}
+                for (int i = 0; i < summary.FlaggedRecordsProcessed.Count; i++)
+                {
+                    reviewsummary.SendReviewSummaryEMail(summary.FlaggedRecordsProcessed[i]);
+                }
 
                 //Add log entries
                 log.Info("Total records " + String.Format("{0:#,###0}", MonsterData.Count));
