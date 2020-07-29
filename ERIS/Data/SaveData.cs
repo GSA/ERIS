@@ -50,6 +50,8 @@ namespace ERIS.Data
 
                         cmd.Parameters.Clear();
 
+                        string persGuid = System.Guid.NewGuid().ToString();
+
                         MySqlParameter[] personParameters = new MySqlParameter[]
                         {
                             new MySqlParameter { ParameterName = "monsterID", Value = monsterData.Person.MonsterID, MySqlDbType = MySqlDbType.VarChar, Size = 90},
@@ -84,6 +86,7 @@ namespace ERIS.Data
                             new MySqlParameter { ParameterName = "virtualRegion", Value = monsterData.Position.VirtualRegion, MySqlDbType = MySqlDbType.VarChar, Size = 3},
                             new MySqlParameter { ParameterName = "workBuilding", Value = monsterData.Building.BuildingLocationCode, MySqlDbType = MySqlDbType.VarChar, Size = 6},
                             new MySqlParameter { ParameterName = "hrEmail", Value = monsterData.Person.HREmail, MySqlDbType = MySqlDbType.VarChar, Size = 64},
+                            new MySqlParameter { ParameterName = "PersGUID", Value = persGuid, MySqlDbType=MySqlDbType.VarChar, Size=36},
                             new MySqlParameter { ParameterName = "result", MySqlDbType = MySqlDbType.Int32, Direction = ParameterDirection.Output},
                             new MySqlParameter { ParameterName = "actionMsg", MySqlDbType = MySqlDbType.VarChar, Size = 50, Direction = ParameterDirection.Output },
                             new MySqlParameter { ParameterName = "SQLExceptionWarning", MySqlDbType=MySqlDbType.VarChar, Size=4000, Direction = ParameterDirection.Output },
@@ -138,6 +141,8 @@ namespace ERIS.Data
 
                         cmd.Parameters.Clear();
 
+                        string persGuid = System.Guid.NewGuid().ToString();
+
                         MySqlParameter[] UserParamters = new MySqlParameter[]
                             {
 
@@ -174,6 +179,7 @@ namespace ERIS.Data
                                 new MySqlParameter { ParameterName = "isVirtual", Value = monsterData.Position.IsVirtual, MySqlDbType = MySqlDbType.Byte},
                                 new MySqlParameter { ParameterName = "virtualRegion", Value = monsterData.Position.VirtualRegion, MySqlDbType = MySqlDbType.VarChar, Size = 3},
                                 new MySqlParameter { ParameterName = "hrEmail", Value = monsterData.Person.HREmail, MySqlDbType = MySqlDbType.VarChar, Size = 64},
+                                new MySqlParameter { ParameterName = "PersGUID", Value = persGuid, MySqlDbType=MySqlDbType.VarChar, Size=36},
                                 new MySqlParameter { ParameterName = "PersID", MySqlDbType=MySqlDbType.Int32, Direction = ParameterDirection.Output },
                                 new MySqlParameter { ParameterName = "result", MySqlDbType = MySqlDbType.Int32, Direction = ParameterDirection.Output},
                                 new MySqlParameter { ParameterName = "actionMsg", MySqlDbType = MySqlDbType.VarChar, Size = 50, Direction = ParameterDirection.Output },
