@@ -122,20 +122,24 @@ namespace ERIS.Process
                                 log.Info("Update record for user: " + employeeData.Person.MonsterID);
                                 persID = records.GetUpdatedID(employeeData);
                                 sponsorship = records.GetSponsor(employeeData);
-                                summary.UpdatedRecordsProcessed.Add(new UpdatedSummary
+                                updatedResults = save.UpdatePersonInformation(persID, employeeData);
+                                if (updatedResults.Result > 0)
                                 {
-                                    MonsterID = employeeData.Person.MonsterID,
-                                    GCIMSID = persID,
-                                    FirstName = employeeData.Person.FirstName,
-                                    MiddleName = employeeData.Person.MiddleName,
-                                    LastName = employeeData.Person.LastName,
-                                    Suffix = employeeData.Person.Suffix,
-                                    Sponsorship = sponsorship,
-                                    UpdatedFields = columnList
+                                    summary.UpdatedRecordsProcessed.Add(new UpdatedSummary
+                                    {
+                                        MonsterID = employeeData.Person.MonsterID,
+                                        GCIMSID = persID,
+                                        FirstName = employeeData.Person.FirstName,
+                                        MiddleName = employeeData.Person.MiddleName,
+                                        LastName = employeeData.Person.LastName,
+                                        Suffix = employeeData.Person.Suffix,
+                                        Sponsorship = sponsorship,
+                                        UpdatedFields = columnList
 
-                                });
+                                    });
+                                }
 
-                            }
+                           }
                             break;
                         case "Potential Match":
                             if (!Helpers.AreEqualGcimsToMonster2(allGCIMSFlaggedData.Single(), employeeData, out columnList, ref log))
