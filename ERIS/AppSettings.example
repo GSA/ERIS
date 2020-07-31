@@ -1,4 +1,33 @@
 ﻿<appSettings>
   <add key="DEBUG" value="[TRUE/FALSE]" />
   <add key="SMTPSERVER" value="" />
+  <add key="PROCESSMONSTERFILE" value="" />
+  <add key="EMAILSUBJECT" value =""/>
+  <add key="DEFAULTEMAIL" value="" />
+  <add key="TO" value="" />
+  <add key="CC" value=""/>
+  <add key="BCC" value="" />
+  <add key="REVIEWSUMMARYFROM" value=""/>
+  <add key="REVIEWSUMMARYTO" value="[HREMAIL]"/>
+  <add key="REVIEWSUMMARYCC" value=""/>
+  <add key="REVIEWSUMMARYBCC" value=""/>
+  <add key="ERRORSUMMARYFROM" value=""/>
+  <add key="ERRORSUMMARYCC" value=""/>
+  <add key="ERRORSUMMARYBCC" value=""/>
+  <add key="ERRORSUMMARYTO" value=""/>
+  <add key="SUMMARYTEMPLATE" value="" />
+  <add key="ERRORSUMMARYTEMPLATE" value=""/>
+  <add key="FLAGGEDSUMMARYTEMPLATE" value=""/>
+  <add key="SUMMARYEMAILSUBJECT" value=""/>
+  <add key="ERRORSUMMARYEMAILSUBJECT" value=""/>
+  <add key="FLAGGEDSUMMARYEMAILSUBJECT" value="Monster Import Failure: [LAST] [SUFFIX], [FIRST] [MIDDLE] - [PROCESSINGDATE] "/>
+  <add key="SUMMARYTO" value="" />
+  <add key="SUMMARYCC" value="" />
+  <add key="SUMMARYBCC" value="" />
+  <add key="SUMMARYFILEPATH" value="" />
+  <add key="CREATEDSUMMARYFILENAME" value="" />
+  <add key="UPDATEDSUMMARYFILENAME" value="" />
+  <add key="FLAGGEDSUMMARYFILENAME" value="" />
+  <add key="ERRORSUMMARYFILENAME" value="" />
+  <add key="MONSTERFILE" value=""/>
 </appSettings>
