@@ -115,7 +115,7 @@ namespace ERIS.Process
 
                                     });
                                 }
-                              
+
                             }
                             else
                             {
@@ -139,7 +139,7 @@ namespace ERIS.Process
                                     });
                                 }
 
-                           }
+                            }
                             break;
                         case "Potential Match":
                             if (!Helpers.AreEqualGcimsToMonster2(allGCIMSFlaggedData.Single(), employeeData, out columnList, ref log))
@@ -185,7 +185,7 @@ namespace ERIS.Process
                 emailData.FlagRecord = summary.FlaggedRecordsProcessed.Count;
                 emailData.ErrorRecord = summary.UnsuccessfulProcessed.Count;
 
-                for (int i = 0; i < summary.FlaggedRecordsProcessed.Count; i++)
+                for (int i = 0; i < emailData.FlagRecord; i++)
                 {
                     reviewsummary.SendReviewSummaryEMail(summary.FlaggedRecordsProcessed[i]);
                 }

@@ -73,9 +73,19 @@ namespace ERIS
 
             log.Info("Done Processing Monster File(s):" + DateTime.Now);
 
+            log.Info("Sending Valiation Error Email");
+
+            if (emailData.ErrorRecord > 0)
+            {                
+                sendErrorSummary.SendErrorSummaryEMail();
+            }
+            else
+            {
+                log.Info("No Validation Error Email");
+            }
+
             log.Info("Sending Summary File");
             sendSummary.SendSummaryEMail();
-            sendErrorSummary.SendErrorSummaryEMail();
             log.Info("Summary file sent");
 
             //Stop second timer

@@ -49,11 +49,11 @@ namespace ERIS.Process
             }
             catch (Exception ex)
             {
-                log.Error("Error Sending ERIS Summary E-Mail: " + ex.Message + " - " + ex.InnerException);
+                log.Error("Error Sending Validation Error E-Mail: " + ex.Message + " - " + ex.InnerException);
             }
             finally
             {
-                log.Info("ERIS Summary E-Mail Sent");
+                log.Info("Validation Error E-Mail Sent");
             }
         }
 

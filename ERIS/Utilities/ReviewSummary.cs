@@ -26,10 +26,10 @@ namespace ERIS.Utilities
         /// </summary>
         private void setDefaults()
         {
-            emailFrom = "DEFAULTEMAIL".GetSetting();
+            emailFrom = "REVIEWSUMMARYFROM".GetSetting();
             emailTo = "TO".GetSetting();
             emailCC = "CC".GetSetting();
-            emailBCC = "REVIEWSUMMARYFROM".GetSetting();
+            emailBCC = "REVIEWSUMMARYBCC".GetSetting();
             server = "SMTPSERVER".GetSetting();
         }
 
