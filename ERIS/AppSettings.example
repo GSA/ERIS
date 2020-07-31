@@ -2,11 +2,7 @@
   <add key="DEBUG" value="[TRUE/FALSE]" />
   <add key="SMTPSERVER" value="" />
   <add key="PROCESSMONSTERFILE" value="" />
-  <add key="EMAILSUBJECT" value =""/>
   <add key="DEFAULTEMAIL" value="" />
-  <add key="TO" value="" />
-  <add key="CC" value=""/>
-  <add key="BCC" value="" />
   <add key="REVIEWSUMMARYFROM" value=""/>
   <add key="REVIEWSUMMARYTO" value="[HREMAIL]"/>
   <add key="REVIEWSUMMARYCC" value=""/>
