@@ -61,6 +61,7 @@ namespace ERIS
 
                 timeForProcess.Start();
                 processMonster.ProcessMonsterFile(MonsterFilePath);
+                File.Delete(MonsterFilePath);
                 timeForProcess.Stop();
 
                 log.Info("Done Processing Monster File: " + DateTime.Now);
@@ -76,7 +77,7 @@ namespace ERIS
             log.Info("Sending Valiation Error Email");
 
             if (emailData.ErrorRecord > 0)
-            {                
+            {
                 sendErrorSummary.SendErrorSummaryEMail();
             }
             else
