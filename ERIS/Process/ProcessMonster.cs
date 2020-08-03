@@ -94,7 +94,7 @@ namespace ERIS.Process
                     switch (monsterAction)
                     {
                         case "Update Record":
-                            if (!Helpers.AreEqualGcimsToMonster1(allGCIMSUpdatedData.Single(), employeeData, out columnList, ref log))
+                            if (!Helpers.AreEqualGcimsToMonster1(allGCIMSUpdatedData.FirstOrDefault(), employeeData, out columnList, ref log))
                             {
                                 log.Info("Update record for user: " + employeeData.Person.MonsterID);
                                 persID = records.GetUpdatedID(employeeData);
@@ -142,7 +142,7 @@ namespace ERIS.Process
                             }
                             break;
                         case "Potential Match":
-                            if (!Helpers.AreEqualGcimsToMonster2(allGCIMSFlaggedData.Single(), employeeData, out columnList, ref log))
+                            if (!Helpers.AreEqualGcimsToMonster2(allGCIMSFlaggedData.FirstOrDefault(), employeeData, out columnList, ref log))
                             {
                                 log.Info("Flagged record for user: " + employeeData.Person.MonsterID);
                                 //persID = records.GetFlaggedID(employeeData);
