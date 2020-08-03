@@ -27,8 +27,8 @@ namespace ERIS.Utilities
         private void setDefaults()
         {
             emailFrom = "REVIEWSUMMARYFROM".GetSetting();
-            emailTo = "TO".GetSetting();
-            emailCC = "CC".GetSetting();
+           //emailTo = "TO".GetSetting();
+            emailCC = "REVIEWSUMMARYCC".GetSetting();
             emailBCC = "REVIEWSUMMARYBCC".GetSetting();
             server = "SMTPSERVER".GetSetting();
         }
