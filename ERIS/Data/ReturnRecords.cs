@@ -53,8 +53,8 @@ namespace ERIS.Data
                             new MySqlParameter { ParameterName = "middlename", Value = monsterData.Person.MiddleName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
                             new MySqlParameter { ParameterName = "lastname", Value = monsterData.Person.LastName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
                             new MySqlParameter { ParameterName = "suffix", Value = monsterData.Person.Suffix, MySqlDbType = MySqlDbType.VarChar, Size = 12},
-                            new MySqlParameter { ParameterName = "ssn", Value = monsterData.Person.SocialSecurityNumber, MySqlDbType = MySqlDbType.TinyBlob},
-                            new MySqlParameter { ParameterName = "dob", Value = monsterData.Birth.DateOfBirth, MySqlDbType = MySqlDbType.TinyBlob},
+                            new MySqlParameter { ParameterName = "ssn", Value = monsterData.Person.SocialSecurityNumber, MySqlDbType = MySqlDbType.VarChar, Size = 9},
+                            new MySqlParameter { ParameterName = "dob", Value = monsterData.Birth.DateOfBirth, MySqlDbType = MySqlDbType.VarChar, Size = 10},
                             new MySqlParameter { ParameterName = "persID", MySqlDbType = MySqlDbType.Int32, Direction = ParameterDirection.Output },
                         };
 
@@ -164,8 +164,8 @@ namespace ERIS.Data
                             new MySqlParameter { ParameterName = "middlename", Value = monsterData.Person.MiddleName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
                             new MySqlParameter { ParameterName = "lastname", Value = monsterData.Person.LastName, MySqlDbType = MySqlDbType.VarChar, Size = 60},
                             new MySqlParameter { ParameterName = "suffix", Value = monsterData.Person.Suffix, MySqlDbType = MySqlDbType.VarChar, Size = 12},
-                            new MySqlParameter { ParameterName = "ssn", Value = monsterData.Person.SocialSecurityNumber, MySqlDbType = MySqlDbType.TinyBlob},
-                            new MySqlParameter { ParameterName = "dob", Value = monsterData.Birth.DateOfBirth, MySqlDbType = MySqlDbType.TinyBlob},
+                            new MySqlParameter { ParameterName = "ssn", Value = monsterData.Person.SocialSecurityNumber, MySqlDbType = MySqlDbType.VarChar, Size = 9},
+                            new MySqlParameter { ParameterName = "dob", Value = monsterData.Birth.DateOfBirth, MySqlDbType = MySqlDbType.VarChar, Size = 10},
                             new MySqlParameter { ParameterName = "sponsorship", MySqlDbType = MySqlDbType.VarChar, Size =4, Direction = ParameterDirection.Output },
                         };
 
