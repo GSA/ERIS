@@ -10,6 +10,6 @@ namespace ERIS.Models
     {
         public string HomePhone { get; set; }
         public string PersonalCell { get; set; }       
-        public string WorkCell { get; set; }
+        //public string WorkCell { get; set; }
     }
 }

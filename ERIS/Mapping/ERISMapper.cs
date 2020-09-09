@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.Data;
 using ERIS.Lookups;
 using ERIS.Models;
 
@@ -12,12 +13,14 @@ namespace ERIS.Mapping
         public void CreateLookupConfig()
         {
             lookupConfig = new MapperConfiguration(cfg =>
-            {                
+            {
                 cfg.CreateMap<Lookup, CountryLookup>().ReverseMap();
                 cfg.CreateMap<Lookup, StateLookup>().ReverseMap();
-                cfg.CreateMap<Lookup, RegionLookup>().ReverseMap();                
+                cfg.CreateMap<Lookup, RegionLookup>().ReverseMap();               
+                cfg.CreateMap<Lookup, BuildingLookup>().ReverseMap();
+                cfg.CreateMap<Lookup, EmailLookup>().ReverseMap();
 
-                //cfg.AddDataReaderMapping();
+                cfg.AddDataReaderMapping();
                 cfg.AllowNullCollections = true;
             });
         }
@@ -26,7 +29,7 @@ namespace ERIS.Mapping
         {
             dataConfig = new MapperConfiguration(cfg =>
             {
-                //cfg.AddDataReaderMapping();
+                cfg.AddDataReaderMapping();
                 cfg.AllowNullCollections = true;
 
                 cfg.CreateMap<Employee, Person>().ReverseMap();

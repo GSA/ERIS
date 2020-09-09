@@ -5,6 +5,10 @@ using AutoMapper;
 using ERIS.Lookups;
 using ERIS.Data;
 using ERIS.Mapping;
+using ERIS.Process;
+using ERIS.Models;
+using System.Collections.Generic;
+using System.IO;
 
 namespace ERIS
 {
@@ -14,9 +18,8 @@ namespace ERIS
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         //File paths from config file
-        //private static string hrFilePath = ConfigurationManager.AppSettings["HRFILE"].ToString();
+        private static string MonsterFilePath = ConfigurationManager.AppSettings["MONSTERFILE"].ToString();
 
-        //private static string separationFilePath = ConfigurationManager.AppSettings["SEPARATIONFILE"].ToString();
 
         //Stopwatch objects
         private static Stopwatch timeForApp = new Stopwatch();
@@ -27,9 +30,15 @@ namespace ERIS
 
         private static IMapper dataMapper;
 
+        private static EMailData emailData = new EMailData();
+
+        private static Employee employeeData = new Employee();
+
+        private static FlaggedSummary summaryData = new FlaggedSummary();        
+
         static void Main(string[] args)
         {
-            //Start timer
+             //Start timer
             timeForApp.Start();
 
             //Log start of application
@@ -37,13 +46,47 @@ namespace ERIS
 
             CreateMaps();
 
-            //Log action
-            log.Info("Processing HR Monster File:" + DateTime.Now);
+            Lookup lookups = createLookups();
+           
+            SendSummary sendSummary = new SendSummary(ref emailData);
+            SendErrorSummary sendErrorSummary = new SendErrorSummary(ref emailData);
+            ProcessMonster processMonster = new ProcessMonster(dataMapper, ref emailData, lookups);
 
-            log.Info("Done Processing HR Links File(s):" + DateTime.Now);
+            //Log action
+            log.Info("Processing Monster File:" + DateTime.Now);
+
+            if (File.Exists(MonsterFilePath))
+            {
+                log.Info("Starting Processing Monster File: " + DateTime.Now);
+
+                timeForProcess.Start();
+                processMonster.ProcessMonsterFile(MonsterFilePath);
+                File.Delete(MonsterFilePath);
+                timeForProcess.Stop();
+
+                log.Info("Done Processing Monster File: " + DateTime.Now);
+                log.Info("Monster File Processing Time: " + timeForProcess.ElapsedMilliseconds);
+            }
+            else
+            {
+                log.Error("Monster File Not Found");
+            }
+
+            log.Info("Done Processing Monster File(s):" + DateTime.Now);
+
+            log.Info("Sending Valiation Error Email");
+
+            if (emailData.ErrorRecord > 0)
+            {
+                sendErrorSummary.SendErrorSummaryEMail();
+            }
+            else
+            {
+                log.Info("No Validation Error Email");
+            }
 
             log.Info("Sending Summary File");
-            
+            sendSummary.SendSummaryEMail();
             log.Info("Summary file sent");
 
             //Stop second timer
@@ -56,6 +99,7 @@ namespace ERIS
             log.Info("Application Done: " + DateTime.Now);
         }
 
+
         private static void CreateMaps()
         {
             map.CreateDataConfig();
@@ -65,12 +109,12 @@ namespace ERIS
         private static Lookup createLookups()
         {
             Lookup lookups;
-            ERISMapper hrmap = new ERISMapper();
+            ERISMapper erismap = new ERISMapper();
             IMapper lookupMapper;
 
-            hrmap.CreateLookupConfig();
+            erismap.CreateLookupConfig();
 
-            lookupMapper = hrmap.CreateLookupMapping();
+            lookupMapper = erismap.CreateLookupMapping();
 
             LoadLookupData loadLookupData = new LoadLookupData(lookupMapper);
 
@@ -78,5 +122,6 @@ namespace ERIS
 
             return lookups;
         }
-    }   
-}
+
+    }
+ }

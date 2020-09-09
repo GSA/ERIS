@@ -8,8 +8,14 @@ namespace ERIS.Lookups
 
         public List<CountryLookup> countryLookup { get; set; }
 
-        public List<StateLookup> stateLookup { get; set; }
+        public List<StateLookup> usStateLookup { get; set; }
+
+        public List<StateLookup> mxStateLookup { get; set; }
+
+        public List<StateLookup> caStateLookup { get; set; }
 
         public List<BuildingLookup> BuildingLookup { get; set; }
+
+        public List<EmailLookup> EmailLookup { get; set; }
     }
 }

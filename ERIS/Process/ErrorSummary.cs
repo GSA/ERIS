@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 
 namespace ERIS.Process
 {
-    internal class SendSummary
+    class SendErrorSummary
     {
         //Reference to logger
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly EMailData emailData = new EMailData();
 
-        public SendSummary(ref EMailData emailData)
+        public SendErrorSummary(ref EMailData emailData)
         {
             this.emailData = emailData;
         }
 
-        public void SendSummaryEMail()
+        public void SendErrorSummaryEMail()
         {
             EMail email = new EMail();
 
@@ -30,7 +30,7 @@ namespace ERIS.Process
             string body = string.Empty;
             string attahcments = string.Empty;
 
-            subject = ConfigurationManager.AppSettings["SUMMARYEMAILSUBJECT"].ToString() + DateTime.Now.ToString("MMMM dd, yyyy");
+            subject = ConfigurationManager.AppSettings["ERRORSUMMARYEMAILSUBJECT"].ToString() + "-" + DateTime.Now.ToString("MMMM dd, yyyy");
 
             body = GenerateEMailBody();
 
@@ -40,20 +40,20 @@ namespace ERIS.Process
             {
                 using (email)
                 {
-                    email.Send(ConfigurationManager.AppSettings["DEFAULTEMAIL"].ToString(),
-                               ConfigurationManager.AppSettings["SUMMARYTO"].ToString(),
-                               ConfigurationManager.AppSettings["SUMMARYCC"].ToString(),
-                               ConfigurationManager.AppSettings["SUMMARYBCC"].ToString(),
+                    email.Send(ConfigurationManager.AppSettings["ERRORSUMMARYFROM"].ToString(),
+                               ConfigurationManager.AppSettings["ERRORSUMMARYTO"].ToString(),
+                               ConfigurationManager.AppSettings["ERRORSUMMARYCC"].ToString(),
+                               ConfigurationManager.AppSettings["ERRORSUMMARYBCC"].ToString(),
                                subject, body, attahcments.TrimEnd(';'), ConfigurationManager.AppSettings["SMTPSERVER"].ToString(), true);
                 }
             }
             catch (Exception ex)
             {
-                log.Error("Error Sending ERIS Summary E-Mail: " + ex.Message + " - " + ex.InnerException);
+                log.Error("Error Sending Validation Error E-Mail: " + ex.Message + " - " + ex.InnerException);
             }
             finally
             {
-                log.Info("ERIS Summary E-Mail Sent");
+                log.Info("Validation Error E-Mail Sent");
             }
         }
 
@@ -62,14 +62,11 @@ namespace ERIS.Process
             StringBuilder errors = new StringBuilder();
             StringBuilder fileNames = new StringBuilder();
 
-            string template = File.ReadAllText(ConfigurationManager.AppSettings["SUMMARYTEMPLATE"]);
+            string template = File.ReadAllText(ConfigurationManager.AppSettings["ERRORSUMMARYTEMPLATE"]);
 
             template = template.Replace("[PROCESSINGDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
-            template = template.Replace("[RECORDSPROCESSED]", emailData.ItemsProcessed.ToString());
-            template = template.Replace("[RECORDSCREATED]", emailData.CreateRecord.ToString());
-            template = template.Replace("[RECORDSUPDATED]", emailData.UpdateRecord.ToString());
-            template = template.Replace("[RECORDSFORHD]", emailData.FlagRecord.ToString());
-            template = template.Replace("[INVALIDRECORDS]", emailData.ErrorRecord.ToString());
+            template = template.Replace("[ERRORRECORDS]", emailData.ErrorRecord.ToString());
+            template = template.Replace("[COUNT RECORDS WITH ERRORS]", emailData.ErrorRecord.ToString());
 
             return template;
         }
@@ -78,12 +75,6 @@ namespace ERIS.Process
         {
             StringBuilder attachments = new StringBuilder();
 
-            if (emailData.CreatedRecordFilename != null)
-                attachments.Append(AddAttachment(emailData.CreatedRecordFilename));
-            if (emailData.UpdatedRecordFilename != null)
-                attachments.Append(AddAttachment(emailData.UpdatedRecordFilename));
-            if (emailData.FlaggRecordFilename!= null)
-                attachments.Append(AddAttachment(emailData.FlaggRecordFilename));
             if (emailData.ErrorFilename != null)
                 attachments.Append(AddAttachment(emailData.ErrorFilename));
 

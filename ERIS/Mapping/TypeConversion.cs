@@ -37,6 +37,9 @@ namespace ERIS.Mapping
                 case "w":
                     return "NCR";
 
+                case "":
+                    return "";
+
                 default:
                     return text.PadLeft(2, '0');
             }
@@ -50,14 +53,7 @@ namespace ERIS.Mapping
     {
         public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
         {
-            string officeSymbol = string.Empty;
-
-            officeSymbol = Regex.Match(text, "[A-Za-z]").Value;
-
-            if (officeSymbol.ToLower().Equals("o").ToString().Length == 1)
-                return officeSymbol;
-
-            switch (officeSymbol.ToLower())
+            switch (text.ToLower())
             {
                 case "o":
                     return "A";
@@ -66,7 +62,43 @@ namespace ERIS.Mapping
                     return "P";
 
                 default:
-                    return officeSymbol;
+                    return text;
+            }
+        }
+    }
+
+    internal sealed class CitizenConverter : BooleanConverter
+    {
+        public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+        {
+            switch (text.ToLower())
+            {
+                case "1":
+                    return true;
+                case "0":
+                    return false;
+                case "":
+                    return null;
+                default:
+                    return false;
+            }
+        }
+    }
+
+    internal sealed class IsVirtualConverter : BooleanConverter
+    {
+        public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+        {
+            switch (text.ToLower())
+            {
+                case "1":
+                    return true;
+                case "0":
+                    return false;
+                case "":
+                    return null;
+                default:
+                    return false;
             }
         }
     }
