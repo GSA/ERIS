@@ -119,8 +119,10 @@ namespace ERIS.Validation
             RuleFor(Employee => Employee.Birth.CityOfBirth)
                     .NotEmpty()
                     .WithMessage($"{{PropertyName}}: Required Field")
-                    .Matches(@"^([a-zA-Z-\. \'\‘\’]{1,75})$")
-                    .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters");
+                    .Length(0, 75)
+                    .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters")
+                    .Matches(@"^[a-zA-Z-\. \'\‘\’]$")
+                    .WithMessage($"{{ PropertyName}}: Contains Invalid Characters");
 
             RuleFor(Employee => Employee.Birth.CountryOfBirth)
                 .NotEmpty()
