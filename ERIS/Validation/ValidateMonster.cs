@@ -54,7 +54,7 @@ namespace ERIS.Validation
                     .NotEmpty()
                     .WithMessage($"{{PropertyName}}: Required Field")
                     .Matches(@"^[a-zA-Z \-\‘\’\'\`]+$")
-                    .WithMessage($"{{PropertyName}}: Contains Invalid Characters");
+                    .WithMessage($"{{PropertyName}}: Contains invalid characters");
 
             RuleFor(Employee => Employee.Person.MiddleName)
                     .Length(0, 60)
@@ -62,7 +62,7 @@ namespace ERIS.Validation
                     .NotEmpty()
                     .WithMessage($"{{PropertyName}}: Required Field")
                     .Matches(@"^([A-Za-z \-\‘\’\'\`]{1,40}|[NMN]{1,3})+$")
-                    .WithMessage($"{{PropertyName}}: Contains Invalid Characters");
+                    .WithMessage($"{{PropertyName}}: Contains invalid characters");
 
             RuleFor(Employee => Employee.Person.LastName)
                     .Length(0, 60)
@@ -70,7 +70,7 @@ namespace ERIS.Validation
                     .NotEmpty()
                     .WithMessage($"{{PropertyName}}: Required Field")
                     .Matches(@"^[a-zA-Z \-\‘\’\'\`]+$")
-                    .WithMessage($"{{PropertyName}}: Contains Invalid Characters");
+                    .WithMessage($"{{PropertyName}}: Contains invalid characters");
 
             RuleFor(Employee => Employee.Person.Suffix)
                 .Matches(@"^(Jr.|Sr.|II|III|IV|V|VI|\s*)$")
@@ -122,7 +122,7 @@ namespace ERIS.Validation
                     .Length(0, 75)
                     .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters")
                     .Matches(@"^[a-zA-Z-\. \'\‘\’]$")
-                    .WithMessage($"{{ PropertyName}}: Contains Invalid Characters");
+                    .WithMessage($"{{ PropertyName}}: Contains invalid characters");
 
             RuleFor(Employee => Employee.Birth.CountryOfBirth)
                 .NotEmpty()
@@ -213,37 +213,47 @@ namespace ERIS.Validation
             RuleFor(Employee => Employee.Address.HomeAddress1)
                 .NotEmpty()
                 .WithMessage($"{{PropertyName}}: Required Field")
-                .Matches(@"^[a-zA-Z0-9 .\\-\\\']{1,60}$")
-                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.");
+                .Length(0, 60)
+                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.")
+                .Matches(@"^[a-zA-Z0-9 .\\-\\\']$")
+                .WithMessage($"{{PropertyName}}: Contains invalid characters");
 
             Unless(e => string.IsNullOrEmpty(e.Address.HomeAddress3), () =>
             {
                 RuleFor(Employee => Employee.Address.HomeAddress2)
                 .NotEmpty()
                 .WithMessage($"{{PropertyName}}: Must be not blank when Home Address 3 is not blank.")
-                .Matches(@"^[a-zA-Z0-9 .\\-\\\']{1,60}$")
-                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.");
+                .Length(0, 60)
+                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.")
+                .Matches(@"^[a-zA-Z0-9 .\\-\\\']$")
+                .WithMessage($"{{PropertyName}}: Contains invalid characters");
             });
 
             Unless(e => string.IsNullOrEmpty(e.Address.HomeAddress2), () =>
             {
                 RuleFor(Employee => Employee.Address.HomeAddress2)
-                .Matches(@"^[a-zA-Z0-9 .\\-\\\']{1,60}$")
-                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.");
+                .Length(0, 60)
+                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.")
+                .Matches(@"^[a-zA-Z0-9 .\\-\\\']$")
+                .WithMessage($"{{PropertyName}}: Contains invalid characters");
             });
 
             Unless(e => string.IsNullOrEmpty(e.Address.HomeAddress3), () =>
             {
                 RuleFor(Employee => Employee.Address.HomeAddress3)
+                .Length(0, 60)
+                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.")
                 .Matches(@"^[a-zA-Z0-9 .\\-\\\']{1,60}$")
-                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.");
+                .WithMessage($"{{PropertyName}}: Contains invalid characters");
             });
 
             RuleFor(Employee => Employee.Address.HomeCity)
                 .NotEmpty()
                 .WithMessage($"{{PropertyName}}: Required Field")
-                .Matches(@"^[a-zA-Z-. \'\‘\’]{1,60}$")
-                .WithMessage($"{{PropertyName}}:  Exceeds maximum number of characters");
+                .Length(0, 60)
+                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.")
+                .Matches(@"^[a-zA-Z-. \'\‘\’]$")
+                .WithMessage($"{{PropertyName}}:  Contains invalid characters");
 
             When(e => e.Address.HomeCountry.ToLower().Equals("us"), () =>
                     {
