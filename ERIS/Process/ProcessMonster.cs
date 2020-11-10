@@ -31,6 +31,8 @@ namespace ERIS.Process
         readonly Lookup lookups;
         private readonly EMailData emailData;
         private ReviewSummary reviewsummary = new ReviewSummary();
+        private ImportSummary importsummary = new ImportSummary();
+        private UpdateSummary updatesummary = new UpdateSummary();
 
         //Constructor
         public ProcessMonster(IMapper dataMapper, ref EMailData emailData, Lookup lookups)
@@ -188,6 +190,16 @@ namespace ERIS.Process
                 for (int i = 0; i < emailData.FlagRecord; i++)
                 {
                     reviewsummary.SendReviewSummaryEMail(summary.FlaggedRecordsProcessed[i]);
+                }
+
+                for (int i = 0; i < emailData.CreateRecord; i++)
+                {
+                    importsummary.SendImportSummaryEMail(summary.CreatedRecordsProcessed[i]);
+                }
+
+                for (int i = 0; i < emailData.UpdateRecord; i++)
+                {
+                    updatesummary.SendUpdateSummaryEMail(summary.UpdatedRecordsProcessed[i]);
                 }
 
                 //Add log entries
