@@ -85,7 +85,7 @@ namespace ERIS.Process
         {
             string tSubject = subject;
 
-            tSubject = tSubject.Replace("[PROCESSINGDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
+            //tSubject = tSubject.Replace("[PROCESSINGDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
             tSubject = tSubject.Replace("[LAST]", summaryData.LastName);
             tSubject = tSubject.Replace("[SUFFIX]", summaryData.Suffix);
             tSubject = tSubject.Replace("[FIRST]", summaryData.FirstName);
