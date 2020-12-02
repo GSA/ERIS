@@ -5,11 +5,14 @@
   <add key="DEFAULTEMAIL" value="" />
   <add key="IMPORTSUMMARYFROM" value=""/>
   <add key="IMPORTSUMMARYTO" value="[HREMAIL]"/>
+  <add key="IMPORTSUMMARYCC" value=""/>
   <add key="IMPORTSUMMARYBCC" value=""/>
   <add key="REVIEWSUMMARYFROM" value=""/>
   <add key="REVIEWSUMMARYTO" value="[HREMAIL]"/>
+  <add key="REVIEWSUMMARYCC" value=""/>
   <add key="REVIEWSUMMARYBCC" value=""/>
   <add key="ERRORSUMMARYFROM" value=""/>
+  <add key="ERRORSUMMARYCC" value=""/>
   <add key="ERRORSUMMARYBCC" value=""/>
   <add key="ERRORSUMMARYTO" value=""/>
   <add key="SUMMARYTEMPLATE" value="" />
