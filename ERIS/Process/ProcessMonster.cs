@@ -113,8 +113,8 @@ namespace ERIS.Process
                                         LastName = employeeData.Person.LastName,
                                         Suffix = employeeData.Person.Suffix,
                                         Sponsorship = sponsorship,
-                                        UpdatedFields = columnList
-
+                                        UpdatedFields = columnList,
+                                        HREmail = employeeData.Person.HREmail
                                     });
                                 }
 
@@ -136,8 +136,8 @@ namespace ERIS.Process
                                         LastName = employeeData.Person.LastName,
                                         Suffix = employeeData.Person.Suffix,
                                         Sponsorship = sponsorship,
-                                        UpdatedFields = columnList
-
+                                        UpdatedFields = columnList,
+                                        HREmail = employeeData.Person.HREmail
                                     });
                                 }
 
@@ -172,7 +172,8 @@ namespace ERIS.Process
                                 FirstName = employeeData.Person.FirstName,
                                 MiddleName = employeeData.Person.MiddleName,
                                 LastName = employeeData.Person.LastName,
-                                Suffix = employeeData.Person.Suffix
+                                Suffix = employeeData.Person.Suffix,
+                                HREmail = employeeData.Person.HREmail
                             });
                             break;
 

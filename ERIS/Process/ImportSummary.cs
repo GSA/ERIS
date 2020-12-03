@@ -27,6 +27,7 @@ namespace ERIS.Process
         private void setDefaults()
         {
             emailFrom = "IMPORTSUMMARYFROM".GetSetting();
+            emailCC = "IMPORTSUMMARYCC".GetSetting();
             emailBCC = "IMPORTSUMMARYBCC".GetSetting();
             server = "SMTPSERVER".GetSetting();
         }
