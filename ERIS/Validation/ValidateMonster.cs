@@ -121,7 +121,7 @@ namespace ERIS.Validation
                     .WithMessage($"{{PropertyName}}: Required Field")
                     .Length(0, 75)
                     .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters")
-                    .Matches(@"^[a-zA-Z-\. \'\‘\’]$")
+                    .Matches(@"^[a-zA-Z-\. \'\‘\’]+$")
                     .WithMessage($"{{ PropertyName}}: Contains invalid characters");
 
             RuleFor(Employee => Employee.Birth.CountryOfBirth)
@@ -215,7 +215,7 @@ namespace ERIS.Validation
                 .WithMessage($"{{PropertyName}}: Required Field")
                 .Length(0, 60)
                 .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.")
-                .Matches(@"^[a-zA-Z0-9 .\\-\\\']$")
+                .Matches(@"^[a-zA-Z0-9 .\\-\\\']+$")
                 .WithMessage($"{{PropertyName}}: Contains invalid characters");
 
             Unless(e => string.IsNullOrEmpty(e.Address.HomeAddress3), () =>
@@ -225,7 +225,7 @@ namespace ERIS.Validation
                 .WithMessage($"{{PropertyName}}: Must be not blank when Home Address 3 is not blank.")
                 .Length(0, 60)
                 .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.")
-                .Matches(@"^[a-zA-Z0-9 .\\-\\\']$")
+                .Matches(@"^[a-zA-Z0-9 .\\-\\\']+$")
                 .WithMessage($"{{PropertyName}}: Contains invalid characters");
             });
 
@@ -234,7 +234,7 @@ namespace ERIS.Validation
                 RuleFor(Employee => Employee.Address.HomeAddress2)
                 .Length(0, 60)
                 .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.")
-                .Matches(@"^[a-zA-Z0-9 .\\-\\\']$")
+                .Matches(@"^[a-zA-Z0-9 .\\-\\\']+$")
                 .WithMessage($"{{PropertyName}}: Contains invalid characters");
             });
 
@@ -243,7 +243,7 @@ namespace ERIS.Validation
                 RuleFor(Employee => Employee.Address.HomeAddress3)
                 .Length(0, 60)
                 .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.")
-                .Matches(@"^[a-zA-Z0-9 .\\-\\\']{1,60}$")
+                .Matches(@"^[a-zA-Z0-9 .\\-\\\']+$")
                 .WithMessage($"{{PropertyName}}: Contains invalid characters");
             });
 
@@ -252,7 +252,7 @@ namespace ERIS.Validation
                 .WithMessage($"{{PropertyName}}: Required Field")
                 .Length(0, 60)
                 .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.")
-                .Matches(@"^[a-zA-Z-. \'\‘\’]$")
+                .Matches(@"^[a-zA-Z-. \'\‘\’]+$")
                 .WithMessage($"{{PropertyName}}:  Contains invalid characters");
 
             When(e => e.Address.HomeCountry.ToLower().Equals("us"), () =>
