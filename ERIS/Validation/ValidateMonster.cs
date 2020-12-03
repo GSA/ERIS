@@ -122,7 +122,7 @@ namespace ERIS.Validation
                     .Length(0, 75)
                     .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters")
                     .Matches(@"^[a-zA-Z-\. \'\‘\’]+$")
-                    .WithMessage($"{{ PropertyName}}: Contains invalid characters");
+                    .WithMessage($"{{PropertyName}}: Contains invalid characters");
 
             RuleFor(Employee => Employee.Birth.CountryOfBirth)
                 .NotEmpty()
