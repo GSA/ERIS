@@ -86,12 +86,18 @@ namespace ERIS.Utilities
         private string prepareEmailSubject(string subject, FlaggedSummary summaryData, bool debug)
         {
             string tSubject = subject;
+            char[] charsToTrim = {' '};
 
             tSubject = tSubject.Replace("[PROCESSINGDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
             tSubject = tSubject.Replace("[LAST]", summaryData.LastName);
             tSubject = tSubject.Replace("[SUFFIX]", summaryData.Suffix);
             tSubject = tSubject.Replace("[FIRST]", summaryData.FirstName);
             tSubject = tSubject.Replace("[MIDDLE]", summaryData.MiddleName);
+
+            if (summaryData.Suffix == "")
+            {
+                tSubject = tSubject.Trim(charsToTrim);
+            }
 
             return tSubject;
         }

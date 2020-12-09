@@ -20,7 +20,7 @@
   <add key="ERRORSUMMARYTEMPLATE" value=""/>
   <add key="FLAGGEDSUMMARYTEMPLATE" value=""/>
   <add key="SUMMARYEMAILSUBJECT" value=""/>
-  <add key="IMPORTEDSUMMARYEMAILSUBJECT" value="Monster Import Success: [LAST] [SUFFIX], [FIRST] [MIDDLE] - [PROCESSINGDATE] "/>
+  <add key="IMPORTEDSUMMARYEMAILSUBJECT" value="Monster Import Success: [LAST] [SUFFIX], [FIRST] [MIDDLE]"/>
   <add key="ERRORSUMMARYEMAILSUBJECT" value=""/>
   <add key="FLAGGEDSUMMARYEMAILSUBJECT" value="Monster Import Failure: [LAST] [SUFFIX], [FIRST] [MIDDLE] - [PROCESSINGDATE] "/>
   <add key="SUMMARYTO" value="" />
