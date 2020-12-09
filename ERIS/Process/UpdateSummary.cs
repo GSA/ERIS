@@ -85,7 +85,6 @@ namespace ERIS.Process
         private string prepareEmailSubject(string subject, UpdatedSummary summaryData, bool debug)
         {
             string tSubject = subject;
-            char[] charsToTrim = {' '};
 
             //tSubject = tSubject.Replace("[PROCESSINGDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
             tSubject = tSubject.Replace("[LAST]", summaryData.LastName);
@@ -95,7 +94,7 @@ namespace ERIS.Process
 
             if (summaryData.Suffix == "")
             {
-                tSubject = tSubject.Trim(charsToTrim);
+                tSubject = Regex.Replace(tSubject, " *,", ",");
             }
 
             return tSubject;

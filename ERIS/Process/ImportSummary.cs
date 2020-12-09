@@ -7,6 +7,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ERIS.Process
@@ -85,7 +86,6 @@ namespace ERIS.Process
         private string prepareEmailSubject(string subject, CreatedSummary summaryData, bool debug)
         {
             string tSubject = subject;
-            char[] charsToTrim = {' '};
 
             //tSubject = tSubject.Replace("[PROCESSINGDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
             tSubject = tSubject.Replace("[LAST]", summaryData.LastName);
@@ -95,7 +95,7 @@ namespace ERIS.Process
 
             if (summaryData.Suffix == "")
             {
-                tSubject = tSubject.Trim(charsToTrim);
+                tSubject = Regex.Replace(tSubject, " *,", ",");
             }
 
             return tSubject;
