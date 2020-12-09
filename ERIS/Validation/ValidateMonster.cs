@@ -359,6 +359,7 @@ namespace ERIS.Validation
             {
                 RuleFor(Employee => Employee.Phone.HomePhone)
                         .NotEmpty()
+                        //". " added tostart of error message to prevent GetErrors() from trimming first letter from the error message
                         .WithMessage(". Phone: At least one phone number is required");
             });
 
