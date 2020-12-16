@@ -365,7 +365,7 @@ namespace ERIS.Validation
 
             When(e => e.Phone.HomePhone != string.Empty, () =>
             {
-                RuleFor(Employee => Employee.Phone.PersonalCell)
+                RuleFor(Employee => Employee.Phone.HomePhone)
                     .MaximumLength(24)
                     .WithMessage($"{{PropertyName}} length must be 0-24")
                     .Matches(@"^(([0-9]{3}[0-9]{3}[0-9]{4})|(\+([0-9]{1,3})\.([0-9]{4,14})(([xX]){1}[0-9]{1,4}))|(\+([0-9]{1,3})\.([0-9]{4,14})))+$")
@@ -374,7 +374,7 @@ namespace ERIS.Validation
 
             When(e => e.Phone.PersonalCell != string.Empty, () =>
             {
-                RuleFor(Employee => Employee.Phone.HomePhone)
+                RuleFor(Employee => Employee.Phone.PersonalCell)
                     .MaximumLength(24)
                     .WithMessage($"{{PropertyName}} length must be 0-24")
                     .Matches(@"^(([0-9]{3}[0-9]{3}[0-9]{4})|(\+([0-9]{1,3})\.([0-9]{4,14})(([xX]){1}[0-9]{1,4}))|(\+([0-9]{1,3})\.([0-9]{4,14})))+$")
