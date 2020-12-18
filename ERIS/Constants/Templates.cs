@@ -8,6 +8,7 @@ namespace ERIS.Constants
 {
     class Templates
     {
-        public const string SummaryEmailTemplate = "SummaryEmailTemplate";
+        public const string ReviewSummaryEmailTemplate = "ReviewSummaryEmailTemplate";
+        public const string ImportSummaryEmailTemplate = "ImportSummaryEmailTemplate";
     }
 }

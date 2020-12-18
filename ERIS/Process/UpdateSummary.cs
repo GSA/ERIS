@@ -7,11 +7,12 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace ERIS.Utilities
+namespace ERIS.Process
 {
-    class ReviewSummary
+    class UpdateSummary
     {
         string emailFrom, emailTo, emailCC, emailBCC, server;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -19,17 +20,16 @@ namespace ERIS.Utilities
         private bool Debug;
 
 
-        public ReviewSummary() { }
+        public UpdateSummary() { }
 
         /// <summary>
         /// Set email default values
         /// </summary>
         private void setDefaults()
         {
-            emailFrom = "REVIEWSUMMARYFROM".GetSetting();
-           //emailTo = "TO".GetSetting();
-            emailCC = "REVIEWSUMMARYCC".GetSetting();
-            emailBCC = "REVIEWSUMMARYBCC".GetSetting();
+            emailFrom = "IMPORTSUMMARYFROM".GetSetting();
+            emailCC = "IMPORTSUMMARYCC".GetSetting();
+            emailBCC = "IMPORTSUMMARYBCC".GetSetting();
             server = "SMTPSERVER".GetSetting();
         }
 
@@ -38,6 +38,7 @@ namespace ERIS.Utilities
         /// </summary>
         /// <param name="subject"></param>
         /// <param name="body"></param>
+        /// <param name="to"></param>
         /// <returns></returns>
         private bool SendEmail(string subject, string body, string to)
         {
@@ -65,12 +66,12 @@ namespace ERIS.Utilities
         /// 
         /// </summary>
         /// <param name="to"></param>
-        /// <param name="contractData"></param>
+        /// <param name="summaryData"></param>
         /// <param name="debug"></param>
         /// <returns></returns>
-        private string prepareTo(string to, FlaggedSummary summaryData, bool debug)
+        private string prepareTo(string to, UpdatedSummary summaryData, bool debug)
         {
-            to = ConfigurationManager.AppSettings["REVIEWSUMMARYTO"].ToString();
+            to = ConfigurationManager.AppSettings["IMPORTSUMMARYTO"].ToString();
             to = to.Replace("[HREMAIL]", summaryData.HREmail);
             return to;
         }
@@ -79,18 +80,23 @@ namespace ERIS.Utilities
         /// Generates email subject by passing in subject
         /// </summary>
         /// <param name="subject"></param>
-        /// <param name="contracts"></param>
+        /// <param name="summaryData"></param>
         /// <param name="debug"></param>
         /// <returns></returns>
-        private string prepareEmailSubject(string subject, FlaggedSummary summaryData, bool debug)
+        private string prepareEmailSubject(string subject, UpdatedSummary summaryData, bool debug)
         {
             string tSubject = subject;
 
-            tSubject = tSubject.Replace("[PROCESSINGDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
+            //tSubject = tSubject.Replace("[PROCESSINGDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
             tSubject = tSubject.Replace("[LAST]", summaryData.LastName);
             tSubject = tSubject.Replace("[SUFFIX]", summaryData.Suffix);
             tSubject = tSubject.Replace("[FIRST]", summaryData.FirstName);
             tSubject = tSubject.Replace("[MIDDLE]", summaryData.MiddleName);
+
+            if (summaryData.Suffix == "")
+            {
+                tSubject = Regex.Replace(tSubject, " *,", ",");
+            }
 
             return tSubject;
         }
@@ -99,10 +105,10 @@ namespace ERIS.Utilities
         /// Generates email body by passing in body
         /// </summary>
         /// <param name="body"></param>
-        /// <param name="contracts"></param>
+        /// <param name="summaryData"></param>
         /// <param name="debug"></param>
         /// <returns></returns>
-        private string prepareEmailBody(string body, FlaggedSummary summaryData, bool debug)
+        private string prepareEmailBody(string body, UpdatedSummary summaryData, bool debug)
         {
             string tBody = body;
 
@@ -110,9 +116,6 @@ namespace ERIS.Utilities
             tBody = tBody.Replace("[SUFFIX]", summaryData.Suffix);
             tBody = tBody.Replace("[FIRST]", summaryData.FirstName);
             tBody = tBody.Replace("[MIDDLE]", summaryData.MiddleName);
-            tBody = tBody.Replace("[RUNDATE]", DateTime.Now.ToString("MM/dd/yyyy"));
-            tBody = tBody.Replace("[MONSTERID]", summaryData.MonsterID);
-            tBody = tBody.Replace("[MATCHINGFIELDS]", summaryData.MatchingFields);
 
             return tBody;
         }
@@ -131,9 +134,9 @@ namespace ERIS.Utilities
             {
                 switch (templateName)
                 {
-                    case Templates.SummaryEmailTemplate:
-                        body = File.ReadAllText("FLAGGEDSUMMARYTEMPLATE".GetSetting());
-                        subject = "FLAGGEDSUMMARYEMAILSUBJECT".GetSetting();
+                    case Templates.ImportSummaryEmailTemplate:
+                        body = File.ReadAllText("IMPORTEDSUMMARYTEMPLATE".GetSetting());
+                        subject = "IMPORTEDSUMMARYEMAILSUBJECT".GetSetting();
                         break;
                     default:
                         break;
@@ -164,13 +167,13 @@ namespace ERIS.Utilities
         /// </summary>
         /// <param name="row"></param>
         /// <returns></returns>
-        internal string SendReviewSummaryEMail(FlaggedSummary row)
+        internal string SendUpdateSummaryEMail(UpdatedSummary row)
         {
             string Subject = "", Body = "", To = "";
 
-             log.Info("Sending review email to HR");
-             GetEmailStub(Templates.SummaryEmailTemplate, ref Subject, ref Body);
-            
+            log.Info("Sending update email to HR");
+            GetEmailStub(Templates.ImportSummaryEmailTemplate, ref Subject, ref Body);
+
 
             To = prepareTo(To, row, Debug);
             Subject = prepareEmailSubject(Subject, row, Debug);
