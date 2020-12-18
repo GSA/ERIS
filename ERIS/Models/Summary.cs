@@ -25,6 +25,7 @@ namespace ERIS.Models
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string Suffix { get; set; }
+        public string HREmail { get; set; }
     }
 
     internal class UpdatedSummary
@@ -37,6 +38,7 @@ namespace ERIS.Models
         public string Suffix { get; set; }
         public string Sponsorship { get; set; }
         public string UpdatedFields { get; set; }
+        public string HREmail { get; set; }
     }
 
     internal class FlaggedSummary

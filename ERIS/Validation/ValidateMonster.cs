@@ -54,7 +54,7 @@ namespace ERIS.Validation
                     .NotEmpty()
                     .WithMessage($"{{PropertyName}}: Required Field")
                     .Matches(@"^[a-zA-Z \-\‘\’\'\`]+$")
-                    .WithMessage($"{{PropertyName}}: Contains Invalid Characters");
+                    .WithMessage($"{{PropertyName}}: Contains invalid characters");
 
             RuleFor(Employee => Employee.Person.MiddleName)
                     .Length(0, 60)
@@ -62,7 +62,7 @@ namespace ERIS.Validation
                     .NotEmpty()
                     .WithMessage($"{{PropertyName}}: Required Field")
                     .Matches(@"^([A-Za-z \-\‘\’\'\`]{1,40}|[NMN]{1,3})+$")
-                    .WithMessage($"{{PropertyName}}: Contains Invalid Characters");
+                    .WithMessage($"{{PropertyName}}: Contains invalid characters");
 
             RuleFor(Employee => Employee.Person.LastName)
                     .Length(0, 60)
@@ -70,7 +70,7 @@ namespace ERIS.Validation
                     .NotEmpty()
                     .WithMessage($"{{PropertyName}}: Required Field")
                     .Matches(@"^[a-zA-Z \-\‘\’\'\`]+$")
-                    .WithMessage($"{{PropertyName}}: Contains Invalid Characters");
+                    .WithMessage($"{{PropertyName}}: Contains invalid characters");
 
             RuleFor(Employee => Employee.Person.Suffix)
                 .Matches(@"^(Jr.|Sr.|II|III|IV|V|VI|\s*)$")
@@ -119,8 +119,10 @@ namespace ERIS.Validation
             RuleFor(Employee => Employee.Birth.CityOfBirth)
                     .NotEmpty()
                     .WithMessage($"{{PropertyName}}: Required Field")
-                    .Matches(@"^([a-zA-Z-\. \'\‘\’]{1,75})$")
-                    .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters");
+                    .Length(0, 75)
+                    .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters")
+                    .Matches(@"^[a-zA-Z-\. \'\‘\’]+$")
+                    .WithMessage($"{{PropertyName}}: Contains invalid characters");
 
             RuleFor(Employee => Employee.Birth.CountryOfBirth)
                 .NotEmpty()
@@ -211,37 +213,47 @@ namespace ERIS.Validation
             RuleFor(Employee => Employee.Address.HomeAddress1)
                 .NotEmpty()
                 .WithMessage($"{{PropertyName}}: Required Field")
-                .Matches(@"^[a-zA-Z0-9 .\\-\\\']{1,60}$")
-                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.");
+                .Length(0, 60)
+                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.")
+                .Matches(@"^[a-zA-Z0-9 .\\-\\\']+$")
+                .WithMessage($"{{PropertyName}}: Contains invalid characters");
 
             Unless(e => string.IsNullOrEmpty(e.Address.HomeAddress3), () =>
             {
                 RuleFor(Employee => Employee.Address.HomeAddress2)
                 .NotEmpty()
                 .WithMessage($"{{PropertyName}}: Must be not blank when Home Address 3 is not blank.")
-                .Matches(@"^[a-zA-Z0-9 .\\-\\\']{1,60}$")
-                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.");
+                .Length(0, 60)
+                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.")
+                .Matches(@"^[a-zA-Z0-9 .\\-\\\']+$")
+                .WithMessage($"{{PropertyName}}: Contains invalid characters");
             });
 
             Unless(e => string.IsNullOrEmpty(e.Address.HomeAddress2), () =>
             {
                 RuleFor(Employee => Employee.Address.HomeAddress2)
-                .Matches(@"^[a-zA-Z0-9 .\\-\\\']{1,60}$")
-                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.");
+                .Length(0, 60)
+                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.")
+                .Matches(@"^[a-zA-Z0-9 .\\-\\\']+$")
+                .WithMessage($"{{PropertyName}}: Contains invalid characters");
             });
 
             Unless(e => string.IsNullOrEmpty(e.Address.HomeAddress3), () =>
             {
                 RuleFor(Employee => Employee.Address.HomeAddress3)
-                .Matches(@"^[a-zA-Z0-9 .\\-\\\']{1,60}$")
-                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.");
+                .Length(0, 60)
+                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.")
+                .Matches(@"^[a-zA-Z0-9 .\\-\\\']+$")
+                .WithMessage($"{{PropertyName}}: Contains invalid characters");
             });
 
             RuleFor(Employee => Employee.Address.HomeCity)
                 .NotEmpty()
                 .WithMessage($"{{PropertyName}}: Required Field")
-                .Matches(@"^[a-zA-Z-. \'\‘\’]{1,60}$")
-                .WithMessage($"{{PropertyName}}:  Exceeds maximum number of characters");
+                .Length(0, 60)
+                .WithMessage($"{{PropertyName}}: Exceeds maximum number of characters.")
+                .Matches(@"^[a-zA-Z-. \'\‘\’]+$")
+                .WithMessage($"{{PropertyName}}:  Contains invalid characters");
 
             When(e => e.Address.HomeCountry.ToLower().Equals("us"), () =>
                     {
@@ -343,26 +355,30 @@ namespace ERIS.Validation
             #region Phone
 
             //**********PHONE*****************************************************************************************
-            When(e => e.Phone.HomePhone == string.Empty, () =>
-            {
-                RuleFor(Employee => Employee.Phone.PersonalCell)
-                        .NotEmpty()
-                        .WithMessage($"{{PropertyName}}: At least one phone number is required")
-                        .MaximumLength(24)
-                        .WithMessage($"{{PropertyName}} length must be 0-24")
-                        .Matches(@"^(([0-9]{3}[0-9]{3}[0-9]{4})|(\+([0-9]{1,3})\.([0-9]{4,14})(([xX]){1}[0-9]{1,4}))|(\+([0-9]{1,3})\.([0-9]{4,14})))+$")
-                        .WithMessage($"{{PropertyName}}: Invalid phone number");
-            });
-
-            When(e => e.Phone.PersonalCell == string.Empty, () =>
+            When(e => e.Phone.HomePhone == string.Empty && e.Phone.PersonalCell == string.Empty, () =>
             {
                 RuleFor(Employee => Employee.Phone.HomePhone)
                         .NotEmpty()
-                        .WithMessage($"{{PropertyName}}: At least one phone number is required")
-                        .MaximumLength(24)
-                        .WithMessage($"{{PropertyName}} length must be 0-24")
-                        .Matches(@"^(([0-9]{3}[0-9]{3}[0-9]{4})|(\+([0-9]{1,3})\.([0-9]{4,14})(([xX]){1}[0-9]{1,4}))|(\+([0-9]{1,3})\.([0-9]{4,14})))+$")
-                        .WithMessage($"{{PropertyName}}: Invalid phone number");
+                        //". " added tostart of error message to prevent GetErrors() from trimming first letter from the error message
+                        .WithMessage(". Phone: At least one phone number is required");
+            });
+
+            When(e => e.Phone.HomePhone != string.Empty, () =>
+            {
+                RuleFor(Employee => Employee.Phone.HomePhone)
+                    .MaximumLength(24)
+                    .WithMessage($"{{PropertyName}} length must be 0-24")
+                    .Matches(@"^(([0-9]{3}[0-9]{3}[0-9]{4})|(\+([0-9]{1,3})\.([0-9]{4,14})(([xX]){1}[0-9]{1,4}))|(\+([0-9]{1,3})\.([0-9]{4,14})))+$")
+                    .WithMessage($"{{PropertyName}}: Invalid phone number");
+            });
+
+            When(e => e.Phone.PersonalCell != string.Empty, () =>
+            {
+                RuleFor(Employee => Employee.Phone.PersonalCell)
+                    .MaximumLength(24)
+                    .WithMessage($"{{PropertyName}} length must be 0-24")
+                    .Matches(@"^(([0-9]{3}[0-9]{3}[0-9]{4})|(\+([0-9]{1,3})\.([0-9]{4,14})(([xX]){1}[0-9]{1,4}))|(\+([0-9]{1,3})\.([0-9]{4,14})))+$")
+                    .WithMessage($"{{PropertyName}}: Invalid phone number");
             });
 
             #endregion Phone

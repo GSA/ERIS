@@ -3,6 +3,10 @@
   <add key="SMTPSERVER" value="" />
   <add key="PROCESSMONSTERFILE" value="" />
   <add key="DEFAULTEMAIL" value="" />
+  <add key="IMPORTSUMMARYFROM" value=""/>
+  <add key="IMPORTSUMMARYTO" value="[HREMAIL]"/>
+  <add key="IMPORTSUMMARYCC" value=""/>
+  <add key="IMPORTSUMMARYBCC" value=""/>
   <add key="REVIEWSUMMARYFROM" value=""/>
   <add key="REVIEWSUMMARYTO" value="[HREMAIL]"/>
   <add key="REVIEWSUMMARYCC" value=""/>
@@ -12,9 +16,11 @@
   <add key="ERRORSUMMARYBCC" value=""/>
   <add key="ERRORSUMMARYTO" value=""/>
   <add key="SUMMARYTEMPLATE" value="" />
+  <add key="IMPORTEDSUMMARYTEMPLATE" value=""/>
   <add key="ERRORSUMMARYTEMPLATE" value=""/>
   <add key="FLAGGEDSUMMARYTEMPLATE" value=""/>
   <add key="SUMMARYEMAILSUBJECT" value=""/>
+  <add key="IMPORTEDSUMMARYEMAILSUBJECT" value="Monster Import Success: [LAST] [SUFFIX], [FIRST] [MIDDLE]"/>
   <add key="ERRORSUMMARYEMAILSUBJECT" value=""/>
   <add key="FLAGGEDSUMMARYEMAILSUBJECT" value="Monster Import Failure: [LAST] [SUFFIX], [FIRST] [MIDDLE] - [PROCESSINGDATE] "/>
   <add key="SUMMARYTO" value="" />
